@@ -1,0 +1,13 @@
+{
+  
+  "db": {
+    "host": "localhost",
+    "port": 3306,
+    "url": "",
+    "database": "crm",
+    "password": "",
+    "name": "db",
+    "user": "root",
+    "connector": "mysql"
+  }
+}
