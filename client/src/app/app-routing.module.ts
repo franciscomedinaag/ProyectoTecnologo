@@ -1,8 +1,37 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+//CRM
+import { LoginComponent } from './components-crm/login/login.component';
+import { ClientesComponent } from './components-crm/clientes/clientes.component';
 
-const routes: Routes = [];
+//sitio Web
+import { InicioComponent } from './components-web/inicio/inicio.component';
+import { ContactoComponent } from './components-web/contacto/contacto.component';
+import { MueblesComponent } from './components-web/muebles/muebles.component';
+import { NosotrosComponent } from './components-web/nosotros/nosotros.component';
+
+const routes: Routes = [
+  //CRM
+  {path: 'login', component: LoginComponent},
+  {path: 'clientes',component: ClientesComponent},
+
+  //sitio Web
+  {path: 'inicio',component: InicioComponent},
+  {path: 'contacto',component: ContactoComponent},
+  {path: 'muebles/:id',component: MueblesComponent},
+  {path: 'nosotros',component: NosotrosComponent},
+
+  //default
+  {path: '',
+      redirectTo: '/inicio',
+      pathMatch: 'full'
+  },
+  {path: '**',
+      redirectTo: '/inicio',
+      pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #33ACE2">
+    <a class="navbar-brand" href="#">
+      <img src="assets/logo-blanco.png" alt="COR" width="30" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"  routerLinkActive="active" style="color:white;">
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="inicio">Inicio </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Muebles
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/muebles', 1]">Cocinas Integrales</a>
+            <a class="dropdown-item" [routerLink]="['/muebles',2]">Escritorios</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 3]">Butacas</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " routerLink="contacto">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " routerLink="nosotros">Nosotros</a>
+        </li>
+        <li class="pt-2 pl-5" style="width: 30px">    
+          <i class="fa fa-facebook-official" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </div>
+  </nav>
