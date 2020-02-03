@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-crm',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarCrmComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth:AuthService, private router:Router) { }
 
   ngOnInit() {
+  }
+
+  onLogout():void{
+    console.log("logout")
+    this.auth.logoutUser();
+    this.router.navigate(['/login']);
   }
 
 }

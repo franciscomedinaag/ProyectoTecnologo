@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {HttpClientModule} from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
 
 //CRM
 import { LoginComponent } from './components-crm/login/login.component';
@@ -41,7 +42,8 @@ import { AuthService } from './services/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [DataApiService, AuthService],
   bootstrap: [AppComponent]

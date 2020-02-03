@@ -14,7 +14,8 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "acls": []
   },
   "AccessToken": {
     "dataSource": "db",
@@ -36,6 +37,10 @@
     "public": false
   },
   "product": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Usuario": {
     "dataSource": "db",
     "public": true
   }

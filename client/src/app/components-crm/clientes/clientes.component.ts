@@ -10,12 +10,14 @@ export class ClientesComponent implements OnInit {
   constructor(private api:DataApiService) { }
 
   ngOnInit() {
-    this.getClients(); 
+    this.getUsers(); 
   }
 
-  getClients(){
-    this.api.getAllClients()
-    .subscribe((clients)=>console.log("productos: ", clients));
+  getUsers(){
+  this.api.get('/Usuarios',true,)
+  .subscribe((usuarios)=>{
+    console.log("los usuarios", usuarios)
+  })
   }
 
 }
