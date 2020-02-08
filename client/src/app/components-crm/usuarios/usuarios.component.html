@@ -1,5 +1,43 @@
 <app-navbar-crm></app-navbar-crm>
+
 <div class="container" style="background-color: white;">
-    <p>usuarios works!</p>
+    <div class="row pt-4 pb-4">
+        <div class="col-sm-6">        
+            <h2 class="text-center">Vendedores</h2>
+        </div>
+        <div class="col-sm-6 text-center">
+            <button *ngIf="showAct" (click)="this.showAct=false;this.vendedores=this.inactivos" class="btn active btn-secondary">Ver inactivos</button>
+            <button *ngIf="!showAct" (click)="this.showAct=true;this.vendedores=this.activos" class="btn active btn-primary">Ver activos</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table lista">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Informe</th>
+                    <th scope="col">Datos</th>
+                    <th *ngIf="showAct" class="text-center" scope="col">Desactivar</th>
+                    <th *ngIf="!showAct" class="text-center" scope="col">Activar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let a of vendedores; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{a.username}}</td>
+                    <td>$150,000</td>
+                    <td><a href="#">Ver</a></td>
+                    <td><a href="#">Perfil</a></td>
+                    <td *ngIf="showAct" class="text-center"><i class="fa fa-window-close-o" aria-hidden="true"></i></td>
+                    <td *ngIf="!showAct" class="text-center"><i class="fa fa-check-circle-o" aria-hidden="true"></i></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
 <app-footer-crm></app-footer-crm>

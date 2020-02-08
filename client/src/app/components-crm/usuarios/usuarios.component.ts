@@ -8,6 +8,11 @@ import { DataApiService } from '../../services/data-api.service';
 })
 export class UsuariosComponent implements OnInit {
 
+  activos:any=[];
+  inactivos:any=[];
+  vendedores:any=[];
+  showAct:boolean=true;
+
   constructor(private api:DataApiService) { }
 
   ngOnInit() {
@@ -15,9 +20,14 @@ export class UsuariosComponent implements OnInit {
   }
 
   getUsers(){
-    this.api.get('/Usuarios',true,{where:{realm:'user'}})
+    this.api.get('/Usuarios',true,{where:{realm:'user',active:true}})
     .subscribe((usuarios)=>{
-      console.log("los usuarios", usuarios)
+      this.activos=usuarios;
+      this.vendedores=usuarios;
+    })
+    this.api.get('/Usuarios',true,{where:{realm:'user',active:false}})
+    .subscribe((usuarios)=>{
+      this.inactivos=usuarios;
     })
   }
 
