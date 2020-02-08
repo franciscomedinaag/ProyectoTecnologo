@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 //CRM
 import { LoginComponent } from './components-crm/login/login.component';
 import { ClientesComponent } from './components-crm/clientes/clientes.component';
+import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   //CRM
   {path: 'login', component: LoginComponent},
   {path: 'clientes',component: ClientesComponent},
+  {path: 'usuarios',component: UsuariosComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

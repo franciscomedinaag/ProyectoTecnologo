@@ -23,13 +23,13 @@ export class DataApiService {
   private genLink(endPoint: string, useToken: boolean,filter:any=false): string {
     let link=this.baseURL+endPoint;
     let params=0;
+    if(filter) { 
+     link+= `${(params==0)?'?':'&'}filter=`+JSON.stringify(filter);
+     params++;
+   }
     if(!(!useToken || !(this.token.length > 0 && this.token != ""))) { 
      
       link+= `${(params==0)?'?':'&'}access_token=`+this.token;
-      params++;
-    }
-     if(filter) { 
-      link+= `${(params==0)?'?':'&'}filter=`+JSON.stringify(filter);
       params++;
     }
     return link;

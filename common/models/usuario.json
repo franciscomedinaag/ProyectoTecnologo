@@ -6,7 +6,25 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "active": {
+      "type": "boolean", 
+      "required": "false",
+      "default": "true"
+    },
+    "registro": {
+      "type": "date", 
+      "required": "true"
+    },
+    "telefono": {
+      "type": "string", 
+      "required": "false"
+    },
+    "imagen": {
+      "type": "string", 
+      "required": "false"
+    }
+  },
   "validations": [],
   "relations": {},
   "acls": [
