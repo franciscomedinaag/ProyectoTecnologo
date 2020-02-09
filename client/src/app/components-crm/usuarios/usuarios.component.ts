@@ -13,6 +13,7 @@ export class UsuariosComponent implements OnInit {
   vendedores:any=[];
   showAct:boolean=true;
 
+
   constructor(private api:DataApiService) { }
 
   ngOnInit() {
@@ -20,15 +21,46 @@ export class UsuariosComponent implements OnInit {
   }
 
   getUsers(){
-    this.api.get('/Usuarios',true,{where:{realm:'user',active:true}})
-    .subscribe((usuarios)=>{
-      this.activos=usuarios;
-      this.vendedores=usuarios;
-    })
+    this.activos=[];
+    this.inactivos=[];
+    this.vendedores=[];
+    if(this.showAct){
+      this.api.get('/Usuarios',true,{where:{realm:'user',active:true}})
+      .subscribe((usuarios)=>{
+        this.activos=usuarios;
+        this.vendedores=this.activos;
+      })
+    }
+    else{
     this.api.get('/Usuarios',true,{where:{realm:'user',active:false}})
     .subscribe((usuarios)=>{
       this.inactivos=usuarios;
+      this.vendedores=this.inactivos;
+    })
+    }
+  }
+
+
+  changeState(user:any, state:boolean){
+    user.active=state;
+    this.api.patch('/Usuarios',user).subscribe((edited)=>{
+     this.getUsers(); 
     })
   }
+
+
+  vista(show:boolean){
+    if(show){
+      this.showAct=true;
+      this.getUsers();
+      this.vendedores=this.activos;
+    }
+    else{
+      this.showAct=false;
+      this.getUsers();
+      this.vendedores=this.inactivos;
+    }
+  }
+  
 
 }

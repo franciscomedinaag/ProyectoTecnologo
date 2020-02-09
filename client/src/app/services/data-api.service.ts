@@ -58,7 +58,11 @@ export class DataApiService {
     let link: string = this.genLink(endPoint, useToken,filter);
     return this.http.post(link, body, { headers: this.headers })  
     .pipe(map(data => data));
-
   }
   
+  public patch(endPoint: string, body: object, useToken:boolean = true,filter={}): Observable<object>{
+    let link: string = this.genLink(endPoint, useToken,filter);
+    return this.http.patch(link, body, { headers: this.headers })  
+    .pipe(map(data => data));
+  }
 }

@@ -17,14 +17,12 @@ export class NavbarCrmComponent implements OnInit {
   }
   
   onLogout():void{
-    console.log("logout")
     this.auth.logoutUser();
     this.router.navigate(['/login']);
   }
   
   getUser(){
     this.user=this.auth.getCurrentUser();
-    console.log("tipo: ",this.user.realm)
   }
 
 }

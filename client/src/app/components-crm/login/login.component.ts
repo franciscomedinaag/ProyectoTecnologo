@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
         }
       }, err=>{
         this.toastr.showError('Datos incorrectos');
-        console.log('Error de inicio de sesion',err)
       })
   }
 

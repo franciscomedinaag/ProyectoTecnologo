@@ -3,11 +3,12 @@
 <div class="container" style="background-color: white;">
     <div class="row pt-4 pb-4">
         <div class="col-sm-6">        
-            <h2 class="text-center">Vendedores</h2>
+            <h2 *ngIf="showAct" class="text-center">Vendedores Activos</h2>
+            <h2 *ngIf="!showAct" class="text-center">Vendedores Inactivos</h2>
         </div>
         <div class="col-sm-6 text-center">
-            <button *ngIf="showAct" (click)="this.showAct=false;this.vendedores=this.inactivos" class="btn active btn-secondary">Ver inactivos</button>
-            <button *ngIf="!showAct" (click)="this.showAct=true;this.vendedores=this.activos" class="btn active btn-primary">Ver activos</button>
+            <button *ngIf="showAct" (click)="vista(false)" class="btn active btn-secondary">Ver inactivos</button>
+            <button *ngIf="!showAct" (click)="vista(true)" class="btn active btn-primary">Ver activos</button>
         </div>
     </div>
     <div class="row">
@@ -29,10 +30,10 @@
                     <th scope="row">{{i+1}}</th>
                     <td>{{a.username}}</td>
                     <td>$150,000</td>
-                    <td><a href="#">Ver</a></td>
+                    <td ><a href="#">Ver</a></td>
                     <td><a href="#">Perfil</a></td>
-                    <td *ngIf="showAct" class="text-center"><i class="fa fa-window-close-o" aria-hidden="true"></i></td>
-                    <td *ngIf="!showAct" class="text-center"><i class="fa fa-check-circle-o" aria-hidden="true"></i></td>
+                    <td *ngIf="showAct" class="text-center" (click)="changeState(a,false)"><i class="fa fa-window-close-o" aria-hidden="true"></i></td>
+                    <td *ngIf="!showAct" class="text-center" (click)="changeState(a,true)"><i class="fa fa-check-circle-o" aria-hidden="true"></i></td>
                   </tr>
                 </tbody>
             </table>
