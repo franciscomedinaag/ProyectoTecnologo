@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components-crm/login/login.component';
 import { ClientesComponent } from './components-crm/clientes/clientes.component';
 import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
+import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
+import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'clientes',component: ClientesComponent},
   {path: 'usuarios',component: UsuariosComponent},
+  {path: 'informesven/:id',component: InformeVenComponent},
+  {path: 'miperfil/:id',component: MiperfilComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

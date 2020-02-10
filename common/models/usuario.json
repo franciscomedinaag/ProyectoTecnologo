@@ -8,20 +8,24 @@
   },
   "properties": {
     "active": {
-      "type": "boolean", 
+      "type": "boolean",
       "required": "false",
       "default": "true"
     },
     "registro": {
-      "type": "date", 
+      "type": "date",
       "required": "true"
     },
     "telefono": {
-      "type": "string", 
+      "type": "string",
       "required": "false"
     },
     "imagen": {
-      "type": "string", 
+      "type": "string",
+      "required": "false"
+    },
+    "meta": {
+      "type": "number",
       "required": "false"
     }
   },
@@ -41,5 +45,26 @@
       "permission": "ALLOW"
     }
   ],
-  "methods": {}
+  "methods": {
+    "setPass": {
+      "accepts": [
+        {
+          "arg": "sendPass",
+          "type": "object",
+          "required": true,
+          "description": "id y la nueva pass"
+        }
+      ],
+      "returns": [
+        {}
+      ],
+      "description": "asignar una nueva contraseña",
+      "http": [
+        {
+          "path": "/setPass",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

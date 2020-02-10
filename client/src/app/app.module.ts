@@ -28,6 +28,8 @@ import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
 import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
 import { ToastService } from './services/toast.service';
+import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
+import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ToastService } from './services/toast.service';
     FooterCrmComponent,
     NavbarWebsiteComponent,
     FooterWebsiteComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    InformeVenComponent,
+    MiperfilComponent
   ],
   imports: [
     BrowserModule,

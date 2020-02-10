@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,12 +14,14 @@ export class UsuariosComponent implements OnInit {
   inactivos:any=[];
   vendedores:any=[];
   showAct:boolean=true;
+  showMeta:boolean=true;
+  admin:any={meta:"number"};
 
-
-  constructor(private api:DataApiService) { }
+  constructor(private api:DataApiService, private auth:AuthService, private router:Router) { }
 
   ngOnInit() {
     this.getUsers();
+    this.getMeta();
   }
 
   getUsers(){
@@ -40,6 +44,18 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
+  getMeta(){
+    this.api.get('/Usuarios',true,{where:{realm:'admin',active:true}})
+    .subscribe((admin)=>{
+      this.admin=admin[0]
+    })
+  }
+
+  assign(admin:any){
+    this.api.patch('/Usuarios',admin).subscribe((edited)=>{
+      this.admin=edited
+     })
+  }
 
   changeState(user:any, state:boolean){
     user.active=state;
@@ -47,7 +63,6 @@ export class UsuariosComponent implements OnInit {
      this.getUsers(); 
     })
   }
-
 
   vista(show:boolean){
     if(show){
@@ -61,6 +76,6 @@ export class UsuariosComponent implements OnInit {
       this.vendedores=this.inactivos;
     }
   }
-  
+
 
 }
