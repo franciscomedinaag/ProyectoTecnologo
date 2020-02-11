@@ -18,6 +18,9 @@ import { InicioComponent } from './components-web/inicio/inicio.component';
 import { ContactoComponent } from './components-web/contacto/contacto.component';
 import { MueblesComponent } from './components-web/muebles/muebles.component';
 import { NosotrosComponent } from './components-web/nosotros/nosotros.component';
+import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
+import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
+import { GraficasComponent } from './components-crm/graficas/graficas.component';
 
 //servicios 
 import { NavbarCrmComponent } from './services/crm/navbar-crm/navbar-crm.component';
@@ -28,8 +31,6 @@ import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
 import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
 import { ToastService } from './services/toast.service';
-import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
-import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MiperfilComponent } from './components-crm/miperfil/miperfil.component'
     FooterWebsiteComponent,
     UsuariosComponent,
     InformeVenComponent,
-    MiperfilComponent
+    MiperfilComponent,
+    GraficasComponent
   ],
   imports: [
     BrowserModule,

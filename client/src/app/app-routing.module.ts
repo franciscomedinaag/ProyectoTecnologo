@@ -7,6 +7,7 @@ import { ClientesComponent } from './components-crm/clientes/clientes.component'
 import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
 import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
 import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
+import { GraficasComponent } from './components-crm/graficas/graficas.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'usuarios',component: UsuariosComponent},
   {path: 'informesven/:id',component: InformeVenComponent},
   {path: 'miperfil/:id',component: MiperfilComponent},
+  {path: 'graficas',component: GraficasComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

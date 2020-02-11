@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -16,8 +17,13 @@ export class UsuariosComponent implements OnInit {
   showAct:boolean=true;
   showMeta:boolean=true;
   admin:any={meta:"number"};
+  user:any={};
+  pass1:string;
+  pass2:string;
+  ready:boolean=false;
+  fecha:any;
 
-  constructor(private api:DataApiService, private auth:AuthService, private router:Router) { }
+  constructor(private api:DataApiService, private auth:AuthService, private router:Router, private toast:ToastService) { }
 
   ngOnInit() {
     this.getUsers();
@@ -77,5 +83,24 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
+  saveUser(){
+    this.fecha=new Date().toISOString();
+    if(this.pass1==this.pass2){
+      this.user.password=this.pass1
+      this.user.registro=this.fecha
+      this.user.imagen=" "
+      this.user.meta=0
+      this.user.realm="user"
+      this.api.post('/Usuarios',this.user)
+      .subscribe((done)=>{
+        this.toast.showSuccess("Usuario creado")
+        this.getUsers();
+      },
+      (err) => {this.toast.showError("Datos incorrectos")});
+      }
+    else{
+      this.toast.showError("Las contraseñas no coinciden")
+    }
+  }
 
 }

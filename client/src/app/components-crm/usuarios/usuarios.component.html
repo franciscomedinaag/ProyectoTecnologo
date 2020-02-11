@@ -3,15 +3,20 @@
 <div class="container" style="background-color: white;">
     <div class="row pt-4 pb-4">
 
-        <div class="col-sm-4">        
-            <h2 *ngIf="showAct" class="text-center">Vendedores Activos </h2>
+        <div class="col-sm-3">        
+            <h2 *ngIf="showAct" class="text-center">Vendedores Activos</h2>
             <h2 *ngIf="!showAct" class="text-center">Vendedores Inactivos</h2>
         </div>
-        <div class="col-sm-4 text-center">
+        <div class="col-sm-3 text-center">
           <button *ngIf="showAct" (click)="vista(false)" class="btn active btn-secondary">Ver inactivos</button>
           <button *ngIf="!showAct" (click)="vista(true)" class="btn active btn-primary">Ver activos</button>
         </div>
-        <div class="col-sm-4" *ngIf="showAct">
+        <div class="col-sm-3 text-center">
+          <h4 *ngIf="showAct" style="color:blue" data-toggle="modal" data-target="#addModal">
+          Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div class="col-sm-3" *ngIf="showAct">
           <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (dblclick)="showMeta=!showMeta" >
             Meta bimestral: {{admin.meta.toLocaleString("en")}}
             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -51,3 +56,48 @@
 </div>
 
 <app-footer-crm></app-footer-crm>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo usuario al sistema</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+          <form class="form-product">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input  [(ngModel)]="user.username" name="username" type="text" class="form-control" id="nombre" placeholder="Ingresa nombre">
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input  [(ngModel)]="user.telefono" name="telefono" type="number" class="form-control" id="telefono" placeholder="Ingresa numero de teléfono">
+            </div>
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input  [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email"  placeholder="user@test.com">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Contraseña</label>
+              <input  [(ngModel)]="pass1" name="pass1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Ingresala de nuevo</label>
+              <input  [(ngModel)]="pass2" name="pass2" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+          </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="saveUser()" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>
