@@ -31,6 +31,8 @@ import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
 import { UsuariosComponent } from './components-crm/usuarios/usuarios.component';
 import { ToastService } from './services/toast.service';
+import { FileChooserComponent } from './components-crm/file-chooser/file-chooser.component';
+import { ProfileImageEditorComponent } from './components-crm/profile-image-editor/profile-image-editor.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ToastService } from './services/toast.service';
     UsuariosComponent,
     InformeVenComponent,
     MiperfilComponent,
-    GraficasComponent
+    GraficasComponent,
+    FileChooserComponent,
+    ProfileImageEditorComponent
   ],
   imports: [
     BrowserModule,

@@ -17,9 +17,12 @@ export class MiperfilComponent implements OnInit {
   private user:boolean=true;
   private tel:boolean=true;
   private mail:boolean=true;
+  private img:boolean=true;
 
   private pass1:string;
   private pass2:string;
+
+  private selectedFile:File= null;
 
   private sendPass:any={newPassword:"",id:0};
 
@@ -59,4 +62,10 @@ export class MiperfilComponent implements OnInit {
     }
   }
 
+  // updateProfileImage(event : any) {
+  //   this.usuario.profileImage = event
+  //   this.usuario.hasChangedProfileImage = true
+  //   console.log("event: ",event)
+  //   this.api.post("/Usuarios/"+this.id+"/changeProfileImage",this.usuario.profileImage,)
+  // }
 }

@@ -8,5 +8,12 @@
     "name": "db",
     "user": "root",
     "connector": "mysql"
+  },
+  "localFiles": {
+    "name": "localFiles",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage",
+    "nameConflict": "makeUnique"
   }
 }

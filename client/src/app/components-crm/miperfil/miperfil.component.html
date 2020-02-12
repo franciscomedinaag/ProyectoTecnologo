@@ -1,8 +1,9 @@
 <app-navbar-crm></app-navbar-crm>
 <div class="container" style="background-color: white;">
     <div class="row pb-5">
-        <div class="col-sm-6 mt-5">
-            <h3 class="text-center">{{usuario.imagen}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
+        <div class="col-sm-6 mt-5 text-center">
+            <h3 *ngIf="img"  (dblclick)="img=!img" >{{usuario.imagen}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
+            <template-profile-image-editor class="text-center" *ngIf="!img" style="top: 10px; right:15px; position:absolute"></template-profile-image-editor>
         </div>
         <div class="col-sm-6 mt-5">
             <h3 class="text-center" *ngIf="user" (dblclick)="user=!user">{{usuario.username}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>

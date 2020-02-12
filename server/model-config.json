@@ -43,5 +43,21 @@
   "Usuario": {
     "dataSource": "db",
     "public": true
+  },
+  "Upload": {
+    "dataSource": "localFiles",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "download": true
+        }
+      }
+    }
+  },
+  "UploadedFiles": {
+    "dataSource": "db",
+    "public": false
   }
 }
