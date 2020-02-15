@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
   encapsulation: ViewEncapsulation.None
 })
 export class FileChooserComponent implements OnInit {
-  @Input() fileType : string
+  @Input() fileType : string //carpeta en storage (eso se ve en la funcion)
   @Input() extensionFilter : string
   @Output('onChange') onChange = new EventEmitter<any>()
 
@@ -36,7 +36,7 @@ export class FileChooserComponent implements OnInit {
           "base64File": btoa(binaryString),
           "fileExtention": "." + file.name.split('.').pop().toLowerCase()
         }
-        console.log('Got the file')
+        console.log('Got the file', this.fileData)
         this.loading = false;
         this.onChange.emit(this.fileData)
       };

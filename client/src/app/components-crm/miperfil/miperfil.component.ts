@@ -62,6 +62,33 @@ export class MiperfilComponent implements OnInit {
     }
   }
 
+  selectImageOrder( img:any){
+		console.log("img: ",img)
+		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
+		this.toast.showSuccess("Se subio la imagen correctamente")
+		},err => {
+      console.log(err)
+			this.toast.showError("No se subio la imagen correctamente")
+		});
+  }
+  /*
+  getImages(productId){
+		this.globalId=productId
+		this.api.get(`/Products/${productId}/getImages`).subscribe((images:any)=>{
+			this.images = images.images;
+		},err=>{
+			console.log("error")
+		})
+  }
+  */
+
+  /*TODO
+  selectImageOrder();
+  y crear metodo en back para guardar la imagen que haga la relacion 
+  sendGrid
+  nodeMail
+  */ 
+
   // updateProfileImage(event : any) {
   //   this.usuario.profileImage = event
   //   this.usuario.hasChangedProfileImage = true

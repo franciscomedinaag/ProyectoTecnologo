@@ -3,7 +3,7 @@
     <div class="row pb-5">
         <div class="col-sm-6 mt-5 text-center">
             <h3 *ngIf="img"  (dblclick)="img=!img" >{{usuario.imagen}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
-            <template-profile-image-editor class="text-center" *ngIf="!img" style="top: 10px; right:15px; position:absolute"></template-profile-image-editor>
+            <template-file-chooser *ngIf="!img" [fileType] ="'profileImages'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
         </div>
         <div class="col-sm-6 mt-5">
             <h3 class="text-center" *ngIf="user" (dblclick)="user=!user">{{usuario.username}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
@@ -11,15 +11,15 @@
         </div>
     </div>
     <div class="row pb-5 pt-5">
-        <div class="col-sm-4 mt-5 text-center  mb-5">
+        <div class="col-sm-4  text-center  mb-5">
             <p *ngIf="tel" (dblclick)="tel=!tel">{{usuario.telefono}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
             <input *ngIf="!tel" type="text" [(ngModel)]="usuario.telefono" (blur)="tel=!tel;assign(usuario)">
         </div>
-        <div class="col-sm-4 mt-5 text-center mb-5">
+        <div class="col-sm-4  text-center mb-5">
             <p *ngIf="mail" (dblclick)="mail=!mail">{{usuario.email}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
             <input *ngIf="!mail" type="text" [(ngModel)]="usuario.email" (blur)="mail=!mail;assign(usuario)">
         </div>
-        <div class="col-sm-4 mt-5 text-center mb-5">
+        <div class="col-sm-4  text-center mb-5">
             <p *ngIf="pass" (dblclick)="pass=!pass" >Cambiar contraseña <i class="fa fa-pencil" aria-hidden="true"></i></p>
             <p *ngIf="!pass" >Ingresa la nueva contraseña: <br><input [(ngModel)]="pass1" class="mt-2"  type="password"></p>
             <p *ngIf="!pass" >Ingresala de nuevo: <br><input [(ngModel)]="pass2" class="mt-2"  type="password"></p>

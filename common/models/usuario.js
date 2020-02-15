@@ -50,5 +50,28 @@ module.exports = function(Usuario) {
     })
   };
 
+//funcion para subir la imagen  TODO copiarla de order profile
+
+Usuario.prototype.setImage=function(newImage, callback){
+  let id=this.id
+  Usuario.app.models.Upload.newBase64File(newImage, function (err, newImage) {
+    if (err) return callback(err,"error in newBase");
+    else{
+     Usuario.findById(id, (err, user)=> {
+      if(err) return callback (err);
+      else{
+        user.imagen=newImage.URL;
+        Usuario.upsert(user, (err, newProductImage)=> {
+             if(err) return callback (err);
+             else{
+                 return callback(null, newProductImage);
+             }
+         })
+          return callback(null, user);
+        }
+     })       
+    }
+    });
+}
   
 };

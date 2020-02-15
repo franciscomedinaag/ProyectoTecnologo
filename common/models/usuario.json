@@ -98,6 +98,34 @@
           "verb": "post"
         }
       ]
+    },
+    "prototype.setImage": {
+      "accepts": [
+        {
+          "arg": "newImage",
+          "type": "object",
+          "required": true,
+          "description": "image to save",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "product",
+          "type": "object",
+          "root": true,
+          "description": "Updated product"
+        }
+      ],
+      "description": " Add Image to a product ",
+      "http": [
+        {
+          "path": "/setImage",
+          "verb": "post"
+        }
+      ]
     }
   }
 }
