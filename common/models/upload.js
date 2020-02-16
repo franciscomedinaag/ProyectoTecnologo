@@ -47,16 +47,16 @@ module.exports = function(Upload) {
         }
         else{
             // serach old file
-            UploadedFiles.findById(oldFileId, function(err, oldFile){
+            UploadedFiles.findOne({where:{URL:oldFileId}}, function(err, oldFile){
                 if (err) return callback(err);
     
                 // destroy old File
-                UploadedFiles.destroyById(oldFileId,function(err){
+                UploadedFiles.destroyAll({where:{URL:oldFileId}},function(err){
                     if (err) return callback(err);
-        
+                    
                     // destroy old file
-                    var container = oldFile.URL.split("/")[2];
-                    var oldFileName = oldFile.URL.split("/")[4];
+                    var container = oldFileId.split("/")[2];
+                    var oldFileName = oldFileId.split("/")[4];
                     Upload.removeFile(container, oldFileName, function(err){
                         if (err) return callback(err);
     

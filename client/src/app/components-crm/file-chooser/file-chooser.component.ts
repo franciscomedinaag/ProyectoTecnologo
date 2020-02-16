@@ -36,7 +36,6 @@ export class FileChooserComponent implements OnInit {
           "base64File": btoa(binaryString),
           "fileExtention": "." + file.name.split('.').pop().toLowerCase()
         }
-        console.log('Got the file', this.fileData)
         this.loading = false;
         this.onChange.emit(this.fileData)
       };

@@ -24,18 +24,12 @@ module.exports = function(Usuario) {
    */
   
   Usuario.prototype.changeProfileImage = function (newImage, callback) {
-    var Upload = app.models.Upload
+    var Upload = Usuario.app.models.Upload
     var actual = this;
     // TODO
-    var newProfileImage = {
-      encodedFileContainer: "profileImages",
-      base64File: newImage.profileImage.base64ProfileImage,
-      fileExtention: newImage.profileImage.base64ProfileImageExtention
-    }
-    Upload.replaceFileBase64File(actual.profileImageId, newProfileImage, function (err, res) {
+    Upload.replaceFileBase64File(actual.imagen, newImage, function (err, res) {
       if (err) return callback(err);
-
-      actual.profileImage(res);
+      actual.imagen=res.URL;
       Usuario.upsert(actual, function (err, updatedUser) {
         if (err) return callback(err);
         Usuario.findOne({
@@ -67,11 +61,13 @@ Usuario.prototype.setImage=function(newImage, callback){
                  return callback(null, newProductImage);
              }
          })
-          return callback(null, user);
+          //return callback(null, user);
         }
      })       
     }
     });
 }
-  
+
+
+
 };

@@ -50,14 +50,17 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "*": false,
-          "download": true
+          "*": true,
+          "download": true,
+          "newBase64File": true,
+          "getFilesToZip": true,
+          "upload":true
         }
       }
     }
   },
   "UploadedFiles": {
     "dataSource": "db",
-    "public": false
+    "public": true
   }
 }

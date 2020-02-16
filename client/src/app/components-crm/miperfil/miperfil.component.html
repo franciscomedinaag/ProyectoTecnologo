@@ -1,8 +1,9 @@
 <app-navbar-crm></app-navbar-crm>
 <div class="container" style="background-color: white;">
     <div class="row pb-5">
-        <div class="col-sm-6 mt-5 text-center">
-            <h3 *ngIf="img"  (dblclick)="img=!img" >{{usuario.imagen}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
+        <div  class="col-sm-6 mt-5 text-center">
+            <img class="foto-perfil" *ngIf="img" [src]="api.baseURL+usuario?.imagen"
+             (click)="img=!img" onerror="this.src='assets/default/user.png'" alt="">
             <template-file-chooser *ngIf="!img" [fileType] ="'profileImages'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
         </div>
         <div class="col-sm-6 mt-5">

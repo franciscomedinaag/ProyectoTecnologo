@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
 import { ToastService } from '../../services/toast.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-miperfil',
@@ -11,7 +12,7 @@ import { ToastService } from '../../services/toast.service';
 export class MiperfilComponent implements OnInit {
 
   private id:any;
-  private usuario:any={};
+  private usuario:any={imagen:""};
 
   private pass:boolean=true;
   private user:boolean=true;
@@ -36,7 +37,7 @@ export class MiperfilComponent implements OnInit {
   getUser(){
     this.api.get('/Usuarios',true,{where:{id:this.id}})
       .subscribe((usuario)=>{
-       this.usuario=usuario[0]
+       this.usuario=usuario[0]      
       })
   }
   
@@ -63,36 +64,26 @@ export class MiperfilComponent implements OnInit {
   }
 
   selectImageOrder( img:any){
-		console.log("img: ",img)
+    if(this.usuario.imagen=="string" || this.usuario.imagen=="" || this.usuario.imagen==null){
 		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
-		this.toast.showSuccess("Se subio la imagen correctamente")
+    this.toast.showSuccess("Se subio la imagen correctamente")
+    this.usuario=res;
+    this.img=true;
 		},err => {
       console.log(err)
-			this.toast.showError("No se subio la imagen correctamente")
-		});
+			this.toast.showError("No se pudo subir la imagen")
+    });
   }
-  /*
-  getImages(productId){
-		this.globalId=productId
-		this.api.get(`/Products/${productId}/getImages`).subscribe((images:any)=>{
-			this.images = images.images;
-		},err=>{
-			console.log("error")
-		})
+  else{
+    this.api.post(`/Usuarios/${this.id}/changeProfileImage`,img).subscribe((res:any)=>{
+      this.toast.showSuccess("Se editó la imagen correctamente")
+      this.usuario=res;
+      this.img=true;
+    },err => {
+      console.log(err)
+			this.toast.showError("No se puedo editar la imagen ")
+    })
   }
-  */
-
-  /*TODO
-  selectImageOrder();
-  y crear metodo en back para guardar la imagen que haga la relacion 
-  sendGrid
-  nodeMail
-  */ 
-
-  // updateProfileImage(event : any) {
-  //   this.usuario.profileImage = event
-  //   this.usuario.hasChangedProfileImage = true
-  //   console.log("event: ",event)
-  //   this.api.post("/Usuarios/"+this.id+"/changeProfileImage",this.usuario.profileImage,)
-  // }
+  }
+  
 }
