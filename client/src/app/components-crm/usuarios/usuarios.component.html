@@ -16,12 +16,20 @@
           Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </h4>
         </div>
-        <div class="col-sm-3" *ngIf="showAct">
+        <div class="col-sm-3" *ngIf="there">
           <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (dblclick)="showMeta=!showMeta" >
-            Meta bimestral: {{admin.meta.toLocaleString("en")}}
+            Meta bimestral: {{meta.cantidad.toLocaleString("en")}}
             <i class="fa fa-pencil" aria-hidden="true"></i>
+            <br>
+             <span *ngIf="meta.fecha" style="color:grey; font-size: small;">
+              Ultima vez editado: {{meta.fecha | date:'short'}}
+            </span>
           </h4>
-          <input *ngIf="!showMeta" type="text" [(ngModel)]="admin.meta" (blur)="showMeta=!showMeta;assign(admin)">
+          <input *ngIf="!showMeta" type="text" [(ngModel)]="meta.cantidad" (blur)="showMeta=!showMeta;assignMeta(meta)">
+        </div>
+        <div class="col-sm-3" *ngIf="!there">
+          Ingresa una meta bimestral:
+          <input type="text" [(ngModel)]="cant" (blur)="showMeta=!showMeta;addMeta(cant)">
         </div>
 
     </div>
@@ -40,8 +48,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr style="background-color: rgb(201, 201, 201);">
+                    <th scope="row">ADMN</th>
+                    <td>{{admin.username}}</td>
+                    <td>N/A</td>
+                    <td class="text-center"><a [routerLink]="['/informesven',admin.id]">Ver</a> </td>
+                    <td><a [routerLink]="['/miperfil',admin.id]">Perfil</a></td>
+                    <td class="text-center">N/A</td>
+                  </tr>
                   <tr *ngFor="let a of vendedores; let i=index">
-                    <th scope="row">{{i+1}}</th>
+                    <th scope="row">VEND</th>
                     <td>{{a.username}}</td>
                     <td>calculo</td>
                     <td class="text-center"><a [routerLink]="['/informesven',a.id]">Ver</a> </td>

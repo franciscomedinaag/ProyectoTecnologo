@@ -27,11 +27,6 @@
     "meta": {
       "type": "number",
       "required": "false"
-    },
-    "profileImage": {
-      "type": "belongsTo",
-      "model": "UploadedFiles",
-      "foreignKey": "profileImageId"
     }
   },
   "validations": [],

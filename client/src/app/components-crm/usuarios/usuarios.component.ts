@@ -16,17 +16,22 @@ export class UsuariosComponent implements OnInit {
   vendedores:any=[];
   showAct:boolean=true;
   showMeta:boolean=true;
-  admin:any={meta:"number"};
+  admin:any={};
+  meta:any={cantidad:0};
   user:any={};
   pass1:string;
   pass2:string;
   ready:boolean=false;
   fecha:any;
 
+  there:boolean=false;
+  cant:number=0;
+
   constructor(private api:DataApiService, private auth:AuthService, private router:Router, private toast:ToastService) { }
 
   ngOnInit() {
     this.getUsers();
+    this.getAdmin();
     this.getMeta();
   }
 
@@ -50,17 +55,41 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  getMeta(){
+  getAdmin(){
     this.api.get('/Usuarios',true,{where:{realm:'admin',active:true}})
     .subscribe((admin)=>{
       this.admin=admin[0]
     })
   }
 
-  assign(admin:any){
-    this.api.patch('/Usuarios',admin).subscribe((edited)=>{
-      this.admin=edited
+  getMeta(){
+    this.api.get('/Metas',true)
+    .subscribe((meta)=>{
+      this.meta=meta[0]
+      if(!this.meta){
+       this.there=false;
+      }
+      else{
+       this.there=true;
+      }
+    },
+    (err) => {console.log(err)})
+  }
+
+  assignMeta(meta:any){
+    this.meta.fecha=new Date().toISOString();
+    this.api.patch('/Metas',meta).subscribe((edited)=>{
+      this.meta=edited
      })
+  }
+  
+  addMeta(cant:number){
+    let meta={cantidad:cant,fecha:new Date().toISOString()}
+    this.api.post('/Metas',meta).subscribe((added)=>{
+      this.meta=added;
+      this.there=true;
+      this.showMeta=true;
+    })
   }
 
   changeState(user:any, state:boolean){

@@ -62,5 +62,13 @@
   "UploadedFiles": {
     "dataSource": "db",
     "public": true
+  },
+  "Meta":{
+    "dataSource":"db",
+    "public":true
+  },
+  "Client":{
+    "dataSource":"db",
+    "public":true
   }
 }
