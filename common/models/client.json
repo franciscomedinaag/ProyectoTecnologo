@@ -6,30 +6,45 @@
       "validateUpsert": true
     },
     "properties": {
-      "active": {
-        "type": "boolean",
-        "required": "false",
-        "default": "true"
+      "nombre": {
+        "type": "string",
+        "required": "false"
       },
-      "registro": {
-        "type": "date",
-        "required": "true"
+      "email": {
+        "type": "string",
+        "required": "false"
       },
       "telefono": {
-        "type": "string",
-        "required": "false"
-      },
-      "imagen": {
-        "type": "string",
-        "required": "false"
-      },
-      "meta": {
         "type": "number",
         "required": "false"
       },
-      "regMeta": {
+      "puesto": {
+        "type": "string",
+        "required": "false"
+      },
+      "estado": {
+        "type": "string",
+        "required": "false"
+      },
+      "empresa": {
+        "type": "string",
+        "required": "false"
+      },
+      "giro": {
+        "type": "string",
+        "required": "false"
+      },
+      "registro": {
         "type": "date",
-        "required":"false"
+        "required": "false"
+      },
+      "cantTratos": {
+        "type": "number",
+        "required": "false"
+      },
+      "real": {
+        "type": "boolean",
+        "required": "false"
       }
     },
     "validations": [],
