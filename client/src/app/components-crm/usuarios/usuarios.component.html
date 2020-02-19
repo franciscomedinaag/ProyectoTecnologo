@@ -12,9 +12,9 @@
           <button *ngIf="!showAct" (click)="vista(true)" class="btn active btn-primary">Ver activos</button>
         </div>
         <div class="col-sm-3 text-center">
-          <h4 *ngIf="showAct" style="color:blue" data-toggle="modal" data-target="#addModal">
-          Agregar <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          </h4>
+          <button class="btn btn-primary" *ngIf="showAct"  data-toggle="modal" data-target="#addModal">
+          Agregar 
+          </button>
         </div>
         <div class="col-sm-3" *ngIf="there">
           <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (dblclick)="showMeta=!showMeta" >

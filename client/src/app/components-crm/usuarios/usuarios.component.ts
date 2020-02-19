@@ -123,9 +123,12 @@ export class UsuariosComponent implements OnInit {
       this.api.post('/Usuarios',this.user)
       .subscribe((done)=>{
         this.toast.showSuccess("Usuario creado")
+        this.user={}
         this.getUsers();
       },
-      (err) => {this.toast.showError("Datos incorrectos")});
+      (err) => {
+        this.toast.showError("Los datos introducidos son incorrectos")
+      });
       }
     else{
       this.toast.showError("Las contraseñas no coinciden")
