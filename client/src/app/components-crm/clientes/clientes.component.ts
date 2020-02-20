@@ -13,11 +13,19 @@ import { ToastService } from '../../services/toast.service';
 export class ClientesComponent implements OnInit {
 
   private fecha:any;
-  private client:any={};
+  private client:any={
+    telefono:" ",
+    correo:" ",
+    puesto:" ",
+    empresa:" ",
+    giro:" ",
+    estado:" ", 
+    email:" "
+  };
   private clients:any=[];
   private filtered:any=[];
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
-  private word:string;
+  private negociaciones:any=["Residencial","Empresarial","Licitacion"];
 
   constructor(private api:DataApiService, 
     private auth:AuthService,
@@ -29,7 +37,10 @@ export class ClientesComponent implements OnInit {
   }
 
   saveClient(){
-    console.log("client: ", this.client)
+      if(this.client.nombre==null || this.client.negociacion==null){
+        this.toast.showError("Nombre y tipo son campos obligatorios");
+        return;
+      }
       this.fecha=new Date().toISOString();
       this.client.registro=this.fecha;
       this.client.cantTratos=0;
@@ -39,7 +50,7 @@ export class ClientesComponent implements OnInit {
       .subscribe((done)=>{
         this.toast.showSuccess("Cliente registrado")
         this.client={}
-      //  this.getClients();
+        this.getClients();
       },
       (err) => {
         this.toast.showError("Los datos introducidos son incorrectos")
@@ -57,12 +68,9 @@ export class ClientesComponent implements OnInit {
   onSearchChange(searchValue: string): void {  
     this.filtered=[];
     this.clients.forEach(client => {
-      // console.log(client.nombre)
-      // console.log(client.nombre.indexOf(searchValue));
       if(client.nombre.toLowerCase().indexOf(searchValue.toLowerCase())!=-1){
         this.filtered.push(client);
       }
-
     });
   }
 

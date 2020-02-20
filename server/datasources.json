@@ -15,5 +15,22 @@
     "provider": "filesystem",
     "root": "./server/storage",
     "nameConflict": "makeUnique"
+  },
+  "Email": {
+    "name": "mail",
+    "connector": "mail",
+    "transports": [{
+      "type": "SMTP",
+      "host": "smtp.gmail.com",
+      "secure": true,
+      "port": 465,
+      "auth": {
+        "user": "xdookielol@gmail.com",
+        "pass": "charmander004"
+      },
+      "tls": {
+        "rejectUnauthorized": false
+      }
+    }]
   }
 }

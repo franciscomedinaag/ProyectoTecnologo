@@ -22,6 +22,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Ficha</th>
+                    <th>Tipo de Cliente</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,7 @@
                     <td>{{c.email}}</td>
                     <td>{{c.telefono}}</td>
                     <td><a [routerLink]="['/fichaclient',c.id]">Ver</a></td>
+                    <td>{{c.negociacion?c.negociacion:"N/A"}}</td>
                   </tr>
                 </tbody>
             </table>
@@ -93,6 +95,16 @@
                 placeholder="Estado de residencia">
                 </ng-select> 
             </div>
+            <div class="form-group">
+              Tipo de cliente:
+              <ng-select class="custom"
+              [items]="negociaciones"
+              [multiple]="false"
+              [(ngModel)]="client.negociacion"
+              name="negociacion"
+              placeholder="Tipo de  negociacion">
+              </ng-select> 
+          </div>
                 
             </form>
           

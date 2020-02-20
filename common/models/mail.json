@@ -1,0 +1,26 @@
+{
+  "name": "Mail",
+  "plural":"Mails",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "sendEmail": {
+    "accepts": [],
+    "returns": [{}],
+    "description": "mandar un email",
+    "http": [
+      {
+        "path": "/sendEmail",
+        "verb": "get"
+      }
+    ]
+    }
+  }
+
+}

@@ -45,6 +45,10 @@
       "real": {
         "type": "boolean",
         "required": "false"
+      },
+      "negociacion":{
+        "type":"string",
+        "required":"false"
       }
     },
     "validations": [],
