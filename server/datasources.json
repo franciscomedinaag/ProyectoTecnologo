@@ -17,7 +17,7 @@
     "nameConflict": "makeUnique"
   },
   "Email": {
-    "name": "mail",
+    "name": "Email",
     "connector": "mail",
     "transports": [{
       "type": "SMTP",

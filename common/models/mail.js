@@ -2,12 +2,11 @@
 
 module.exports = function(Mail) {
 
-    Mail.sendEmail = function(cb) {
+    Mail.sendEmail = function(data,cb) {
         Mail.app.models.Email.send({
-          to: 'franciscomedinaag@gmail.com',
-          from: 'franciscomedinaag@gmail.com',
-          subject: 'sended via loopback 3.x',
-          text: 'testing ISSUES'
+          to: data.to,
+          subject: data.subject,
+          text: data.text
           //html: 'my <em>html</em>'
         }, function(err, mail) {
           if(err){

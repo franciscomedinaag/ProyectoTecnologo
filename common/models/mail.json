@@ -11,13 +11,18 @@
   "acls": [],
   "methods": {
     "sendEmail": {
-    "accepts": [],
+    "accepts": [{
+      "arg": "data",
+      "type": "object",
+      "required": true,
+      "description": "info para enviar el correo"
+    }],
     "returns": [{}],
     "description": "mandar un email",
     "http": [
       {
         "path": "/sendEmail",
-        "verb": "get"
+        "verb": "post"
       }
     ]
     }

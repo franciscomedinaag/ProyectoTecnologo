@@ -4,10 +4,11 @@
         <div class="col-sm-3 text-center">
             <h2>Clientes</h2>
         </div>
-        <div class="col-sm-3 text-center">
+        <div class="col-sm-4 text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Agregar</button>
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#sendModal">Mandar Email</button>
         </div>
-        <div class="col-sm-6 text-center">
+        <div class="col-sm-5 text-center">
             Buscar por nombre: 
             <input (input)="onSearchChange($event.target.value)" [(ngModel)]="word" type="text" placeholder="Ingresa un nombre">
         </div>
@@ -41,11 +42,13 @@
 </div>
 <app-footer-crm></app-footer-crm>
 
+           <!--ADD CLIENT-->
+
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo usuario al sistema</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo cliente al sistema</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -112,6 +115,52 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" (click)="saveClient()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+           <!--SEND EMAIL-->
+
+  <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Redactar correo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Asunto: </label>
+                <input  [(ngModel)]="data.subject" name="subject" type="text" class="form-control" id="subject" placeholder="Ingresar el asunto">
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Texto: </label>
+                <textarea  [(ngModel)]="data.text" name="text" type="textarea" rows="3" class="form-control" id="text" placeholder="Añada su texto aquí..."></textarea>
+              </div>
+            <div class="form-group">
+              Clientes Seleccionados:
+              <ng-select class="custom"
+              [items]="clientsWithEmail"
+              [multiple]="true"
+              [(ngModel)]="data.to"
+              bindValue="email"
+              bindLabel="nombre"
+              name="to"
+              placeholder="Seleccionar clientes">
+              </ng-select> 
+          </div>
+                
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="sendMail(data)" class="btn btn-primary">Enviar</button>
         </div>
       </div>
     </div>

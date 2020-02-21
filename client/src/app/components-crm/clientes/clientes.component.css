@@ -12,3 +12,7 @@
     min-height: 0px;
     border-radius: 0;
 }
+.btn{
+    width: 120px;
+    margin:5px;
+}

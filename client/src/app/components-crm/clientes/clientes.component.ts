@@ -22,10 +22,16 @@ export class ClientesComponent implements OnInit {
     estado:" ", 
     email:" "
   };
+  private data:any={
+    subject:" ",
+    text:" ",
+    to:" "
+  };
   private clients:any=[];
   private filtered:any=[];
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
   private negociaciones:any=["Residencial","Empresarial","Licitacion"];
+  private clientsWithEmail:any=[];
 
   constructor(private api:DataApiService, 
     private auth:AuthService,
@@ -62,6 +68,14 @@ export class ClientesComponent implements OnInit {
       .subscribe((clients)=>{
         this.clients=clients;
         this.filtered=this.clients;
+        this.clientsWithEmail=clients;
+
+        this.clientsWithEmail.forEach(client => {
+          if(client.email.length<5){
+            this.clientsWithEmail.pop(client);
+          }
+        });
+
       })
   }
 
@@ -72,6 +86,35 @@ export class ClientesComponent implements OnInit {
         this.filtered.push(client);
       }
     });
+  }
+
+  sendMail(data){
+    if(data.to!=" "){
+    data.to=ClientesComponent.formatTo(data.to);
+    }
+    console.log(data)
+    if(data.subject==" " || data.to==" "){
+     this.toast.showError("No se han llenado todos los campos");
+    }
+    else{
+      this.api.post('/Mails/sendEmail',{data:data}).subscribe((okay)=>{
+        console.log("se armo")
+      },
+      (err) => {
+        console.log("Error: ",err)
+      });
+      this.data={}
+    }
+  }
+
+
+  private static formatTo(contacts){
+    let lista:string="";
+
+    contacts.forEach(contact => {
+      lista=lista+contact+", "
+    });
+    return lista.slice(0,lista.length-2);
   }
 
 }

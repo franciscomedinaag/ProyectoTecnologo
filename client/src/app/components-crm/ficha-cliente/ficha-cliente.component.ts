@@ -51,7 +51,7 @@ export class FichaClienteComponent implements OnInit {
   }
 
   sendMail(){
-    this.api.get('/Mail/sendMail').subscribe((okay)=>{
+    this.api.get('/Mails/sendEmail').subscribe((okay)=>{
       console.log("se armo")
     },
     (err) => {
