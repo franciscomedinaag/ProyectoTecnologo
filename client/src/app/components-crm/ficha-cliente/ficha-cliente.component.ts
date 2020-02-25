@@ -23,6 +23,7 @@ export class FichaClienteComponent implements OnInit {
   private negociaciones:any=["Residencial","Empresarial","Licitacion"];
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
 
+  private note:any={};
 
   constructor(private activated:ActivatedRoute, private api:DataApiService) { }
 
@@ -33,9 +34,10 @@ export class FichaClienteComponent implements OnInit {
 
   
   getClient(){
-    this.api.get('/Clients',true,{where:{id:this.id}})
+    this.api.get(`/Clients/${this.id}/getClient`)
       .subscribe((client)=>{
-       this.client=client[0] 
+       this.client=client
+       console.log(this.client) 
       })
   }
 
@@ -57,6 +59,24 @@ export class FichaClienteComponent implements OnInit {
     (err) => {
       console.log("Error: ",err)
     });
+  }
+
+  createNote(note){
+    note.fecha=new Date().toISOString();
+    note.clientId=this.client.id; 
+    this.api.post('/Notas',note).subscribe((noted)=>{
+      this.note={}
+      this.getClient();
+    })
+  }
+
+  deleteNote(id){
+    if(confirm("¿Desea eliminar la nota?")){
+      this.api.delete(`/Notas/${id}`).subscribe((okay)=>{
+        this.getClient();
+      })
+    }
+
   }
 
 }

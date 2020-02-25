@@ -11,7 +11,7 @@
           <button *ngIf="showAct" (click)="vista(false)" class="btn active btn-secondary">Ver inactivos</button>
           <button *ngIf="!showAct" (click)="vista(true)" class="btn active btn-primary">Ver activos</button>
         </div>
-        <div class="col-sm-3 text-center">
+        <div class="col-sm-3 text-center pt-1 pb-1">
           <button class="btn btn-primary" *ngIf="showAct"  data-toggle="modal" data-target="#addModal">
           Agregar 
           </button>

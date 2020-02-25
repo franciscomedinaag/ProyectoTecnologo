@@ -71,6 +71,10 @@
     "dataSource":"db",
     "public":true
   },
+  "Nota": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

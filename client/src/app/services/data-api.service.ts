@@ -65,4 +65,15 @@ export class DataApiService {
     return this.http.patch(link, body, { headers: this.headers })  
     .pipe(map(data => data));
   }
+
+   /**
+   * Metodo delete para conectarse con la api
+   * @param endPoint string con el end pint a usar ej: "Usuarios/1"
+   * @param useToken boolean para  intentar usar token en la peticion default: true
+   */
+  public delete(endPoint: string, useToken:boolean = true,filter={}): Observable<object>{
+    let link: string = this.genLink(endPoint, useToken,filter);
+    return this.http.delete(link, {headers:this.headers})
+    .pipe(map(data=>data));
+  }
 }

@@ -154,6 +154,9 @@
               placeholder="Seleccionar clientes">
               </ng-select> 
           </div>
+          <div class="form-group">
+            <template-file-chooser [fileType] ="'sendDocs'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+          </div>
                 
             </form>
           

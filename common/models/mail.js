@@ -3,12 +3,30 @@
 module.exports = function(Mail) {
 
     Mail.sendEmail = function(data,cb) {
-        Mail.app.models.Email.send({
+      if(data.attachment==" "){
+        var info={
+        to: data.to,
+        subject: data.subject,
+        text: data.text
+        }
+      }
+      else{
+          var info={
           to: data.to,
           subject: data.subject,
-          text: data.text
+          text: data.text,
+          attachments:[
+            {
+              filename:`archivo${data.ext}`,
+              content:data.attachment,
+              encoding:'base64'
+              //,contentType:''
+            }
+          ]
           //html: 'my <em>html</em>'
-        }, function(err, mail) {
+          }
+      }
+        Mail.app.models.Email.send(info , function(err, mail) {
           if(err){
             console.log("hay error :(")
             return cb(err);

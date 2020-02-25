@@ -52,7 +52,13 @@
       }
     },
     "validations": [],
-    "relations": {},
+    "relations": {
+      "notas": {
+      "type": "hasMany",
+      "model": "Nota",
+      "foreignKey": "clientId" 
+      }
+    },
     "acls": [
       {
         "accessType": "*",
@@ -68,6 +74,24 @@
       }
     ],
     "methods": {
+      "prototype.getClient": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "client a retornar"
+          }
+        ],
+        "description": "Traer un cliente con sus include",
+        "http": [
+          {
+            "path": "/getClient",
+            "verb": "get"
+          }
+        ]
+      }
     }
   }
   

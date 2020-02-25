@@ -25,13 +25,18 @@ export class ClientesComponent implements OnInit {
   private data:any={
     subject:" ",
     text:" ",
-    to:" "
+    to:" ",
+    attachment:" "
   };
+
   private clients:any=[];
   private filtered:any=[];
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
   private negociaciones:any=["Residencial","Empresarial","Licitacion"];
   private clientsWithEmail:any=[];
+
+  private attachment:any=" "
+  private ext:any=" "
 
   constructor(private api:DataApiService, 
     private auth:AuthService,
@@ -92,16 +97,18 @@ export class ClientesComponent implements OnInit {
     if(data.to!=" "){
     data.to=ClientesComponent.formatTo(data.to);
     }
-    console.log(data)
     if(data.subject==" " || data.to==" "){
      this.toast.showError("No se han llenado todos los campos");
     }
     else{
+      data.attachment=this.attachment;
+      data.ext=this.ext;
+      console.log(data)
       this.api.post('/Mails/sendEmail',{data:data}).subscribe((okay)=>{
-        console.log("se armo")
+        this.toast.showSuccess("Correo mandado con exito")
       },
       (err) => {
-        console.log("Error: ",err)
+        this.toast.showError("Revisa tu conexión de red")
       });
       this.data={}
     }
@@ -115,6 +122,11 @@ export class ClientesComponent implements OnInit {
       lista=lista+contact+", "
     });
     return lista.slice(0,lista.length-2);
+  }
+
+  selectImageOrder( doc:any){
+    this.attachment=doc.base64File;
+    this.ext=doc.fileExtention;
   }
 
 }

@@ -1,5 +1,5 @@
 <div id="fileChooser" class="d-flex flex-column justify-content-center align-items-center">
-  <p *ngIf="fileData != null  && !( fileData.fileExtention == '.png' || fileData.fileExtention == '.jpg' || fileData.fileExtention == '.jpeg')">Archivo seleccionado</p>
+  <p *ngIf="fileData != null  && !( fileData.fileExtention == '.png' || fileData.fileExtention == '.jpg' || fileData.fileExtention == '.jpeg')" style="color:white;font-weight: bolder;">¡Archivo seleccionado!</p>
   <img *ngIf="fileData != null  && ( fileData.fileExtention == '.png' || fileData.fileExtention == '.jpg' || fileData.fileExtention == '.jpeg')"
     src="{{'data:image/' + fileData.fileExtention.split('.')[1] + ';base64,' + fileData.base64File}}">
     <!-- <video width="400" controls *ngIf="fileData != null  && fileData.fileExtention == '.mp4'">

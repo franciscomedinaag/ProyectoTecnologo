@@ -23,7 +23,6 @@ export class FileChooserComponent implements OnInit {
 
   onFileChange(event) {
     this.loading = true;
-    console.log("FileType:", this.fileType)
 		let reader = new FileReader();
 		if(event.target.files != null && event.target.files.length > 0) {
       let file = event.target.files[0];
