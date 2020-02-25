@@ -1,0 +1,37 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-3 pb-5  align-items-center">
+        <div class="col-sm-8 text-center ">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Cátalogos</h2>
+        </div>
+        <div class="col-sm-4 text-center">
+            <template-file-chooser [fileType] ="'catalogos'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center pl-5 pr-5">
+            <div class=" table-responsive">
+                <table class="table lista">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Archivo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr *ngFor="let c of filtered; let i=index">
+                        <th scope="row">{{c.nombre}}</th>
+                        <td>{{c.email}}</td>
+                        <td>{{c.telefono}}</td>
+                        <td><a [routerLink]="['/fichaclient',c.id]">Ver</a></td>
+                        <td>{{c.negociacion?c.negociacion:"N/A"}}</td>
+                      </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>

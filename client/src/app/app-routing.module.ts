@@ -9,6 +9,7 @@ import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.co
 import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
 import { GraficasComponent } from './components-crm/graficas/graficas.component';
 import { FichaClienteComponent } from './components-crm/ficha-cliente/ficha-cliente.component';
+import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'miperfil/:id',component: MiperfilComponent},
   {path: 'graficas',component: GraficasComponent},
   {path: 'fichaclient/:id',component: FichaClienteComponent},
+  {path: 'catalogos',component: CatalogosComponent},
 
 
   //sitio Web

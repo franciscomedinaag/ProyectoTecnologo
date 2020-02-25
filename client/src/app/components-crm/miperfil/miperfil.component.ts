@@ -34,9 +34,9 @@ export class MiperfilComponent implements OnInit {
     this.getUser()
   }
 
-  getUser(){
-    this.api.get('/Usuarios',true,{where:{id:this.id}})
-      .subscribe((usuario)=>{
+  async getUser(){
+    await this.api.get('/Usuarios',true,{where:{id:this.id}}).toPromise()
+      .then((usuario)=>{
        this.usuario=usuario[0]      
       })
   }

@@ -35,6 +35,7 @@ import { NavbarWebsiteComponent } from './services/website/navbar-website/navbar
 import { FooterWebsiteComponent } from './services/website/footer-website/footer-website.component';
 import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
+import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AuthService } from './services/auth.service';
     GraficasComponent,
     FileChooserComponent,
     ProfileImageEditorComponent,
-    FichaClienteComponent
+    FichaClienteComponent,
+    CatalogosComponent
   ],
   imports: [
     BrowserModule,
