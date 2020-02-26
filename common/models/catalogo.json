@@ -6,13 +6,19 @@
       "validateUpsert": true
     },
     "properties": {
-      "nota": {
+      "nombre": {
+        "type": "string",
+        "required": "true"
+      },
+      "file": {
         "type": "string",
         "required": "true"
       }
     },
     "validations": [],
-    "relations": {},
+    "relations": {
+     
+    },
     "acls": [
       {
         "accessType": "*",
@@ -28,6 +34,58 @@
       }
     ],
     "methods": {
+      "setFile": {
+        "accepts": [
+          {
+            "arg": "newFile",
+            "type": "object",
+            "required": true,
+            "description": "file to save",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "file",
+            "type": "object",
+            "root": true,
+            "description": "new file"
+          }
+        ],
+        "description": " Add catalog ",
+        "http": [
+          {
+            "path": "/setFile",
+            "verb": "post"
+          }
+        ]
+      },
+      "deleteFile": {
+        "accepts": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+          }
+        ],
+        "description": " Delete File ",
+        "http": [
+          {
+            "path": "/deleteFile",
+            "verb": "post"
+          }
+        ]
+      }
     }
   }
   
