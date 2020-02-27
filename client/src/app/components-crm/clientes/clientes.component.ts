@@ -34,9 +34,10 @@ export class ClientesComponent implements OnInit {
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
   private negociaciones:any=["Residencial","Empresarial","Licitacion"];
   private clientsWithEmail:any=[];
-
+  private catalogos:any=[];
   private attachment:any=" "
   private ext:any=" "
+  private cat:boolean=null;
 
   constructor(private api:DataApiService, 
     private auth:AuthService,
@@ -45,6 +46,14 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit() {
    this.getClients();
+   this.getCat();
+  }
+
+  getCat(){
+    this.api.get('/Catalogos')
+    .subscribe((catalogos)=>{
+      this.catalogos=catalogos;
+    })
   }
 
   saveClient(){
@@ -103,13 +112,20 @@ export class ClientesComponent implements OnInit {
     else{
       data.attachment=this.attachment;
       data.ext=this.ext;
-      console.log(data)
+      if(data.ext==" "){
+        let base=this.api.baseURL
+        data.attachment=base+data.attachment;
+      }
+      
       this.api.post('/Mails/sendEmail',{data:data}).subscribe((okay)=>{
         this.toast.showSuccess("Correo mandado con exito")
+        this.attachment=" ";
+        this.ext=" ";
       },
       (err) => {
         this.toast.showError("Revisa tu conexión de red")
       });
+
       this.data={}
     }
   }

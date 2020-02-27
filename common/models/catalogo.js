@@ -50,4 +50,30 @@ module.exports = function(Catalogo) {
         });
     }
 
+
+    // Catalogo.downloadFile=function(file, callback){
+        
+    //     var container = file.split("/")[2];
+    //     var oldFileName = file.split("/")[4];
+    //     Catalogo.app.models.Upload.downloadStream(container, oldFileName,function(err,res){
+    //         if(err) return callback(err)
+
+    //         console.log(res);
+    //         callback(null, res)
+    //     });
+    // }
+
+    // Catalogo.findDownload=function(file,callback){
+    //     Catalogo.find({where: {file:file.id}},
+    //         (err,contenido)=>{
+    //             if(err)return callback(err);
+                
+    //             Catalogo.downloadFile(contenido[0].file, function(err,res){
+    //                 if(err) return callback(err)
+
+    //                 callback(null, res)
+    //             })
+    //          }
+    //     )
+    // }
 }

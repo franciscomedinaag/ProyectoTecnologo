@@ -11,20 +11,35 @@ module.exports = function(Mail) {
         }
       }
       else{
+        if(data.ext==" "){
           var info={
-          to: data.to,
-          subject: data.subject,
-          text: data.text,
-          attachments:[
-            {
-              filename:`archivo${data.ext}`,
-              content:data.attachment,
-              encoding:'base64'
-              //,contentType:''
+            to: data.to,
+            subject: data.subject,
+            text: data.text,
+            attachments:[
+              {
+                path:data.attachment
+              }
+            ]
             }
-          ]
-          //html: 'my <em>html</em>'
-          }
+        }
+        else{
+          var info={
+            to: data.to,
+            subject: data.subject,
+            text: data.text,
+            attachments:[
+              {
+                filename:`archivo${data.ext}`,
+                content:data.attachment,
+                encoding:'base64'
+                //,contentType:''
+              }
+            ]
+            //html: 'my <em>html</em>'
+            }
+        }
+          
       }
         Mail.app.models.Email.send(info , function(err, mail) {
           if(err){

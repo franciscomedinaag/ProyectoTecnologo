@@ -15,6 +15,7 @@ export class CatalogosComponent implements OnInit {
   private send:boolean=true
   private newFile:any={}
   private catalogos:any;
+  private editing:any;
 
   constructor(private api:DataApiService,private toast:ToastService) { }
 
@@ -79,22 +80,36 @@ export class CatalogosComponent implements OnInit {
 
 
   showPdf(id) {
-    let name;
-    let base64;
-    this.catalogos.forEach(cat => {
-      if(cat.id==id){
-        name=cat.nombre;
-        base64=cat.file;
-      }
-    });
-
-    const linkSource = 'data:application/pdf;base64,'+base64;
+    
+    let base:string=this.api.baseURL
+    
+    const linkSource = base+id;
     const downloadLink = document.createElement("a");
     const fileName = name+'.pdf';
 
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();
+
+  }
+
+  setEdit(c){
+    this.editing=c;
+  }
+
+  assign(){
+    if(this.catalogue.length>2){
+      this.editing.nombre=this.catalogue
+      this.api.patch('/Catalogos',this.editing)
+        .subscribe((okay)=>{
+          this.getCat();
+          this.catalogue=" ";
+          this.toast.showSuccess("Nombre editado")
+        })
+    }
+    else{
+      this.toast.showError("El nombre debe ser mas largo")
+    }
   }
 
 

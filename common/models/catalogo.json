@@ -76,12 +76,74 @@
         ],
         "returns": [
           {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
           }
         ],
         "description": " Delete File ",
         "http": [
           {
             "path": "/deleteFile",
+            "verb": "post"
+          }
+        ]
+      },
+      "downloadFile": {
+        "accepts": [
+          {
+            "arg": "oldFile",
+            "type": "string",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "description": " Download a File ",
+        "http": [
+          {
+            "path": "/downloadFile",
+            "verb": "get"
+          }
+        ]
+      },
+      "findDownload": {
+        "accepts": [
+          {
+            "arg": "oldFileURL",
+            "type": "object",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+          }
+        ],
+        "description": " find a File to download ",
+        "http": [
+          {
+            "path": "/findDownload",
             "verb": "post"
           }
         ]

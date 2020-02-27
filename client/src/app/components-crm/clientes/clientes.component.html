@@ -142,22 +142,43 @@
                 <label for="nombre">Texto: </label>
                 <textarea  [(ngModel)]="data.text" name="text" type="textarea" rows="3" class="form-control" id="text" placeholder="Añada su texto aquí..."></textarea>
               </div>
-            <div class="form-group">
-              Clientes Seleccionados:
-              <ng-select class="custom"
-              [items]="clientsWithEmail"
-              [multiple]="true"
-              [(ngModel)]="data.to"
-              bindValue="email"
-              bindLabel="nombre"
-              name="to"
-              placeholder="Seleccionar clientes">
-              </ng-select> 
+            
+
+          <p>Adjuntar:</p>
+
+          <button class="btn btn-primary" (click)="cat=true">Catálogos</button>
+          <button class="btn btn-primary" (click)="cat=false">Archivo</button>
+
+          <div *ngIf="cat" class="form-group">
+            Mandar Catalogo:
+            <ng-select class="custom"
+            [items]="catalogos"
+            [multiple]="false"
+            [(ngModel)]="attachment"
+            bindValue="file"
+            bindLabel="nombre"
+            name="cat"
+            placeholder="Seleccionar clientes">
+            </ng-select> 
           </div>
-          <div class="form-group">
+
+          <div *ngIf="cat==false" class="form-group">
             <template-file-chooser [fileType] ="'sendDocs'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
           </div>
                 
+          <div class="form-group">
+            Clientes Seleccionados:
+            <ng-select class="custom"
+            [items]="clientsWithEmail"
+            [multiple]="true"
+            [(ngModel)]="data.to"
+            bindValue="email"
+            bindLabel="nombre"
+            name="to"
+            placeholder="Seleccionar clientes">
+            </ng-select> 
+          </div>
+
             </form>
           
         </div>
