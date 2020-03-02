@@ -4,8 +4,8 @@
     <div class="row pt-4 pb-4">
 
         <div class="col-sm-3">        
-            <h2 *ngIf="showAct" class="text-center">Vendedores Activos</h2>
-            <h2 *ngIf="!showAct" class="text-center">Vendedores Inactivos</h2>
+            <h2 *ngIf="showAct" style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center">Vendedores Activos</h2>
+            <h2 *ngIf="!showAct" style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center">Vendedores Inactivos</h2>
         </div>
         <div class="col-sm-3 text-center">
           <button *ngIf="showAct" (click)="vista(false)" class="btn active btn-secondary">Ver inactivos</button>

@@ -27,6 +27,8 @@ import { ToastService } from './services/toast.service';
 import { FileChooserComponent } from './components-crm/file-chooser/file-chooser.component';
 import { ProfileImageEditorComponent } from './components-crm/profile-image-editor/profile-image-editor.component';
 import { FichaClienteComponent } from './components-crm/ficha-cliente/ficha-cliente.component';
+import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
+import { TratosComponent } from './components-crm/tratos/tratos.component';
 
 //servicios 
 import { NavbarCrmComponent } from './services/crm/navbar-crm/navbar-crm.component';
@@ -35,7 +37,6 @@ import { NavbarWebsiteComponent } from './services/website/navbar-website/navbar
 import { FooterWebsiteComponent } from './services/website/footer-website/footer-website.component';
 import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
-import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CatalogosComponent } from './components-crm/catalogos/catalogos.compone
     FileChooserComponent,
     ProfileImageEditorComponent,
     FichaClienteComponent,
-    CatalogosComponent
+    CatalogosComponent,
+    TratosComponent
   ],
   imports: [
     BrowserModule,

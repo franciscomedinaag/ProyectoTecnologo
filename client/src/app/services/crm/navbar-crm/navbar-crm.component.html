@@ -15,7 +15,7 @@
           <a class="nav-link" routerLink="clientes">Tareas </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes">Tratos </a>
+          <a class="nav-link"  [routerLink]="['/tratos']">Tratos </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" routerLink="clientes">Informes bimestrales </a>
@@ -24,7 +24,7 @@
           <a class="nav-link" routerLink="clientes">Clientes </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes">Mi Perfil </a>
+          <a class="nav-link" [routerLink]="['/miperfil',this.user.id]">Mi Perfil </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" routerLink="inicio">Ir al sitio web </a>
@@ -47,7 +47,7 @@
           <a class="nav-link" [routerLink]="['/graficas']">Gráficas </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="usuarios">Tratos </a>
+          <a class="nav-link" [routerLink]="['/tratos']">Tratos </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/catalogos']">Catálogos </a>

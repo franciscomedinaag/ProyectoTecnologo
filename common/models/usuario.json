@@ -30,7 +30,8 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+  },
   "acls": [
     {
       "accessType": "*",

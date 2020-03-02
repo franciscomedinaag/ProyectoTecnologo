@@ -79,6 +79,14 @@
     "dataSource": "db",
     "public":true
   },
+  "Trato": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Categoria": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

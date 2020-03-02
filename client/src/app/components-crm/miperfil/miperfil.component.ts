@@ -64,7 +64,7 @@ export class MiperfilComponent implements OnInit {
   }
 
   selectImageOrder( img:any){
-    if(this.usuario.imagen=="string" || this.usuario.imagen=="" || this.usuario.imagen==null){
+    if(this.usuario.imagen==" string" || this.usuario.imagen=="" || this.usuario.imagen==null){
 		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
     this.toast.showSuccess("Se subio la imagen correctamente")
     this.usuario=res;
@@ -81,7 +81,7 @@ export class MiperfilComponent implements OnInit {
       this.img=true;
     },err => {
       console.log(err)
-			this.toast.showError("No se puedo editar la imagen ")
+			this.toast.showError("No se pudo editar la imagen ")
     })
   }
   }

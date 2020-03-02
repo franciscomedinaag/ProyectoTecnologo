@@ -1,0 +1,107 @@
+{
+    "name": "Trato",
+    "plural": "Tratos",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "fechaInicio": {
+        "type": "date",
+        "required": "true"
+      },
+      "fechaFin": {
+        "type": "date",
+        "required": "false"
+      },
+      "estado": {
+        "type": "number",
+        "required": "true"
+      },
+      "nombre": {
+        "type": "string",
+        "required": "true"
+      },
+      "descripcion": {
+        "type": "string",
+        "required": "true"
+      },
+      "tipo": {
+        "type": "number",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "vendedor": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "vendedorId"
+      },
+      "cliente": {
+        "type": "belongsTo",
+        "model": "Client",
+        "foreignKey": "clientId"
+      }
+   },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$unauthenticated",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {
+      "getTratos": {
+        "accepts": [],
+        "returns": [
+          {
+            "arg": "tratos",
+            "type": "object",
+            "root": true,
+            "description": "tratos encontrados"
+          }
+        ],
+        "description": " Traer todos los tratos ",
+        "http": [
+          {
+            "path": "/getTratos",
+            "verb": "get"
+          }
+        ]
+      },
+      "getTratosUsuario": {
+        "accepts": [
+          {
+            "arg": "data",
+            "type": "object",
+            "root": true,
+            "description": "id del vendedor"
+          }
+        ],
+        "returns": [
+          {
+            "arg": "tratos",
+            "type": "object",
+            "root": true,
+            "description": "tratos encontrados"
+          }
+        ],
+        "description": " Traer todos los tratos ",
+        "http": [
+          {
+            "path": "/getTratosUsuario",
+            "verb": "post"
+          }
+        ]
+      }
+    }
+  }
+  
