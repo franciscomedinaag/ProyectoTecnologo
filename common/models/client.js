@@ -8,7 +8,6 @@ module.exports = function(Client) {
         }, function(err,client){
             return callback(null,client);
         })
-
     };
 
 };

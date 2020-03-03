@@ -29,6 +29,10 @@
       "tipo": {
         "type": "number",
         "required": "true"
+      },
+      "nota": {
+        "type": "string",
+        "required": "true"
       }
     },
     "validations": [],
@@ -99,6 +103,24 @@
           {
             "path": "/getTratosUsuario",
             "verb": "post"
+          }
+        ]
+      },
+      "prototype.getTrato": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "Trato",
+          "type": "object",
+          "root": true,
+          "description": "Trato a retornar"
+          }
+        ],
+        "description": "Traer un Trato con sus include",
+        "http": [
+          {
+            "path": "/getTrato",
+            "verb": "get"
           }
         ]
       }

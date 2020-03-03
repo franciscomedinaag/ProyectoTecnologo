@@ -18,7 +18,8 @@ export class TratosComponent implements OnInit {
     clienteId:null,
     vendedorId:null,
     estado:0,
-      fechaFin:null //abierto
+    fechaFin:null,
+    nota:" " 
   }
 
   private tipos:any=[
@@ -181,7 +182,7 @@ export class TratosComponent implements OnInit {
       if(confirm(mess)){
       let fecha=new Date().toISOString();
       trato.fechaFin=fecha;
-
+      if(trato.nota==""){trato.nota=" "}
       if(estado){trato.estado=1}
       else{trato.estado=2}
 

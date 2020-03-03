@@ -14,4 +14,12 @@ module.exports = function(Trato) {
             callback(null,tratos);
         })
     };
+
+    Trato.prototype.getTrato = function(callback) {
+        var id=this.id
+        Trato.findById(id,{include:['vendedor','cliente']}, function(err,client){
+            return callback(null,client);
+        })
+    };
+
 };
