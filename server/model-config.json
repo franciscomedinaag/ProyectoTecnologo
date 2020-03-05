@@ -87,6 +87,10 @@
     "dataSource": "db",
     "public":true
   },
+  "Archivo": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

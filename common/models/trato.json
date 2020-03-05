@@ -33,6 +33,10 @@
       "nota": {
         "type": "string",
         "required": "true"
+      },
+      "reporte": {
+        "type": "string",
+        "required": "true"
       }
     },
     "validations": [],
@@ -46,6 +50,11 @@
         "type": "belongsTo",
         "model": "Client",
         "foreignKey": "clientId"
+      },
+      "archivos": {
+        "type": "hasMany",
+        "model": "Archivo",
+        "foreignKey": "tratoId" 
       }
    },
     "acls": [
@@ -121,6 +130,34 @@
           {
             "path": "/getTrato",
             "verb": "get"
+          }
+        ]
+      },
+      "prototype.setFile": {
+        "accepts": [
+          {
+            "arg": "newFile",
+            "type": "object",
+            "required": true,
+            "description": "file to save",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "file",
+            "type": "object",
+            "root": true,
+            "description": "new file"
+          }
+        ],
+        "description": " Add file ",
+        "http": [
+          {
+            "path": "/setFile",
+            "verb": "post"
           }
         ]
       }

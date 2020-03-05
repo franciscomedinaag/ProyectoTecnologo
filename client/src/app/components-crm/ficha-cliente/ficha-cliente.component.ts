@@ -24,6 +24,10 @@ export class FichaClienteComponent implements OnInit {
   private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
 
   private note:any={};
+  private anti:any=false;
+  private antiquity:any="";
+
+  private terminados:any=[];
 
   constructor(private activated:ActivatedRoute, private api:DataApiService) { }
 
@@ -37,9 +41,57 @@ export class FichaClienteComponent implements OnInit {
     this.api.get(`/Clients/${this.id}/getClient`)
       .subscribe((client)=>{
        this.client=client
-       console.log(this.client) 
+       this.terminados=[]
+       this.client.tratos.forEach(trato => {
+         if(trato.estado==1){
+           this.terminados.push(trato.fechaFin)
+         }
+       });
+       this.getAnti(this.terminados);
       })
   }
+
+  getAnti(fechas:Array<string>){
+    
+    if(fechas.length){
+      fechas.sort();
+    
+      let fecha=new Date().toISOString();
+
+      this.antiquityCalc(fechas[0], fecha);
+
+      this.anti=true;
+    }
+    else{
+      this.anti=false;
+    }
+  }
+
+  antiquityCalc(ultimo:String, hoy:String){
+
+    let años=(+ultimo.slice(0,4))-(+hoy.slice(0,4));
+    let meses=(+ultimo.slice(5,7))-(+hoy.slice(5,7));
+    let dias=(+ultimo.slice(8,10))-(+hoy.slice(8,10));
+    años=Math.abs(años)
+    meses=Math.abs(meses)
+    dias=Math.abs(dias)
+
+    if(años>0){
+      this.antiquity=this.antiquity+dias + " años  "
+    }
+    else if(meses>0){
+      this.antiquity=this.antiquity+dias + " meses  "
+    }
+    else if(dias>0){
+      this.antiquity=this.antiquity+dias + " días  "
+    }
+    else{
+      this.antiquity="N/A"
+    }
+   // console.log(this.antiquity)
+
+  }
+
 
   assign(client:any){
     this.api.patch('/Clients',client).subscribe((edited)=>{

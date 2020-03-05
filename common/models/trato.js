@@ -7,6 +7,7 @@ module.exports = function(Trato) {
         })
     };
 
+
     Trato.getTratosUsuario = function(data,callback) {
         Trato.find({include:['vendedor','cliente'],where:{vendedorId:data.id}}, function(err,tratos){
             if(err) return callback(err)
@@ -15,11 +16,31 @@ module.exports = function(Trato) {
         })
     };
 
+
     Trato.prototype.getTrato = function(callback) {
         var id=this.id
-        Trato.findById(id,{include:['vendedor','cliente']}, function(err,client){
+        Trato.findById(id,{include:['vendedor','cliente','archivos']}, function(err,client){
             return callback(null,client);
         })
     };
+
+
+    Trato.prototype.setFile=function(data, callback){
+ 
+        Trato.app.models.Upload.newBase64File(data.file, function (err, newFile) {
+            if (err) return callback(err,"error in newBase");
+            else{ 
+                data.file=newFile.URL         
+                Trato.app.models.Archivo.create(data, (err, insertedFile)=> {
+                    if(err) return callback (err);
+                    else{
+                        return callback(null, insertedFile);
+                    }
+                })
+            }
+            });
+
+    };
+
 
 };

@@ -5,17 +5,18 @@
             <h2 style="font-weight: bold; color:rgb(150, 150, 150);">{{client.nombre}}</h2>
         </div>
         <div class="col-sm-4 pt-2 text-center">
-            <span class="float-left" style="color:grey; font-size: small;">
-                Antigüedad: {{client.registro | date:'short'}}
+            <span *ngIf="anti" class="float-left" style="color:grey; font-size: small;">
+                Antigüedad: {{antiquity}}
               </span>   
         </div>
         <div class="col-sm-3 text-center">
-            <button class="btn btn-primary" (click)="sendMail()"> Mandar Correo </button> 
+            <button class="btn sender btn-primary" (click)="sendMail()"> Mandar Correo </button> 
         </div>
     </div>
 
     <div class="row  pb-5 pl-3 pr-3 text-start">
-        <div class="col-sm-4" style="border:2px solid #33ACE2">
+        <div class="col-sm-5">
+            <div class="card text-white bg-secondary mb-3" style=" padding:5%; min-width: 18rem;">
             <div class="row">
                 <div class="col">
                     <span *ngIf="neg" (dblclick)="neg=!neg"><strong>Tipo de cliente:  </strong> {{client.negociacion}} 
@@ -83,18 +84,26 @@
                     <strong>Cliente   {{client.real?"real":"potencial"}} </strong>
                 </div>
             </div>
+            </div>
         </div>
-        <div class="col-sm-5 " >
-            hey
+        <div class="col-sm-4 "  >
+            
         </div>
         <div class="col-sm-3 " >
-            <h4 class="text-center" style="color:#33ACE2"  data-toggle="modal" data-target="#addNote">Notas <small style="font-size: small;"> (Agregar) </small></h4>           
+            <h4  style="color:#33ACE2;font-weight: bold;"  data-toggle="modal" data-target="#addNote">Notas: <small style="font-size: small;"> (Agregar) </small></h4>           
             <ul>
                 <li *ngFor="let n of client.notas"  class="text-start" (click)="deleteNote(n.id)">
                     {{n.nota}} <i class="fa fa-minus-circle fa-sm" aria-hidden="true"></i>
                     <br>
                 </li>
             </ul>
+
+            <h4  style="color:#33ACE2;font-weight: bold;">Tratos: </h4>
+            <ul>
+                <li  *ngFor="let t of client.tratos" >
+                    <a [routerLink]="['/fichatrato',t.id]">{{t.nombre}}</a>
+                </li>
+            </ul> 
         </div>
     </div>
 </div>

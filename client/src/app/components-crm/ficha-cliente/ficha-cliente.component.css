@@ -20,3 +20,7 @@ span:hover{
 h4:hover{
     opacity: 75%;
 }
+
+.sender{
+    width:130px;
+}

@@ -57,7 +57,12 @@
       "type": "hasMany",
       "model": "Nota",
       "foreignKey": "clientId" 
-      }
+      },
+      "tratos": {
+        "type": "hasMany",
+        "model": "Trato",
+        "foreignKey": "clientId" 
+        }
     },
     "acls": [
       {

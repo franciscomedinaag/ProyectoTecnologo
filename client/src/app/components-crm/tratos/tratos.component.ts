@@ -19,7 +19,8 @@ export class TratosComponent implements OnInit {
     vendedorId:null,
     estado:0,
     fechaFin:null,
-    nota:" " 
+    nota:" " ,
+    reporte:" "
   }
 
   private tipos:any=[
@@ -177,12 +178,15 @@ export class TratosComponent implements OnInit {
       }
       else{
         mess='¿Desea dar por perdido el trato?'
+        
       }
 
       if(confirm(mess)){
       let fecha=new Date().toISOString();
       trato.fechaFin=fecha;
       if(trato.nota==""){trato.nota=" "}
+      if(trato.reporte==""){trato.reporte=" "}
+
       if(estado){trato.estado=1}
       else{trato.estado=2}
 
@@ -213,7 +217,9 @@ export class TratosComponent implements OnInit {
         clienteId:null,
         vendedorId:null,
         estado:0,
-        fechaFin:null};
+        fechaFin:null,
+        nota:" " ,
+        reporte:" "};
         this.getTratos()
   
       },err=>{
@@ -225,7 +231,9 @@ export class TratosComponent implements OnInit {
         clienteId:null,
         vendedorId:null,
         estado:0,
-        fechaFin:null};
+        fechaFin:null,
+        nota:" " ,
+        reporte:" "};
   
       })
     }

@@ -34,19 +34,21 @@
 
     </div>
     <div class="row">
-      <div class="table-responsive">
-            <table class="table lista">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Monto</th>
-                    <th scope="col" class="text-center">Informe</th>
-                    <th scope="col">Datos</th>
-                    <th *ngIf="showAct" class="text-center" scope="col">Desactivar</th>
-                    <th *ngIf="!showAct" class="text-center" scope="col">Activar</th>
-                  </tr>
-                </thead>
+      <div class="col">
+
+        <div class="table-responsive">
+          <table class="table lista">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Monto</th>
+                <th scope="col" class="text-center">Informe</th>
+                <th scope="col">Datos</th>
+                <th *ngIf="showAct" class="text-center" scope="col">Desactivar</th>
+                <th *ngIf="!showAct" class="text-center" scope="col">Activar</th>
+              </tr>
+            </thead>
                 <tbody>
                   <tr style="background-color: rgb(201, 201, 201);">
                     <th scope="row">ADMN</th>
@@ -66,15 +68,16 @@
                     <td *ngIf="!showAct" class="text-center" (click)="changeState(a,true)"><i class="fa fa-check-circle-o" aria-hidden="true"></i></td>
                   </tr>
                 </tbody>
-            </table>
+              </table>
           </div>
+        </div>
+      </div>
     </div>
-</div>
-
-<app-footer-crm></app-footer-crm>
-
-
-<!-- Modal -->
+      
+      <app-footer-crm></app-footer-crm>
+      
+      
+      <!-- Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
