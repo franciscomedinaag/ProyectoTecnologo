@@ -13,21 +13,15 @@
         <div class=" table-responsive">
           <table class="table lista">
               <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Titulo</th>
-                  <th scope="col">Cliente</th>
-                  <th scope="col">Trato</th>
-                  <th scope="col">Categoria</th>
-                  <th scope="col">Fecha a realizar</th>
-                </tr>
-              </thead>
+                
               <tbody>
                 <tr *ngFor="let s of subtareas; let i=index">
-                  <th class="titulo" data-toggle="modal" data-target="#descModal" (click)="seeFull(s)" >{{s.titulo}} (ver)</th>
+                  <th [className]="s.fechaFin.includes(hoy) ? 'text-warning' : ''">
+                    {{s.fechaFin.includes(hoy)?"HOY":s.fechaFin | date:'shortDate'}}</th>            
+                  <td><a class="text-primary" data-toggle="modal" data-target="#descModal" (click)="seeFull(s)">{{s.titulo}} (ver)</a></td>
                   <td><a [routerLink]="['/fichaclient',s.trato.cliente.id]">{{s.trato.cliente.nombre}}</a></td>
                   <td><a [routerLink]="['/fichatrato',s.tratoId]">{{s.trato.nombre}}</a></td>
                   <td>{{s.catName}}</td>
-                  <td>{{s.fechaFin}}</td>            
                 </tr>
               </tbody>
           </table>
@@ -118,12 +112,9 @@
         </div>
         <div class="modal-body">
             <form class="form-product">
-
               <div class="form-group">
                 <span style="font-weight:bold;">Descripción: </span> {{full.descripcion}}
               </div>
-              
-
             </form>      
         </div>
         <div class="modal-footer">

@@ -26,10 +26,14 @@ export class SubtareasComponent implements OnInit {
   private subtareas:any;
   private id:any;
   private full:any;
+  private hoy:any;
 
   constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService) { }
 
   ngOnInit() {
+    this.hoy=new Date().toISOString();
+    this.hoy=this.hoy.split('T')
+    this.hoy=this.hoy[0];
     this.id=this.auth.getCurrentUser().id;
     this.getTratos()
     this.getCategorias()
@@ -64,7 +68,7 @@ export class SubtareasComponent implements OnInit {
 
   createSub(){
     this.subtarea.fechaInicio=new Date().toISOString();
-    let fin=this.subtarea.fechaFin.split("-")
+    let fin=this.subtarea.fechaFin.split("-");
     let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
     this.subtarea.fechaFin=f;
 
@@ -72,6 +76,10 @@ export class SubtareasComponent implements OnInit {
       this.subtarea.tratoId=="" ||this.subtarea.categoriaId==""){
         this.toast.showError("Debes llenar todos los campos")
         return
+    }
+    else if(this.subtarea.fechaFin<this.hoy){
+      this.toast.showError("!La fecha límite ya pasó!")
+      return
     }
     else{
       this.api.post('/Subtareas',this.subtarea)
@@ -84,8 +92,10 @@ export class SubtareasComponent implements OnInit {
   }
 
   seeFull(full){
+    if(full.categoriaId==5){
+      /*MANDAR A COTIZACION*/ 
+    }
     this.full=full
-    console.log(this.full)
   }
 
 

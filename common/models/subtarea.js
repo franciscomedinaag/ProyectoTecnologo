@@ -4,7 +4,7 @@ module.exports = function(Subtarea) {
 
     Subtarea.getSubtareas= function(data,callback) {
         let vendedorId=data.vendedorId
-        Subtarea.find({
+        Subtarea.find({order: 'fechaFin ASC',
             include:{
                 relation:'trato',
                 scope:{
