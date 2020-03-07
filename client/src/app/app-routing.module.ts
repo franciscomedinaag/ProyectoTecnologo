@@ -12,6 +12,8 @@ import { FichaClienteComponent } from './components-crm/ficha-cliente/ficha-clie
 import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
 import { TratosComponent } from './components-crm/tratos/tratos.component';
 import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.component';
+import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
+
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -31,6 +33,8 @@ const routes: Routes = [
   {path: 'catalogos',component: CatalogosComponent},
   {path: 'tratos',component: TratosComponent},
   {path: 'fichatrato/:id',component: FichaTratoComponent},
+  {path: 'subtareas',component: SubtareasComponent},
+
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

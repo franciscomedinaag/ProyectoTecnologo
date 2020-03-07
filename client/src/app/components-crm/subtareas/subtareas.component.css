@@ -12,11 +12,7 @@
     min-height: 0px;
     border-radius: 0;
 }
-.btn{
-    width: 120px;
-    margin:5px;
-}
 
-.rowColor{
-    background-color: rgb(218, 175, 68);
+.titulo:hover{
+    opacity:75%
 }

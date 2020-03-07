@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
+import { ToastService } from '../../services/toast.service';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-ficha-cliente',
@@ -34,10 +36,11 @@ export class FichaClienteComponent implements OnInit {
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
     this.getClient()
+ 
   }
-
   
   getClient(){
+    let frecuente=0;
     this.api.get(`/Clients/${this.id}/getClient`)
       .subscribe((client)=>{
        this.client=client
@@ -48,18 +51,40 @@ export class FichaClienteComponent implements OnInit {
          }
        });
        this.getAnti(this.terminados);
+      this.isFrecuent();
       })
   }
 
+  async isFrecuent(){
+
+     let frecuente=0;
+     let sixAgo=new Date();
+     sixAgo.setDate(sixAgo.getDate()-180);
+     this.client.tratos.forEach(trato => {
+        if(trato.estado==1){
+          if(trato.fechaFin>sixAgo.toISOString()){
+            frecuente++;
+          }
+        }
+      });
+      if(frecuente<3){
+       this.client.frecuente=false;
+       this.assign(this.client);
+       console.log("no")
+      }
+      else{
+        this.client.frecuente=true;
+        this.assign(this.client);
+        console.log("si")
+      }
+
+  }
+
   getAnti(fechas:Array<string>){
-    
     if(fechas.length){
-      fechas.sort();
-    
+      fechas.sort(); 
       let fecha=new Date().toISOString();
-
       this.antiquityCalc(fechas[0], fecha);
-
       this.anti=true;
     }
     else{
@@ -68,34 +93,46 @@ export class FichaClienteComponent implements OnInit {
   }
 
   antiquityCalc(ultimo:String, hoy:String){
+    let ult=new Date(ultimo.slice(0,10));
+    let today=new Date(hoy.slice(0,10));
 
-    let años=(+ultimo.slice(0,4))-(+hoy.slice(0,4));
-    let meses=(+ultimo.slice(5,7))-(+hoy.slice(5,7));
-    let dias=(+ultimo.slice(8,10))-(+hoy.slice(8,10));
-    años=Math.abs(años)
-    meses=Math.abs(meses)
-    dias=Math.abs(dias)
+    var Difference_In_Time = today.getTime() - ult.getTime(); 
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+    let bufferD=0;
+    let bufferM=0;
+    let dias=(Math.abs(Difference_In_Days))
+    let meses=0;
+    let años=0;
+    for (let i=1;i<Math.abs(Difference_In_Days)+1;i++){
+      if(bufferD==30){
+        console.log("mes")
+        bufferD=0;
+        meses++;
+        dias=dias-30;
+        bufferM++;
+        if(bufferM==12){
+          bufferM=0;
+          años++;
+          meses=meses-12;
+        }
+      }
+      bufferD++;
+    }
 
-    if(años>0){
-      this.antiquity=this.antiquity+dias + " años  "
+    if(años){
+      this.antiquity=años+" año, "
     }
-    else if(meses>0){
-      this.antiquity=this.antiquity+dias + " meses  "
+    if(meses){
+      this.antiquity=this.antiquity+meses+" meses, "
     }
-    else if(dias>0){
-      this.antiquity=this.antiquity+dias + " días  "
+    if(dias){
+      this.antiquity=this.antiquity+dias+" dias. "
     }
-    else{
-      this.antiquity="N/A"
-    }
-   // console.log(this.antiquity)
-
   }
 
 
   assign(client:any){
     this.api.patch('/Clients',client).subscribe((edited)=>{
-      this.client=edited
      })
   }
 

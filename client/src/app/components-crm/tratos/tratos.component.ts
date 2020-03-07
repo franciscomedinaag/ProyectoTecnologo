@@ -52,6 +52,9 @@ export class TratosComponent implements OnInit {
 
   private client:number;
 
+  private clientObj:any={};
+  private frecuent:boolean=false;
+
   constructor(private api:DataApiService, 
     private auth:AuthService, private toast:ToastService) { }
 
@@ -171,26 +174,57 @@ export class TratosComponent implements OnInit {
     })
   }
 
-  assign(trato, estado){
-    let mess
-      if(estado){
-        mess='¿Desea cerrar el trato?'
+  /*
+    calcular hoy hace 6 meses
+    buscar y contar tratos que fechaFin<hoyHace6meses
+    si se contaron 3 o mas cliente frecuente
+    */ 
+
+    async isFrecuent(clientId){
+     await this.api.get(`/Clients/${clientId}/getClient`).toPromise().then((client)=>{
+      this.clientObj=client;
+      let frecuente=0;
+      let sixAgo=new Date();
+      sixAgo.setDate(sixAgo.getDate()-180);
+      console.log("los tratos", this.clientObj.tratos);
+      this.clientObj.tratos.forEach(trato => {
+         if(trato.estado==1){
+           if(trato.fechaFin>sixAgo.toISOString()){
+             frecuente++;
+             if(frecuente>=3){
+               this.frecuent=true;
+               this.clientObj.frecuente=true;
+             }
+           }
+         }
+       });
+       if(this.frecuent){
+        this.frecuent=false;
+        console.log("hacer frecuente al cliente")
+        this.api.patch('/Clients',this.clientObj).subscribe((okay)=>{})
       }
       else{
-        mess='¿Desea dar por perdido el trato?'
-        
+        console.log("no hacerlo frecuente AUN")
       }
+    });
+   }
+   
+   assign(trato, estado){
+    let mess;
+      if(estado){mess='¿Desea cerrar el trato?'}
+      else{mess='¿Desea dar por perdido el trato?'}
 
       if(confirm(mess)){
       let fecha=new Date().toISOString();
       trato.fechaFin=fecha;
       if(trato.nota==""){trato.nota=" "}
       if(trato.reporte==""){trato.reporte=" "}
-
       if(estado){trato.estado=1}
       else{trato.estado=2}
 
-      this.api.patch('/Tratos',trato).subscribe((edited)=>{
+      this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+         this.isFrecuent(trato.clientId)
+        
         this.getTratos();
       })
     }

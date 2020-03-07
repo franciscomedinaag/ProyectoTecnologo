@@ -4,7 +4,12 @@
         <div class="col-sm-5 text-center">
             <h2 style="font-weight: bold; color:rgb(150, 150, 150);">{{client.nombre}}</h2>
         </div>
-        <div class="col-sm-4 pt-2 text-center">
+        <div class="col-sm-2 pt-2 text-center">
+            <p *ngIf="client.frecuente" class="float-left" style="color:darkgoldenrod; font-weight: bold;">
+                Cliente frecuente
+              </p>   
+        </div>
+        <div class="col-sm-2 pt-2 text-center">
             <span *ngIf="anti" class="float-left" style="color:grey; font-size: small;">
                 Antigüedad: {{antiquity}}
               </span>   

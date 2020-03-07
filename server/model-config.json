@@ -83,7 +83,11 @@
     "dataSource": "db",
     "public":true
   },
-  "Categoria": {
+  "CategoriaSub": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Subtarea": {
     "dataSource": "db",
     "public":true
   },

@@ -27,7 +27,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let c of filtered; let i=index">
+                  <tr *ngFor="let c of filtered; let i=index" [className]="c.frecuente ? 'rowColor' : ''">
                     <th scope="row">{{c.nombre}}</th>
                     <td>{{c.email}}</td>
                     <td>{{c.telefono}}</td>
@@ -62,7 +62,7 @@
               </div>  
               <div class="form-group">
                 <label for="nombre">Telefóno</label>
-                <input  [(ngModel)]="client.telefono" name="telefono" type="number" class="form-control" id="telefono" placeholder="ej. 331254654">
+                <input  [(ngModel)]="client.telefono" name="telefono" type="text" class="form-control" id="telefono" placeholder="ej. 331254654">
               </div>
               <div class="form-group">
                   <div class="row">

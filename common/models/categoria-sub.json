@@ -1,6 +1,6 @@
 {
-    "name": "Categoria",
-    "plural": "Categorias",
+    "name": "CategoriaSub",
+    "plural": "CategoriaSubs",
     "idInjection": true,
     "options": {
       "validateUpsert": true

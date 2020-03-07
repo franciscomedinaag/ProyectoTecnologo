@@ -30,6 +30,9 @@ export class FichaTratoComponent implements OnInit {
   private noDefFiles:any=[];
   private defButton:boolean=false;
 
+  private clientObj:any={};
+  private frecuent:boolean=false;
+
   constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
 
   ngOnInit() {
@@ -62,6 +65,7 @@ export class FichaTratoComponent implements OnInit {
   }
 
   assignNota(trato){
+    this.trato.reporte=" "
     if(trato.nota!=""){
       trato.estado=0;
       this.api.patch(`/Tratos`,trato)
@@ -75,15 +79,21 @@ export class FichaTratoComponent implements OnInit {
   }
 
   assign(trato, estado){
+    if(!this.trato.reporte){
+      this.trato.reporte=" "
+    }
     let mess
       if(estado){mess='¿Desea cerrar el trato?'}
-      else{mess='¿Desea dar por perdido el trato?'    }
+      else{mess='¿Desea dar por perdido el trato?'}
 
       if(confirm(mess)){
       let fecha=new Date().toISOString();
       trato.fechaFin=fecha;
 
-      if(estado){trato.estado=1}
+      if(estado){
+        trato.estado=1
+        this.isFrecuent(this.trato.clientId);
+      }
       else{trato.estado=2}
 
       this.api.patch('/Tratos',trato).subscribe((edited)=>{
@@ -154,6 +164,35 @@ export class FichaTratoComponent implements OnInit {
     else{
       this.trato.archivos=this.noDefFiles;
     }
+  }
+
+  async isFrecuent(clientId){
+    await this.api.get(`/Clients/${clientId}/getClient`).toPromise().then((client)=>{
+     this.clientObj=client;
+     let frecuente=0;
+     let sixAgo=new Date();
+     sixAgo.setDate(sixAgo.getDate()-180);
+     console.log("los tratos", this.clientObj.tratos);
+     this.clientObj.tratos.forEach(trato => {
+        if(trato.estado==1){
+          if(trato.fechaFin>sixAgo.toISOString()){
+            frecuente++;
+            if(frecuente>=3){
+              this.frecuent=true;
+              this.clientObj.frecuente=true;
+            }
+          }
+        }
+      });
+      if(this.frecuent){
+       this.frecuent=false;
+       console.log("hacer frecuente al cliente")
+       this.api.patch('/Clients',this.clientObj).subscribe((okay)=>{})
+     }
+     else{
+       console.log("no hacerlo frecuente AUN")
+     }
+   });
   }
 
 }

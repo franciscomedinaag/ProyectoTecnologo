@@ -20,7 +20,8 @@ export class ClientesComponent implements OnInit {
     empresa:" ",
     giro:" ",
     estado:" ", 
-    email:" "
+    email:" ",
+    frecuente:false
   };
   private data:any={
     subject:" ",
@@ -38,6 +39,7 @@ export class ClientesComponent implements OnInit {
   private attachment:any=" "
   private ext:any=" "
   private cat:boolean=null;
+  private clientCheck:any;
 
   constructor(private api:DataApiService, 
     private auth:AuthService,
@@ -57,6 +59,16 @@ export class ClientesComponent implements OnInit {
   }
 
   saveClient(){
+    if(Number(this.client.telefono)){
+      if(this.client.telefono.length<8 || this.client.telefono.length>=14){
+        this.toast.showError("El telefono debe ser entre 8-12 caracteres");
+        return;
+      }
+    }
+    else{
+      this.toast.showError("Telefono debe ser un numero")
+      return;
+    }
       if(this.client.nombre==null || this.client.negociacion==null){
         this.toast.showError("Nombre y tipo son campos obligatorios");
         return;
@@ -79,19 +91,49 @@ export class ClientesComponent implements OnInit {
 
   getClients(){
     this.api.get('/Clients',true)
-      .subscribe((clients)=>{
+      .subscribe((clients:Array<any>)=>{
         this.clients=clients;
+        //this.clients[clients.length-1]=clients[clients.length-1]
         this.filtered=this.clients;
-        this.clientsWithEmail=clients;
-
+        this.clientsWithEmail=this.filtered;
         this.clientsWithEmail.forEach(client => {
-          if(client.email.length<5){
+          this.isFrecuent(client)
+          if(client.email.length<6){
             this.clientsWithEmail.pop(client);
           }
         });
-
       })
   }
+
+  async isFrecuent(clienteIn){
+    this.api.get(`/Clients/${clienteIn.id}/getClient`)
+    .subscribe((client)=>{
+      this.clientCheck=client;
+      let frecuente=0;
+      let sixAgo=new Date();
+      sixAgo.setDate(sixAgo.getDate()-180);
+      this.clientCheck.tratos.forEach(trato => {
+         if(trato.estado==1){
+           if(trato.fechaFin>sixAgo.toISOString()){
+             frecuente++;
+           }
+         }
+       });
+       if(frecuente<3){
+        this.clientCheck.frecuente=false;
+        this.assign(this.clientCheck);
+       }
+       else{
+         this.clientCheck.frecuente=true;
+         this.assign(this.clientCheck);
+       }
+    })
+ }
+
+ assign(client:any){
+  this.api.patch('/Clients',client).subscribe((edited)=>{
+   })
+}
 
   onSearchChange(searchValue: string): void {  
     this.filtered=[];

@@ -8,17 +8,11 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
-import {NgSelectModule} from '@ng-select/ng-select'
-
+import {NgSelectModule} from '@ng-select/ng-select';
+import {DpDatePickerModule} from 'ng2-date-picker';
 //CRM
 import { LoginComponent } from './components-crm/login/login.component';
 import { ClientesComponent } from './components-crm/clientes/clientes.component';
-
-//sitio Web
-import { InicioComponent } from './components-web/inicio/inicio.component';
-import { ContactoComponent } from './components-web/contacto/contacto.component';
-import { MueblesComponent } from './components-web/muebles/muebles.component';
-import { NosotrosComponent } from './components-web/nosotros/nosotros.component';
 import { InformeVenComponent } from './components-crm/informe-ven/informe-ven.component';
 import { MiperfilComponent } from './components-crm/miperfil/miperfil.component';
 import { GraficasComponent } from './components-crm/graficas/graficas.component';
@@ -30,6 +24,12 @@ import { FichaClienteComponent } from './components-crm/ficha-cliente/ficha-clie
 import { CatalogosComponent } from './components-crm/catalogos/catalogos.component';
 import { TratosComponent } from './components-crm/tratos/tratos.component';
 
+//sitio Web
+import { InicioComponent } from './components-web/inicio/inicio.component';
+import { ContactoComponent } from './components-web/contacto/contacto.component';
+import { MueblesComponent } from './components-web/muebles/muebles.component';
+import { NosotrosComponent } from './components-web/nosotros/nosotros.component';
+
 //servicios 
 import { NavbarCrmComponent } from './services/crm/navbar-crm/navbar-crm.component';
 import { FooterCrmComponent } from './services/crm/footer-crm/footer-crm.component';
@@ -38,6 +38,7 @@ import { FooterWebsiteComponent } from './services/website/footer-website/footer
 import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
 import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.component';
+import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.co
     FichaClienteComponent,
     CatalogosComponent,
     TratosComponent,
-    FichaTratoComponent
+    FichaTratoComponent,
+    SubtareasComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +72,7 @@ import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.co
     NgSelectModule,
     BrowserAnimationsModule,  
     FormsModule,
+    DpDatePickerModule,
     ToastrModule.forRoot()
   ],
   providers: [DataApiService, AuthService,ToastService],

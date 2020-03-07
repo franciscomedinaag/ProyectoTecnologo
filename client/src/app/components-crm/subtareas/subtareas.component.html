@@ -1,0 +1,134 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-4 pb-4">
+        <div class="col-sm-6 text-center">
+            <h1>Subtareas</h1>
+        </div>
+        <div class="col-sm-6 text-center">
+            <button data-toggle="modal" data-target="#subModal" class="btn btn-primary"> Crear </button>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <div class=" table-responsive">
+          <table class="table lista">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Trato</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Fecha a realizar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of subtareas; let i=index">
+                  <th class="titulo" data-toggle="modal" data-target="#descModal" (click)="seeFull(s)" >{{s.titulo}} (ver)</th>
+                  <td><a [routerLink]="['/fichaclient',s.trato.cliente.id]">{{s.trato.cliente.nombre}}</a></td>
+                  <td><a [routerLink]="['/fichatrato',s.tratoId]">{{s.trato.nombre}}</a></td>
+                  <td>{{s.catName}}</td>
+                  <td>{{s.fechaFin}}</td>            
+                </tr>
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo trato</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+
+                <div class="form-group">
+                    <label for="descripcion">Titulo: </label>
+                    <input  [(ngModel)]="subtarea.titulo" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" >
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea  [(ngModel)]="subtarea.descripcion" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="mr-3" for="nombre">Fecha límite:</label>
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                </div>
+                
+              <div class="form-group">
+                Trato:
+                <ng-select class="custom"
+                [items]="tratos"
+                [multiple]="false"
+                [(ngModel)]="subtarea.tratoId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="tratoId"
+                placeholder="Inserte el trato de la subtarea">
+                </ng-select> 
+              </div>
+
+              <div class="form-group">
+                Tipo de subtarea:
+                <ng-select class="custom"
+                [items]="categorias"
+                [multiple]="false"
+                [(ngModel)]="subtarea.categoriaId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="categoriaId"
+                placeholder="Inserte el tipo de tarea">
+                </ng-select> 
+              </div>
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createSub()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Información de la tarea</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-product">
+
+              <div class="form-group">
+                <span style="font-weight:bold;">Descripción: </span> {{full.descripcion}}
+              </div>
+              
+
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -77,10 +77,16 @@ export class UsuariosComponent implements OnInit {
   }
 
   assignMeta(meta:any){
-    this.meta.fecha=new Date().toISOString();
-    this.api.patch('/Metas',meta).subscribe((edited)=>{
-      this.meta=edited
-     })
+    if(Number(meta.cantidad)){
+      this.meta.fecha=new Date().toISOString();
+      this.api.patch('/Metas',meta).subscribe((edited)=>{
+        this.meta=edited
+       })
+    }
+    else{
+      this.toast.showError("Ingresa un numero")
+      this.getMeta();
+    }
   }
   
   addMeta(cant:number){
