@@ -5,17 +5,17 @@
             <h2 style="font-weight: bold; color:rgb(150, 150, 150);">{{client.nombre}}</h2>
         </div>
         <div class="col-sm-2 pt-2 text-center">
-            <p *ngIf="client.frecuente" class="float-left" style="color:darkgoldenrod; font-weight: bold;">
+            <p *ngIf="client.frecuente" class="text-center" style="color:darkgoldenrod; font-weight: bold;">
                 Cliente frecuente
               </p>   
         </div>
         <div class="col-sm-2 pt-2 text-center">
-            <span *ngIf="anti" class="float-left" style="color:grey; font-size: small;">
+            <span *ngIf="anti" class="text-center" style="color:grey; font-size: small;">
                 Antigüedad: {{antiquity}}
               </span>   
         </div>
         <div class="col-sm-3 text-center">
-            <button class="btn sender btn-primary" (click)="sendMail()"> Mandar Correo </button> 
+            <button class="btn sender btn-primary" data-toggle="modal" data-target="#sendModal"> Mandar Correo </button> 
         </div>
     </div>
 
@@ -135,6 +135,61 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" (click)="createNote(note)" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Redactar correo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Asunto: </label>
+                <input  [(ngModel)]="data.subject" name="subject" type="text" class="form-control" id="subject" placeholder="Ingresar el asunto">
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Texto: </label>
+                <textarea  [(ngModel)]="data.text" name="text" type="textarea" rows="3" class="form-control" id="text" placeholder="Añada su texto aquí..."></textarea>
+              </div>
+            
+
+              <p>Adjuntar:</p>
+
+              <button class="btn btn-primary" (click)="cat=true">Catálogos</button>
+              <button class="ml-3 btn btn-primary" (click)="cat=false">Archivo</button>
+
+              <div *ngIf="cat" class="form-group">
+                Mandar Catalogo:
+                <ng-select class="custom"
+                [items]="catalogos"
+                [multiple]="false"
+                [(ngModel)]="attachment"
+                bindValue="file"
+                bindLabel="nombre"
+                name="cat"
+                placeholder="Seleccionar clientes">
+                </ng-select> 
+              </div>
+
+              <div *ngIf="cat==false" class="form-group">
+                <template-file-chooser [fileType] ="'sendDocs'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+              </div>
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="sendMail(data)" class="btn btn-primary">Enviar</button>
         </div>
       </div>
     </div>

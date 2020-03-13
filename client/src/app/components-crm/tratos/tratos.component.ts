@@ -200,12 +200,9 @@ export class TratosComponent implements OnInit {
        });
        if(this.frecuent){
         this.frecuent=false;
-        console.log("hacer frecuente al cliente")
         this.api.patch('/Clients',this.clientObj).subscribe((okay)=>{})
       }
-      else{
-        console.log("no hacerlo frecuente AUN")
-      }
+
     });
    }
    

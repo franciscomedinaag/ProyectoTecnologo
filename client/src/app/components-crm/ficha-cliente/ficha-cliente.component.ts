@@ -28,15 +28,24 @@ export class FichaClienteComponent implements OnInit {
   private note:any={};
   private anti:any=false;
   private antiquity:any="";
-
   private terminados:any=[];
+  private attachment:any=" "
+  private ext:any=" "
+  private catalogos:any=[];
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService) { }
+  private data:any={
+    subject:" ",
+    text:" ",
+    to:" ",
+    attachment:" "
+  };
+
+  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
     this.getClient()
- 
+    this.getCat()
   }
   
   getClient(){
@@ -44,6 +53,7 @@ export class FichaClienteComponent implements OnInit {
     this.api.get(`/Clients/${this.id}/getClient`)
       .subscribe((client)=>{
        this.client=client
+       this.data.to=this.client.email
        this.terminados=[]
        this.client.tratos.forEach(trato => {
          if(trato.estado==1){
@@ -141,14 +151,14 @@ export class FichaClienteComponent implements OnInit {
     else{this.getClient();}
   }
 
-  sendMail(){
-    this.api.get('/Mails/sendEmail').subscribe((okay)=>{
-      console.log("se armo")
-    },
-    (err) => {
-      console.log("Error: ",err)
-    });
-  }
+  // sendMail(){
+  //   this.api.get('/Mails/sendEmail').subscribe((okay)=>{
+  //     console.log("se armo")
+  //   },
+  //   (err) => {
+  //     console.log("Error: ",err)
+  //   });
+  // }
 
   createNote(note){
     note.fecha=new Date().toISOString();
@@ -165,7 +175,44 @@ export class FichaClienteComponent implements OnInit {
         this.getClient();
       })
     }
+  }
 
+  selectImageOrder( doc:any){
+    this.attachment=doc.base64File;
+    this.ext=doc.fileExtention;
+  }
+
+  sendMail(data){
+    if(data.subject==" " || data.to==" "){
+     this.toast.showError("No se han llenado todos los campos");
+    }
+    else{
+      data.attachment=this.attachment;
+      data.ext=this.ext;
+      if(data.ext==" "){
+        let base=this.api.baseURL
+        data.attachment=base+data.attachment;
+      }
+      
+      this.api.post('/Mails/sendEmail',{data:data}).subscribe((okay)=>{
+        this.toast.showSuccess("Correo mandado con exito")
+        this.attachment=" ";
+        this.ext=" ";
+      },
+      (err) => {
+        this.toast.showError("Revisa tu conexión de red")
+      });
+
+      this.data={}
+      this.data.to=this.client.email
+    }
+  }
+
+  getCat(){
+    this.api.get('/Catalogos')
+    .subscribe((catalogos)=>{
+      this.catalogos=catalogos;
+    })
   }
 
 }

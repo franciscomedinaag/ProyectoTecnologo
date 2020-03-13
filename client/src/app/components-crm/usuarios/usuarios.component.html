@@ -16,7 +16,7 @@
           Agregar 
           </button>
         </div>
-        <div class="col-sm-3" *ngIf="there">
+        <div class="col-sm-3 text-center" *ngIf="there">
           <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (dblclick)="showMeta=!showMeta" >
             Meta bimestral: {{meta.cantidad.toLocaleString("en")}}
             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -25,7 +25,11 @@
               Ultima vez editado: {{meta.fecha | date:'short'}}
             </span>
           </h4>
-          <input *ngIf="!showMeta" type="text" [(ngModel)]="meta.cantidad" (blur)="showMeta=!showMeta;assignMeta(meta)">
+          <span class="text-center" *ngIf="!showMeta">
+            <input  class="text-center" type="text" [(ngModel)]="meta.cantidad" (blur)="showMeta=!showMeta;assignMeta(meta)">
+            <br>
+            <button class="text-center mt-1 btn btn-primary" (click)="showMeta=!showMeta;assignMeta(meta)">Editar</button>
+          </span>
         </div>
         <div class="col-sm-3" *ngIf="!there">
           Ingresa una meta bimestral:

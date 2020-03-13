@@ -100,6 +100,27 @@
             "verb": "get"
           }
         ]
+      },
+      "sendWhats": {
+        "accepts": [{ 
+          "arg": "data",
+          "type": "object",
+          "root": true,
+          "description": "datos para el whats"
+          }],
+        "returns": [{ 
+          "arg": "nose",
+          "type": "object",
+          "root": true,
+          "description": "nose a retornar"
+          }],
+        "description": "mandar un whatsapp",
+        "http": [
+          {
+            "path": "/sendWhats",
+            "verb": "post"
+          }
+        ]
       }
     }
   }
