@@ -55,6 +55,12 @@ export class TratosComponent implements OnInit {
   private clientObj:any={};
   private frecuent:boolean=false;
 
+  private disclaimer:any={
+    nombre:"",
+    show:false,
+    id:""
+  };
+
   constructor(private api:DataApiService, 
     private auth:AuthService, private toast:ToastService) { }
 
@@ -63,7 +69,6 @@ export class TratosComponent implements OnInit {
     this.getUsers()
     this.current=this.auth.getCurrentUser().realm;
     this.getTratos()
-
   }
 
    getTratos(){
@@ -99,7 +104,6 @@ export class TratosComponent implements OnInit {
         }
         this.api.post('/Tratos/getTratosUsuario',{data:data})
         .subscribe((tratos)=>{
-          console.log(tratos)
           this.full=tratos;
           if(!this.showAct){
             this.tratos=[]
@@ -118,7 +122,31 @@ export class TratosComponent implements OnInit {
         }
         });
         this.fullI=this.tratos;
-      }
+        }
+
+
+        this.tratos.forEach(trato => {
+          console.log(trato.subtareas)
+          for(let i = 0; i < trato.subtareas.length; i++) {
+            for(let j = 0; j < trato.subtareas.length - 1; j++) {
+                if(trato.subtareas[j].fechaFin < trato.subtareas[j + 1].fechaFin) {
+                    let swap = trato.subtareas[j];
+                    trato.subtareas[j] = trato.subtareas[j + 1];
+                    trato.subtareas[j + 1] = swap;
+                }
+            }
+          }
+          let twoAgo=new Date();
+          twoAgo.setDate(twoAgo.getDate()-60);
+          if(trato.subtareas[0].fechaFin<twoAgo.toISOString()){
+            console.log("Trato inactive", trato.nombre)
+            this.disclaimer.nombre=trato.nombre
+            this.disclaimer.show=true
+            this.disclaimer.id=trato.id
+          }
+
+        });
+
         })  
       }
   }

@@ -2,7 +2,7 @@
 <div class="container" style="background-color: white;">
     <div class="row pb-5 align-items-center">
         <div  class="col-sm-6 mt-3 text-center">
-            <h3 style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center" *ngIf="user" (dblclick)="user=!user">{{usuario.username}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
+            <h3 style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center" *ngIf="user" (click)="user=!user">{{usuario.username}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
             <input class="text-center" *ngIf="!user" type="text" [(ngModel)]="usuario.username" (blur)="user=!user;assign(usuario)">
             <img class="foto-perfil" *ngIf="img" [src]="api.baseURL+usuario?.imagen"
              (click)="img=!img" onerror="this.src='assets/default/user.png'" alt="">
@@ -13,13 +13,13 @@
             style="max-width: 18rem; margin-left: 15%; margin-right: 15%;">
                 <div class="card-header">Información</div>
                 <div class="card-body">
-                    <p *ngIf="tel" (dblclick)="tel=!tel">{{usuario.telefono}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
+                    <p *ngIf="tel" (click)="tel=!tel">{{usuario.telefono}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
                     <input *ngIf="!tel" type="text" [(ngModel)]="usuario.telefono" (blur)="tel=!tel;assign(usuario)">
 
-                    <p *ngIf="mail" (dblclick)="mail=!mail">{{usuario.email}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
+                    <p *ngIf="mail" (click)="mail=!mail">{{usuario.email}} <i class="fa fa-pencil" aria-hidden="true"></i></p>
                     <input *ngIf="!mail" type="text" [(ngModel)]="usuario.email" (blur)="mail=!mail;assign(usuario)">
 
-                    <p *ngIf="pass" (dblclick)="pass=!pass" >Cambiar contraseña <i class="fa fa-pencil" aria-hidden="true"></i></p>
+                    <p *ngIf="pass" (click)="pass=!pass" >Cambiar contraseña <i class="fa fa-pencil" aria-hidden="true"></i></p>
                     <p *ngIf="!pass" >Ingresa la nueva contraseña: <br><input [(ngModel)]="pass1" class="mt-2"  type="password"></p>
                     <p *ngIf="!pass" >Ingresala de nuevo: <br><input [(ngModel)]="pass2" class="mt-2"  type="password"></p>
                         <br>

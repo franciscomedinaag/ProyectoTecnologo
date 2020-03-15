@@ -23,7 +23,7 @@ export class SubtareasComponent implements OnInit {
     tratoId:"",
     categoriaId:""
   }
-  private subtareas:any;
+  private subtareas:any=[];
   private id:any;
   private full:any;
   private hoyGuion:any;
@@ -32,6 +32,8 @@ export class SubtareasComponent implements OnInit {
   private showDesc:boolean=true;
   private estado=0;
   private userTel:any;
+  private allSubtareas:any;
+
 
   constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService) { }
 
@@ -81,17 +83,39 @@ export class SubtareasComponent implements OnInit {
   }
 
   getSub(){
+    let fail=0;
+    let done=0;
     let data={vendedorId:this.id}
+    this.subtareas=[]
     this.api.post('/Subtareas/getSubtareas', {data:data})
     .subscribe((subtareas)=>{
-      this.subtareas=subtareas
-      this.subtareas.forEach(s => {
+      this.allSubtareas=subtareas
+      this.allSubtareas.forEach(s => {
         s.catName=this.categorias.find(x=>x.id==s.categoriaId).nombre
         if(s.fechaFin<this.hoyLocale && s.estado==0){
           this.setVencida(s)
         }
+        
+        if(s.estado==1 && done<=20){
+          //añadir solo 20 subtareas
+          this.subtareas.push(s)
+          done++;
+        }
+        else if(s.estado==2 && fail<=20){
+          //añadir solo 20 subtareas
+          this.subtareas.push(s)
+          fail++;
+        }
+        else if(s.estado==0){
+          this.subtareas.push(s)
+        }
       });
     })
+  }
+  
+  setVencida(s){
+    s.estado=2;
+    this.api.patch('/Subtareas',s).subscribe((okay)=>{})
   }
 
   createSub(){
@@ -148,10 +172,6 @@ export class SubtareasComponent implements OnInit {
     }
   }
 
-  setVencida(s){
-    s.estado=2;
-    this.api.patch('/Subtareas',s).subscribe((okay)=>{})
-  }
 
   setDescription(full){
     this.api.patch('/Subtareas',full).subscribe((okay)=>{
@@ -160,31 +180,30 @@ export class SubtareasComponent implements OnInit {
     })
   }
 
-  getUserTel(){
-    this.api.get(`/Usuarios/${this.auth.getCurrentUser().id}`)
-      .subscribe((tel)=>{
-        this.userTel=tel
-        this.sendWhats(this.userTel.telefono)
-      })
-  }
+  // getUserTel(){
+  //   this.api.get(`/Usuarios/${this.auth.getCurrentUser().id}`)
+  //     .subscribe((tel)=>{
+  //       this.userTel=tel
+  //       this.sendWhats(this.userTel.telefono)
+  //     })
+  // }
 
-  sendWhats(tel){
-    let body:String="Tareas agendadas para hoy:"
-    this.subtareas.forEach(s => {
-      if(s.estado==0){
-        if(s.fechaFin==this.hoyLocale){
-          body=body+s.titulo+' / '
-        }
-      }
-    });
-    let data={
-      to:'whatsapp:+521'+tel,
-      body:body
-    }
-    if(body!="Tareas agendadas para hoy:"){
-      this.api.post('/Clients/sendWhats',{data:data}).subscribe((sent)=>{})
-    }
-
-  }
+  // sendWhats(tel){
+  //   let body:String="Tareas agendadas para hoy:"
+  //   this.subtareas.forEach(s => {
+  //     if(s.estado==0){
+  //       if(s.fechaFin==this.hoyLocale){
+  //         body=body+s.titulo+' / '
+  //       }
+  //     }
+  //   });
+  //   let data={
+  //     to:'whatsapp:+521'+tel,
+  //     body:body
+  //   }
+  //   if(body!="Tareas agendadas para hoy:"){
+  //     this.api.post('/Clients/sendWhats',{data:data}).subscribe((sent)=>{})
+  //   }
+  // }
 
 }

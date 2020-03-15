@@ -24,7 +24,7 @@
             <div class="card text-white bg-secondary mb-3" style=" padding:5%; min-width: 18rem;">
             <div class="row">
                 <div class="col">
-                    <span *ngIf="neg" (dblclick)="neg=!neg"><strong>Tipo de cliente:  </strong> {{client.negociacion}} 
+                    <span *ngIf="neg" (click)="neg=!neg"><strong>Tipo de cliente:  </strong> {{client.negociacion}} 
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </span>
                     <ng-select class="custom"
@@ -41,21 +41,21 @@
             <div *ngIf="client.negociacion!='Residencial'">
                 <div class="row">
                     <div class="col">
-                        <span *ngIf="emp" (dblclick)="emp=!emp"><strong>Empresa:  </strong> {{client.empresa}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <span *ngIf="emp" (click)="emp=!emp"><strong>Empresa:  </strong> {{client.empresa}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
                         <input class="text-center" *ngIf="!emp" type="text" [(ngModel)]="client.empresa" 
                         (blur)="emp=!emp;validate(client.empresa)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <span *ngIf="gir" (dblclick)="gir=!gir"><strong>Giro de la empresa:  </strong> {{client.giro}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <span *ngIf="gir" (click)="gir=!gir"><strong>Giro de la empresa:  </strong> {{client.giro}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
                         <input class="text-center" *ngIf="!gir" type="text" [(ngModel)]="client.giro" 
                         (blur)="gir=!gir;validate(client.giro)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <span *ngIf="pue" (dblclick)="pue=!pue"><strong>Puesto:  </strong> {{client.puesto}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <span *ngIf="pue" (click)="pue=!pue"><strong>Puesto:  </strong> {{client.puesto}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
                         <input class="text-center" *ngIf="!pue" type="text" [(ngModel)]="client.puesto" 
                         (blur)="pue=!pue;validate(client.puesto)">
                     </div>
@@ -63,14 +63,14 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <span *ngIf="ema" (dblclick)="ema=!ema"><strong>Email:  </strong> {{client.email}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                    <span *ngIf="ema" (click)="ema=!ema"><strong>Email:  </strong> {{client.email}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
                         <input class="text-center" *ngIf="!ema" type="text" [(ngModel)]="client.email" 
                         (blur)="ema=!ema;validate(client.email)">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <span *ngIf="est" (dblclick)="est=!est"><strong>Estado:  </strong> {{client.estado}} 
+                    <span *ngIf="est" (click)="est=!est"><strong>Estado:  </strong> {{client.estado}} 
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </span>
                     <ng-select class="custom"
@@ -92,7 +92,13 @@
             </div>
         </div>
         <div class="col-sm-4 "  >
-            
+          <h4 class="text-center" style="color:#33ACE2;font-weight: bold;">Historial: </h4>
+          <ul>
+            <li  *ngFor="let h of historial" >
+              {{h.titulo}} <br> <span style="color:#33ACE2;">{{h.fechaFin | date:'shortDate'}}</span>
+            </li>
+          </ul>
+
         </div>
         <div class="col-sm-3 " >
             <h4  style="color:#33ACE2;font-weight: bold;"  data-toggle="modal" data-target="#addNote">Notas: <small style="font-size: small;"> (Agregar) </small></h4>           

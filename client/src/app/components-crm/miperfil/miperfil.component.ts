@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
 import { ToastService } from '../../services/toast.service';
 import { ThrowStmt } from '@angular/compiler';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-miperfil',
@@ -27,7 +29,8 @@ export class MiperfilComponent implements OnInit {
 
   private sendPass:any={newPassword:"",id:0};
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
+  constructor(private activated:ActivatedRoute, private api:DataApiService, 
+    private toast:ToastService, private router:Router, private auth:AuthService) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
@@ -42,6 +45,18 @@ export class MiperfilComponent implements OnInit {
   }
   
   assign(usuario:any){
+    if(Number(this.usuario.telefono)){
+      if(this.usuario.telefono.length<8 || this.usuario.telefono.length>=14){
+        this.toast.showError("El telefono debe ser entre 8-12 caracteres");
+        this.getUser()
+        return;
+      }
+    }
+    else{
+      this.toast.showError("El telefono debe ser un numero");
+      this.getUser()
+      return;
+    }
     this.api.patch('/Usuarios',usuario).subscribe((edited)=>{
       this.usuario=edited
      })
@@ -56,11 +71,17 @@ export class MiperfilComponent implements OnInit {
       this.api.post('/Usuarios/setPass',{sendPass:this.sendPass},true,null)
       .subscribe((done)=>{
         this.toast.showSuccess("Contraseña cambiada satisfactoriamente")
+        this.onLogout()
       })
     }
     else{
       this.toast.showError("Las contraseñas no coinciden")
     }
+  }
+
+  onLogout():void{
+    this.auth.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   selectImageOrder( img:any){

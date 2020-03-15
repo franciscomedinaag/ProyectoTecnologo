@@ -78,13 +78,19 @@ export class UsuariosComponent implements OnInit {
 
   assignMeta(meta:any){
     if(Number(meta.cantidad)){
-      this.meta.fecha=new Date().toISOString();
-      this.api.patch('/Metas',meta).subscribe((edited)=>{
-        this.meta=edited
-       })
+      if(meta.cantidad>0){
+        this.meta.fecha=new Date().toISOString();
+        this.api.patch('/Metas',meta).subscribe((edited)=>{
+          this.meta=edited
+        })
+      }
+      else{
+        this.toast.showError("Meta tiene que ser un valor positivo")
+        this.getMeta();
+      }
     }
     else{
-      this.toast.showError("Ingresa un numero")
+      this.toast.showError("La meta tiene que ser una cantidad")
       this.getMeta();
     }
   }
@@ -126,16 +132,36 @@ export class UsuariosComponent implements OnInit {
       this.user.imagen=" "
       this.user.meta=0
       this.user.realm="user"
-      this.api.post('/Usuarios',this.user)
-      .subscribe((done)=>{
-        this.toast.showSuccess("Usuario creado")
-        this.user={}
-        this.getUsers();
-      },
-      (err) => {
-        this.toast.showError("Los datos introducidos son incorrectos")
-      });
+      if(Number(this.user.telefono)){
+        if(this.user.telefono.length<8 || this.user.telefono.length>=14){
+          this.toast.showError("El telefono debe ser entre 8-12 caracteres");
+          return;
+        }
       }
+      else{
+        this.toast.showError("El telefono no es un numero");
+        return
+      }
+
+      this.api.get(`/Usuarios`,true,{where:{username:this.user.username}})
+      .subscribe((found:Array<any>)=>{
+        if(found.length==0){
+          this.api.post('/Usuarios',this.user)
+          .subscribe((done)=>{
+            this.toast.showSuccess("Usuario creado")
+            this.user={}
+            this.getUsers();
+          },
+          (err) => {
+            this.toast.showError("Correo no valido")
+          });
+        }
+        else{
+          this.toast.showError("Este correo ya está registrado")
+        }
+      })
+
+    }
     else{
       this.toast.showError("Las contraseñas no coinciden")
     }

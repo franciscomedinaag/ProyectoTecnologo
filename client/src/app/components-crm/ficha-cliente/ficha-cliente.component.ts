@@ -32,6 +32,7 @@ export class FichaClienteComponent implements OnInit {
   private attachment:any=" "
   private ext:any=" "
   private catalogos:any=[];
+  private historial:any=[]
 
   private data:any={
     subject:" ",
@@ -56,15 +57,35 @@ export class FichaClienteComponent implements OnInit {
        this.data.to=this.client.email
        this.terminados=[]
        this.client.tratos.forEach(trato => {
+         this.api.get(`/Subtareas`,true,{where:{tratoId:trato.id}})
+         .subscribe((subtareas:Array<any>)=>{
+           subtareas.forEach(s => {
+             if(s.estado==0){
+               this.historial.push(s)
+               this.sortHist()
+             }
+           });
+         })
          if(trato.estado==1){
            this.terminados.push(trato.fechaFin)
          }
        });
        this.getAnti(this.terminados);
-      this.isFrecuent();
+       this.isFrecuent();
       })
   }
 
+  sortHist(){
+    for(let i = 0; i < this.historial.length; i++) {
+      for(let j = 0; j < this.historial.length - 1; j++) {
+          if(this.historial[j].fechaFin < this.historial[j + 1].fechaFin) {
+              let swap = this.historial[j];
+              this.historial[j] = this.historial[j + 1];
+              this.historial[j + 1] = swap;
+          }
+      }
+    }
+  }
   async isFrecuent(){
 
      let frecuente=0;
@@ -80,12 +101,10 @@ export class FichaClienteComponent implements OnInit {
       if(frecuente<3){
        this.client.frecuente=false;
        this.assign(this.client);
-       console.log("no")
       }
       else{
         this.client.frecuente=true;
         this.assign(this.client);
-        console.log("si")
       }
 
   }
@@ -138,6 +157,9 @@ export class FichaClienteComponent implements OnInit {
     if(dias){
       this.antiquity=this.antiquity+dias+" dias. "
     }
+    else{
+      this.antiquity="0"
+    }
   }
 
 
@@ -150,15 +172,6 @@ export class FichaClienteComponent implements OnInit {
     if(text!=null && text!=""){this.assign(this.client)}
     else{this.getClient();}
   }
-
-  // sendMail(){
-  //   this.api.get('/Mails/sendEmail').subscribe((okay)=>{
-  //     console.log("se armo")
-  //   },
-  //   (err) => {
-  //     console.log("Error: ",err)
-  //   });
-  // }
 
   createNote(note){
     note.fecha=new Date().toISOString();

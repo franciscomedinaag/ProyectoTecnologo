@@ -17,7 +17,7 @@
           </button>
         </div>
         <div class="col-sm-3 text-center" *ngIf="there">
-          <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (dblclick)="showMeta=!showMeta" >
+          <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (click)="showMeta=!showMeta" >
             Meta bimestral: {{meta.cantidad.toLocaleString("en")}}
             <i class="fa fa-pencil" aria-hidden="true"></i>
             <br>
@@ -100,7 +100,7 @@
             </div>
             <div class="form-group">
               <label for="telefono">Teléfono</label>
-              <input  [(ngModel)]="user.telefono" name="telefono" type="number" class="form-control" id="telefono" placeholder="Ingresa numero de teléfono">
+              <input  [(ngModel)]="user.telefono" name="telefono" type="text" class="form-control" id="telefono" placeholder="Ingresa numero de teléfono">
             </div>
             <div class="form-group">
               <label for="email">Correo electrónico</label>

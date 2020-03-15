@@ -25,7 +25,8 @@
     </div>
     <div class="row align-items-center pb-5">
         <div class="col-sm text-center">
-           <p> <span style="font-weight: bold;">Cliente: </span> {{trato.cliente?.nombre}} </p>             
+          <p> <span style="font-weight: bold;">Cliente: </span>
+            <a [routerLink]="['/fichaclient',trato.cliente.id]"> {{trato.cliente?.nombre}} </a></p>           
            <p> <span style="font-weight: bold;">Vendedor: </span> {{trato.vendedor?.username}} </p>   
            <p *ngIf="trato.estado==2"> <span style="font-weight: bold;color:crimson">Reporte trato vencido: </span> {{trato.reporte}} </p>             
         </div>

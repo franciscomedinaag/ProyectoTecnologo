@@ -20,7 +20,8 @@ export class FichaTratoComponent implements OnInit {
     estado:0,
     fechaFin:null,
     nota:" " ,
-    reporte:" "
+    reporte:" ",
+    cliente:{}
   };
   private desc:boolean=true;
   private toUpload:boolean=false;

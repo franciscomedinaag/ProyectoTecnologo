@@ -69,31 +69,51 @@ export class ClientesComponent implements OnInit {
       this.toast.showError("Telefono debe ser un numero")
       return;
     }
-      if(this.client.nombre==null || this.client.negociacion==null){
-        this.toast.showError("Nombre y tipo son campos obligatorios");
-        return;
-      }
+    if(this.client.nombre==null || this.client.negociacion==null){
+      this.toast.showError("Nombre y tipo son campos obligatorios");
+      return;
+    }
+    if(!this.validateEmail(this.client.email)){
+      this.toast.showError("Correo electrónico invalido");
+      return;
+    }
+
       this.fecha=new Date().toISOString();
       this.client.registro=this.fecha;
       this.client.cantTratos=0;
       this.client.real=false;
 
-      this.api.post('/Clients',this.client)
-      .subscribe((done)=>{
-        this.toast.showSuccess("Cliente registrado")
-        this.client={}
-        this.getClients();
-      },
-      (err) => {
-        this.toast.showError("Los datos introducidos son incorrectos")
-      });
+      this.api.get(`/Clients`,true,{where:{email:this.client.email}})
+      .subscribe((found:Array<any>)=>{
+        if(found.length==0){
+          this.api.post('/Clients',this.client)
+          .subscribe((done)=>{
+            this.toast.showSuccess("Cliente registrado")
+            this.client={}
+            this.getClients();
+          },
+          (err) => {
+            this.toast.showError("Datos incompletos")
+          });
+        }
+        else{
+          this.toast.showError("Este correo ya está registrado")
+        }
+      })
+
+  }
+
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
   getClients(){
-    this.api.get('/Clients',true)
+    this.api.get('/Clients/getFullClients')
       .subscribe((clients:Array<any>)=>{
+        clients.push(clients[clients.length-1])
+        clients.push(clients[clients.length-2])
         this.clients=clients;
-        //this.clients[clients.length-1]=clients[clients.length-1]
         this.filtered=this.clients;
         this.clientsWithEmail=this.filtered;
         this.clientsWithEmail.forEach(client => {
@@ -106,13 +126,10 @@ export class ClientesComponent implements OnInit {
   }
 
   async isFrecuent(clienteIn){
-    this.api.get(`/Clients/${clienteIn.id}/getClient`)
-    .subscribe((client)=>{
-      this.clientCheck=client;
       let frecuente=0;
       let sixAgo=new Date();
       sixAgo.setDate(sixAgo.getDate()-180);
-      this.clientCheck.tratos.forEach(trato => {
+      clienteIn.tratos.forEach(trato => {
          if(trato.estado==1){
            if(trato.fechaFin>sixAgo.toISOString()){
              frecuente++;
@@ -120,19 +137,18 @@ export class ClientesComponent implements OnInit {
          }
        });
        if(frecuente<3){
-        this.clientCheck.frecuente=false;
-        this.assign(this.clientCheck);
+        clienteIn.frecuente=false;
+        this.assign(clienteIn);
        }
        else{
-         this.clientCheck.frecuente=true;
-         this.assign(this.clientCheck);
+         clienteIn.frecuente=true;
+         this.assign(clienteIn);
        }
-    })
+    
  }
 
  assign(client:any){
-  this.api.patch('/Clients',client).subscribe((edited)=>{
-   })
+  this.api.patch('/Clients',client).subscribe((edited)=>{})
 }
 
   onSearchChange(searchValue: string): void {  

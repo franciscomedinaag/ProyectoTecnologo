@@ -55,6 +55,11 @@
         "type": "hasMany",
         "model": "Archivo",
         "foreignKey": "tratoId" 
+      },
+      "subtareas": {
+        "type": "hasMany",
+        "model": "Subtarea",
+        "foreignKey": "tratoId" 
       }
    },
     "acls": [

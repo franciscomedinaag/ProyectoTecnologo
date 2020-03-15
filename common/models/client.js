@@ -24,4 +24,11 @@ module.exports = function(Client) {
         })    
     }
 
+    Client.getFullClients = function(callback) {
+        Client.find({include:['notas','tratos']}, 
+        function(err,client){
+            return callback(null,client);
+        })
+    };
+
 };

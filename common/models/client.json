@@ -101,6 +101,24 @@
           }
         ]
       },
+      "getFullClients": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "clients a retornar"
+          }
+        ],
+        "description": "Traer clientes con sus include",
+        "http": [
+          {
+            "path": "/getFullClients",
+            "verb": "get"
+          }
+        ]
+      },
       "sendWhats": {
         "accepts": [{ 
           "arg": "data",
