@@ -1,0 +1,57 @@
+{
+    "name": "ProductoFijo",
+    "plural": "ProductosFijos",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "clave": {
+        "type": "string",
+        "required": "true"
+      },
+      "imagen": {
+        "type": "string",
+        "required": "true"
+      },
+      "descripcion": {
+        "type": "string",
+        "required": "true"
+      },
+      "precio": {
+        "type": "number",
+        "required": "true"
+      },
+      "fr": {
+        "type": "string",
+        "required": "true"
+      },
+      "fo": {
+        "type": "string",
+        "required": "true"
+      },
+      "al": {
+        "type": "string",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$unauthenticated",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {
+    }
+  }
+  

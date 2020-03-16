@@ -39,6 +39,7 @@ import { DataApiService } from './services/data-api.service';
 import { AuthService } from './services/auth.service';
 import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.component';
 import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
+import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { SubtareasComponent } from './components-crm/subtareas/subtareas.compone
     CatalogosComponent,
     TratosComponent,
     FichaTratoComponent,
-    SubtareasComponent
+    SubtareasComponent,
+    PreciosFijosComponent
   ],
   imports: [
     BrowserModule,
