@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
 import { ToastService } from '../../services/toast.service';
@@ -6,7 +6,8 @@ import { ToastService } from '../../services/toast.service';
 @Component({
   selector: 'app-ficha-trato',
   templateUrl: './ficha-trato.component.html',
-  styleUrls: ['./ficha-trato.component.css']
+  styleUrls: ['./ficha-trato.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FichaTratoComponent implements OnInit {
 
@@ -34,11 +35,25 @@ export class FichaTratoComponent implements OnInit {
   private clientObj:any={};
   private frecuent:boolean=false;
 
+  private subtarea:any={
+    fechaInicio:"",
+    fechaFin:"",
+    titulo:"",
+    descripcion:"",
+    estado:0,
+    tratoId:"",
+    categoriaId:""
+  }
+  private hoyGuion:any;
+  private categorias:any=[];
+
   constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
+    this.hoyGuion=FichaTratoComponent.setHoy()
     this.getTrato();
+    this.getCategorias();
   }
 
   getTrato(){
@@ -194,6 +209,63 @@ export class FichaTratoComponent implements OnInit {
        console.log("no hacerlo frecuente AUN")
      }
    });
+  }
+
+
+  createSub(){
+    let inicio=this.hoyGuion.split("-")
+    let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
+    this.subtarea.fechaInicio=i;
+    this.subtarea.tratoId=this.id
+    if(this.subtarea.titulo=="" || this.subtarea.fechaFin=="" || this.subtarea.descripcion=="" ||
+    this.subtarea.tratoId=="" ||this.subtarea.categoriaId==""){
+      this.toast.showError("Debes llenar todos los campos")
+      return
+    }
+    else if(this.subtarea.fechaFin<this.hoyGuion){
+      this.toast.showError("!La fecha límite ya pasó!")
+      return
+    }
+    else{
+      let fin=this.subtarea.fechaFin.split("-");
+      let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
+      this.subtarea.fechaFin=f;
+      this.api.post('/Subtareas',this.subtarea)
+      .subscribe((okay)=>{
+        this.subtarea={ fechaInicio:"",
+        fechaFin:"",
+        titulo:"",
+        descripcion:"",
+        estado:0,
+        tratoId:"",
+        categoriaId:""}
+        this.getTrato()
+        this.toast.showSuccess("Subtarea creada")
+      })
+    }
+  }
+
+
+  private static setHoy():string{ //Obtener hoy en formato con guion (del ddatepicker)
+    let hoy;
+    hoy=new Date().toLocaleDateString();
+    hoy=hoy.split('/');
+      if(hoy[0].length<2){
+        hoy[0]='0'+hoy[0]
+      }
+      if(hoy[1].length<2){
+        hoy[1]='0'+hoy[1]
+      }
+    let hoyString=hoy[0]+'-'+hoy[1]+'-'+hoy[2]
+    hoy=hoyString
+    return hoyString;
+  }
+
+  getCategorias(){
+    this.api.get('/CategoriaSubs',true)
+    .subscribe((categorias)=>{
+      this.categorias=categorias
+    })  
   }
 
 }

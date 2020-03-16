@@ -126,7 +126,6 @@ export class TratosComponent implements OnInit {
 
 
         this.tratos.forEach(trato => {
-          console.log(trato.subtareas)
           for(let i = 0; i < trato.subtareas.length; i++) {
             for(let j = 0; j < trato.subtareas.length - 1; j++) {
                 if(trato.subtareas[j].fechaFin < trato.subtareas[j + 1].fechaFin) {
@@ -139,7 +138,6 @@ export class TratosComponent implements OnInit {
           let twoAgo=new Date();
           twoAgo.setDate(twoAgo.getDate()-60);
           if(trato.subtareas[0].fechaFin<twoAgo.toISOString()){
-            console.log("Trato inactive", trato.nombre)
             this.disclaimer.nombre=trato.nombre
             this.disclaimer.show=true
             this.disclaimer.id=trato.id
@@ -214,7 +212,6 @@ export class TratosComponent implements OnInit {
       let frecuente=0;
       let sixAgo=new Date();
       sixAgo.setDate(sixAgo.getDate()-180);
-      console.log("los tratos", this.clientObj.tratos);
       this.clientObj.tratos.forEach(trato => {
          if(trato.estado==1){
            if(trato.fechaFin>sixAgo.toISOString()){
@@ -235,10 +232,20 @@ export class TratosComponent implements OnInit {
    }
    
    assign(trato, estado){
-    let mess;
+     let ready=false;
+     if(estado){
+       trato.subtareas.forEach(s => {
+         if(s.estado==1 && s.categoriaId==5){
+          ready=true;
+         }
+       });
+     }
+
+     if(ready){
+      let mess;
       if(estado){mess='¿Desea cerrar el trato?'}
       else{mess='¿Desea dar por perdido el trato?'}
-
+      
       if(confirm(mess)){
       let fecha=new Date().toISOString();
       trato.fechaFin=fecha;
@@ -247,11 +254,14 @@ export class TratosComponent implements OnInit {
       if(estado){trato.estado=1}
       else{trato.estado=2}
 
-      this.api.patch('/Tratos',trato).subscribe( (edited)=>{
-         this.isFrecuent(trato.clientId)
-        
-        this.getTratos();
-      })
+        this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+          this.isFrecuent(trato.clientId)
+          this.getTratos();
+        })
+      }
+    }
+    else{
+      this.toast.showError("El trato no cuenta con una cotización terminada")
     }
   }
 

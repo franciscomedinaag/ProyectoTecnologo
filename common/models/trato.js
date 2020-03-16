@@ -19,7 +19,7 @@ module.exports = function(Trato) {
 
     Trato.prototype.getTrato = function(callback) {
         var id=this.id
-        Trato.findById(id,{include:['vendedor','cliente','archivos']}, function(err,client){
+        Trato.findById(id,{include:['vendedor','cliente','archivos','subtareas']}, function(err,client){
             return callback(null,client);
         })
     };

@@ -37,11 +37,27 @@
             <p *ngIf="trato.nota!=' '"> <span style="font-weight: bold;">Nota reapertura: </span> {{trato.nota}}</p>    
         </div>
     </div>
-    <div class="row align-items-center pb-4">
+    <div class="row align-items-center">
         <div class="col text-center">
-            <h3 style="font-weight: bold; color:#33ACE2">Subtareas</h3>
+            <h4  data-toggle="modal" data-target="#subModal" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación<small>(Agregar)</small></h4>
         </div>
     </div>
+    <hr>
+    <div class="row align-items-center pb-4">
+      <div class="col text-center">
+        <ul>
+          <li *ngFor="let s of trato.subtareas">
+            <strong> {{s.titulo}} </strong>   |   {{s.fechaFin | date:'shortDate'}}  | 
+            <strong class="text-warning" *ngIf="s.estado==0">  Pendiente</strong>
+            <strong class="text-succes" *ngIf="s.estado==1">  Realizada</strong> 
+            <strong class="text-danger" *ngIf="s.estado==2">  Vencida</strong>
+            <br>
+            {{s.descripcion}}
+            <hr>
+          </li>
+        </ul>
+      </div>
+  </div>
 </div>
 <app-footer-crm></app-footer-crm>
 
@@ -134,7 +150,6 @@
     </div>
   </div>
 
-  <!--HACERLOS DEFINITIVO ASI COMO INTERCALAR ENTRE DEFINITIVOS Y NO DEFINITIVOS-->
 
   <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -159,6 +174,60 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" (click)="assign(trato,false)" data-dismiss="modal" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Crear subtarea</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+
+                <div class="form-group">
+                    <label for="descripcion">Titulo: </label>
+                    <input  [(ngModel)]="subtarea.titulo" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" >
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea  [(ngModel)]="subtarea.descripcion" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="mr-3" for="nombre">Fecha límite:</label>
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                </div>
+
+              <div class="form-group">
+                Tipo de subtarea:
+                <ng-select class="custom"
+                [items]="categorias"
+                [multiple]="false"
+                [(ngModel)]="subtarea.categoriaId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="categoriaId"
+                placeholder="Inserte el tipo de tarea">
+                </ng-select> 
+              </div>
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createSub()" class="btn btn-primary">Crear</button>
         </div>
       </div>
     </div>
