@@ -1,0 +1,27 @@
+.card{
+    border: 1px solid rgb(94, 93, 93);
+    max-height: 100%;
+}
+
+.card-img-top{
+    height: 180px;
+    width: 100%;
+}
+
+.cardB{
+    width:47%
+}
+
+.producto{
+    max-height: 100px;
+}
+
+@media screen and (max-width: 1000px) {
+    .cardB{
+        width: 100%;
+    }
+  }
+
+span:hover{
+    opacity:65%
+}

@@ -14,6 +14,7 @@ import { TratosComponent } from './components-crm/tratos/tratos.component';
 import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.component';
 import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
 import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
+import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -35,7 +36,7 @@ const routes: Routes = [
   {path: 'fichatrato/:id',component: FichaTratoComponent},
   {path: 'subtareas',component: SubtareasComponent},
   {path: 'preciosfijos',component: PreciosFijosComponent},
-
+  {path: 'cotizacion/:tratoId/:subId',component: CotizacionComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class SubtareasComponent implements OnInit {
   private allSubtareas:any;
 
 
-  constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService) { }
+  constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService, private router:Router) { }
 
   ngOnInit() {
     this.id=this.auth.getCurrentUser().id;
@@ -85,6 +86,7 @@ export class SubtareasComponent implements OnInit {
   getSub(){
     let fail=0;
     let done=0;
+    let pend=0;
     let data={vendedorId:this.id}
     this.subtareas=[]
     this.api.post('/Subtareas/getSubtareas', {data:data})
@@ -108,6 +110,7 @@ export class SubtareasComponent implements OnInit {
         }
         else if(s.estado==0){
           this.subtareas.push(s)
+          pend++;
         }
       });
     })
@@ -153,7 +156,7 @@ export class SubtareasComponent implements OnInit {
 
   seeFull(full){
     if(full.categoriaId==5){
-      /*MANDAR A COTIZACION*/ 
+     this.router.navigate([`/cotizacion/${full.tratoId}/${full.id}`])
     }
     this.full=full
   }
@@ -179,31 +182,5 @@ export class SubtareasComponent implements OnInit {
       this.full=okay
     })
   }
-
-  // getUserTel(){
-  //   this.api.get(`/Usuarios/${this.auth.getCurrentUser().id}`)
-  //     .subscribe((tel)=>{
-  //       this.userTel=tel
-  //       this.sendWhats(this.userTel.telefono)
-  //     })
-  // }
-
-  // sendWhats(tel){
-  //   let body:String="Tareas agendadas para hoy:"
-  //   this.subtareas.forEach(s => {
-  //     if(s.estado==0){
-  //       if(s.fechaFin==this.hoyLocale){
-  //         body=body+s.titulo+' / '
-  //       }
-  //     }
-  //   });
-  //   let data={
-  //     to:'whatsapp:+521'+tel,
-  //     body:body
-  //   }
-  //   if(body!="Tareas agendadas para hoy:"){
-  //     this.api.post('/Clients/sendWhats',{data:data}).subscribe((sent)=>{})
-  //   }
-  // }
 
 }

@@ -52,6 +52,65 @@
       }
     ],
     "methods": {
+      "setProduct": {
+        "accepts": [
+          {
+            "arg": "newFile",
+            "type": "object",
+            "required": true,
+            "description": "product to save",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "file",
+            "type": "object",
+            "root": true,
+            "description": "new file"
+          }
+        ],
+        "description": " Add product with image ",
+        "http": [
+          {
+            "path": "/setProduct",
+            "verb": "post"
+          }
+        ]
+      },
+      "deleteFile": {
+        "accepts": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "description": " Delete File ",
+        "http": [
+          {
+            "path": "/deleteFile",
+            "verb": "post"
+          }
+        ]
+      }
     }
   }
   

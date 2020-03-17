@@ -29,3 +29,10 @@ h3:hover{
     opacity:60%
 }
 
+.tit:hover{
+    opacity: 50%;
+}
+
+.tit{
+    color:#33ACE2;
+}

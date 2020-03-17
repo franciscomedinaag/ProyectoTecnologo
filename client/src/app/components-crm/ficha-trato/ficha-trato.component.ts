@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
 import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ficha-trato',
@@ -47,7 +48,8 @@ export class FichaTratoComponent implements OnInit {
   private hoyGuion:any;
   private categorias:any=[];
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
+  constructor(private activated:ActivatedRoute, private api:DataApiService, 
+    private toast:ToastService, private router:Router) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
@@ -266,6 +268,10 @@ export class FichaTratoComponent implements OnInit {
     .subscribe((categorias)=>{
       this.categorias=categorias
     })  
+  }
+
+  gotCoti(sub){
+    if(sub.categoriaId==5){this.router.navigate([`/cotizacion/${sub.tratoId}/${sub.id }`])}
   }
 
 }

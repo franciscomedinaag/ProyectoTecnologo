@@ -40,6 +40,7 @@ import { AuthService } from './services/auth.service';
 import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.component';
 import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
 import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
+import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fi
     TratosComponent,
     FichaTratoComponent,
     SubtareasComponent,
-    PreciosFijosComponent
+    PreciosFijosComponent,
+    CotizacionComponent
   ],
   imports: [
     BrowserModule,

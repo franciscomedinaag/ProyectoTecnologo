@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col text-center">
         <div class=" table-responsive">
-            <table class="table lista">
+            <table class="table lista table-striped">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">Nombre</th>
@@ -27,7 +27,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let c of filtered; let i=index" [className]="c.frecuente ? 'rowColor' : ''">
+                  <tr *ngFor="let c of filtered; let i=index" [className]="c.frecuente ? 'table-warning' : ''">
                     <th scope="row">{{c.nombre}}</th>
                     <td>{{c.email}}</td>
                     <td>{{c.telefono}}</td>
