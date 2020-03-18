@@ -217,6 +217,7 @@ export class FichaTratoComponent implements OnInit {
   createSub(){
     let inicio=this.hoyGuion.split("-")
     let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
+    let mesSub=this.subtarea.fechaFin.split("-")[1]
     this.subtarea.fechaInicio=i;
     this.subtarea.tratoId=this.id
     if(this.subtarea.titulo=="" || this.subtarea.fechaFin=="" || this.subtarea.descripcion=="" ||
@@ -224,7 +225,7 @@ export class FichaTratoComponent implements OnInit {
       this.toast.showError("Debes llenar todos los campos")
       return
     }
-    else if(this.subtarea.fechaFin<this.hoyGuion){
+    else if(this.subtarea.fechaFin<this.hoyGuion && mesSub<=inicio[1]){
       this.toast.showError("!La fecha límite ya pasó!")
       return
     }
@@ -233,7 +234,19 @@ export class FichaTratoComponent implements OnInit {
       let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
       this.subtarea.fechaFin=f;
       this.api.post('/Subtareas',this.subtarea)
-      .subscribe((okay)=>{
+      .subscribe((okay:any)=>{
+        if(okay.categoriaId==5){
+          let cotizacion:any={
+            manoObra:0,
+            administrativos:0,
+            utilidad:0,
+            impuestos:0,
+            subtareaId:okay.id,
+          }  
+          this.api.post(`/Cotizaciones`,cotizacion)
+          .subscribe((coti)=>{
+          })  
+        }
         this.subtarea={ fechaInicio:"",
         fechaFin:"",
         titulo:"",

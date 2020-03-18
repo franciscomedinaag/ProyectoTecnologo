@@ -7,14 +7,115 @@
     </div>
     <div class="row pb-4">
         <div class="col-sm-4 text-center">
-            <button class="btn mt-1 btn-primary">Agregar producto</button>
+            <button class="btn headButton mt-1 btn-primary" data-toggle="modal" data-target="#addProducto">Agregar producto</button>
         </div>
         <div class="col-sm-4 text-center">
-            <button class="btn mt-1 btn-secondary">Solicitar al administrador</button>
+            <button class="btn headButton mt-1 btn-secondary">Solicitar al administrador</button>
         </div>
         <div class="col-sm-4 text-center">
-            <button class="btn mt-1 btn-primary">Conceptos</button>
+            <button class="btn headButton mt-1 btn-primary">Conceptos</button>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col text-center">
+            <div class=" table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                  <tr>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Descripción</th>
+                      <th scope="col">Producto Base</th>
+                      <th scope="col">Tablones</th>
+                      <th scope="col">Precio Unitario</th>
+                      <th scope="col">Precio total</th>
+                      <th scope="col">Quitar</th>
+                  </tr>
+                    </thead>
+                    <tbody>
+                  <tr *ngFor="let p of productosCreados">
+                        <td scope="row">{{p.cantidad}}</td>
+                        <td>{{p.descripcion}}</td>
+                        <td>{{p.productoFijo.clave}}</td>
+                        <td>{{p.cantTablones}}</td>
+                        <td>base+precioTablon*cantTablones</td>
+                        <!-- <td>{{p.productosFijo.precio+p.tablon.precio*p.cantTablones}}</td> -->
+                        <td>eso * cantidad</td>
+                        <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+                  </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 <app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="addProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar a la cotización</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Descripción: </label>
+                <textarea  [(ngModel)]="producto.descripcion" name="descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingresa la clave"></textarea>
+              </div>        
+              <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="nombre">Cantidad a elaborar de este producto:</label>
+                        <input  [(ngModel)]="producto.cantidad" name="cantidad" type="number" class="form-control" id="cantidad" placeholder="Ingresa descripcion">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nombre">Monto de herrajes por producto: </label>
+                        <input  [(ngModel)]="producto.montoHerrajes" name="montoHerrajes" type="number" class="form-control" id="montoHerrajes" placeholder="Ingresa precio">
+                    </div>
+                </div>
+              </div>  
+              <div class="form-group">
+                  <div class="row align-items-center">
+                      <div class="col-sm-6">
+                          Tablon para modificaciones:
+                          <ng-select class="custom"
+                          [items]="tablones"
+                          [multiple]="false"
+                          [(ngModel)]="producto.tablonId"
+                          bindValue="id"
+                          bindLabel="nombre"
+                          name="estado"
+                          placeholder="Tablon para modificaciones">
+                          </ng-select> 
+                      </div>
+                      <div class="col-sm-6">
+                          <label for="nombre">Cantidad de tablones por producto (puedes ingresar decimales):</label>
+                          <input  [(ngModel)]="producto.cantTablones" name="cantTablones" type="number" class="form-control" id="cantTablones" placeholder="Ingresa descripcion">
+                      </div>
+                  </div>
+              </div>    
+              <div class="form-group">
+                Producto de base:
+                <ng-select class="custom"
+                [items]="productosFijos"
+                [multiple]="false"
+                bindValue="id"
+                bindLabel="clave"
+                [(ngModel)]="producto.productoFijoId"
+                name="productoFijoId"
+                placeholder="Producto de base">
+                </ng-select> 
+              </div>     
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="addProduct()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>

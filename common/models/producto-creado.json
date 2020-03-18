@@ -1,48 +1,44 @@
 {
-    "name": "Subtarea",
-    "plural": "Subtareas",
+    "name": "ProductoCreado",
+    "plural": "ProductosCreados",
     "idInjection": true,
     "options": {
       "validateUpsert": true
     },
     "properties": {
-      "fechaInicio": {
-        "type": "string",
-        "required": "true"
-      },
-      "fechaFin": {
-        "type": "string",
-        "required": "true"
-      },
-      "titulo": {
-        "type": "string",
-        "required": "true"
-      },
       "descripcion": {
         "type": "string",
         "required": "true"
       },
-      "estado": {
+      "cantidad": {
+        "type": "number",
+        "required": "true"
+      },
+      "cantTablones": {
+        "type": "number",
+        "required": "true"
+      },
+      "montoHerrajes": {
         "type": "number",
         "required": "true"
       }
     },
     "validations": [],
     "relations": {
-      "trato": {
-      "type": "belongsTo",
-      "model": "Trato",
-      "foreignKey": "tratoId" 
-      },
-      "categoria": {
+      "tablon": {
         "type": "belongsTo",
-        "model": "CategoriaSub",
-        "foreignKey": "categoriaId" 
+        "model": "Tablon",
+        "foreignKey": "tablonId" 
       },
-      "subtarea": {
-        "type": "hasOne",
+      "productoFijo": {
+        "type": "belongsTo",
+        "model": "ProductoFijo",
+        "foreignKey": "productoFijoId" 
+      },
+      "cotizacion": {
+        "type": "belongsTo",
         "model": "Cotizacion",
-        "foreignKey": "subtareaId"
+        "foreignKey": "cotizacionId" 
       }
     },
     "acls": [
@@ -60,25 +56,25 @@
       }
     ],
     "methods": {
-      "getSubtareas": {
-        "accepts": [{
+      "getCreados": {
+        "accepts": [{ 
           "arg": "data",
           "type": "object",
           "root": true,
-          "description": "id del vendedor"
-        }],
+          "description": "data con la cotizacionId"
+          }],
         "returns": [
-          {
-            "arg": "subtareas",
-            "type": "object",
-            "root": true,
-            "description": "subtareas encontrados"
+          { 
+          "arg": "productosCreados",
+          "type": "object",
+          "root": true,
+          "description": "Productos creados a retornar"
           }
         ],
-        "description": " Traer todos los subtareas ",
+        "description": "Traer un Trato con sus include",
         "http": [
           {
-            "path": "/getSubtareas",
+            "path": "/getCreados",
             "verb": "post"
           }
         ]
