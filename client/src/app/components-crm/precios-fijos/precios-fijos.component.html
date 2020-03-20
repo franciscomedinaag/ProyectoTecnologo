@@ -30,7 +30,7 @@
                   <td>$ {{t.precio}}</td>
                   <td>{{t.vertical}}</td>
                   <td>{{t.horizontal}}</td>
-                  <td><i (click)="deleteTab(t.id)" class="fa fa-trash" aria-hidden="true"></i></td>
+                  <td><i (click)="deleteTab(t)" class="fa fa-trash" aria-hidden="true"></i></td>
                 </tr>
               </tbody>
           </table>
@@ -55,7 +55,7 @@
             <h5 class="card-title">{{p.clave}}</h5>
             <p class="card-text">$ {{p.precio}} c/u</p>
             <a data-toggle="modal" data-target="#seeVisible" (click)="visible=p" class="btn cardB btn-primary mr-2 text-white">Ver</a>
-            <a (click)="onDelete(p.imagen,p.id)" class="btn cardB btn-danger  text-white">Eliminar</a>
+            <a (click)="onDelete(p)" class="btn cardB btn-danger  text-white">Eliminar</a>
           </div>
         </div>
       </div>

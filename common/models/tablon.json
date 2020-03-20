@@ -21,6 +21,10 @@
       "vertical": {
         "type": "number",
         "required": "true"
+      },
+      "deleted": {
+        "type": "boolean",
+        "required": "true"
       }
     },
     "validations": [],

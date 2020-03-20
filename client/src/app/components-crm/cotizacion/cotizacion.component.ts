@@ -18,6 +18,7 @@ export class CotizacionComponent implements OnInit {
   private tablones:any;
   private productosFijos:any;
   private productosCreados:any;
+  private total:number=0;
   private trato:any={
     nombre:""
   };
@@ -40,7 +41,6 @@ export class CotizacionComponent implements OnInit {
     this.getCoti() //trae la subtarea, el trato y la cotizacione
     this.getTablones()
     this.getFijos()
-    this.getCreados()
   }
 
   getCoti(){
@@ -50,18 +50,17 @@ export class CotizacionComponent implements OnInit {
         if(sub.id==this.subtareaId){
           this.cotNumber=index+1
           this.subtarea=sub
-
-          this.api.get(`/Tratos/${sub.tratoId}`)
-          .subscribe((trato:Array<any>)=>{
-            this.trato=trato
-          })
-
-          this.api.get(`/Cotizaciones`,true,{where:{subtareaId:this.subtareaId}})
-          .subscribe((coti)=>{
-            this.cotizacion=coti[0]
-          })
         }
       });
+      this.api.get(`/Cotizaciones`,true,{where:{subtareaId:this.subtareaId}})
+      .subscribe((coti)=>{
+        this.cotizacion=coti[0]
+        this.api.get(`/Tratos/${this.tratoId}`)
+        .subscribe((trato:Array<any>)=>{
+          this.trato=trato
+        })
+        this.getCreados()
+      })
     })
   }
 
@@ -86,7 +85,12 @@ export class CotizacionComponent implements OnInit {
     this.api.post(`/ProductosCreados/getCreados`,{data:data})
     .subscribe((creados:any)=>{
       this.productosCreados=creados
-      console.log("creados",creados)
+      this.productosCreados.forEach(p => {
+        if(p.tablonId==0){p.unitario=p.productoFijo.precio}
+        else{p.unitario=p.productoFijo.precio + (p.tablon.precio * p.cantTablones)}
+        p.neto=p.unitario*p.cantidad
+        this.total=this.total+p.neto
+      });
     })
   }
 
@@ -108,6 +112,7 @@ export class CotizacionComponent implements OnInit {
     this.api.post(`/ProductosCreados`,this.producto)
     .subscribe((created)=>{
       this.toast.showSuccess("Producto añadido a la cotización")
+      this.getCreados()
       this.producto={
         descripcion:null,
         cantidad:null,
@@ -118,6 +123,56 @@ export class CotizacionComponent implements OnInit {
         cotizacionId:null
       }
     }) 
+   }
+
+   onDeleteCreated(id){
+     console.log(id)
+    if(confirm("¿Deseas quitar este producto de la cotizacion?")){
+     this.api.delete(`/ProductosCreados/${id}`)
+     .subscribe((deleted)=>{
+       this.getCreados()
+     })
+    }
+   }
+
+   addConcept(){
+     if(!(Number(this.cotizacion.manoObra)) || !(Number(this.cotizacion.administrativos)) || !(Number(this.cotizacion.utilidad)) ||
+     !(Number(this.cotizacion.impuestos))){
+       this.toast.showError("Debes ingresar numeros mayores a 0")
+       return
+     }
+     if(this.cotizacion.manoObra<=0 || this.cotizacion.administrativos<=0 || this.cotizacion.utilidad<=0 ||this.cotizacion.impuestos<=0 )
+     {
+      this.toast.showError("No puedes ingresar valores negativos")
+      return
+     }
+     if(this.cotizacion.impuestos>100){
+      this.toast.showError("El porcentaje de impuestos no puede ser mayor al 100")
+      return
+     }
+     this.api.patch(`/Cotizaciones`,this.cotizacion)
+     .subscribe((edited)=>{
+       this.toast.showSuccess("Conceptos editados")
+       this.cotizacion=edited
+     })
+   }
+
+   finish(){
+     if(this.productosCreados.length>0){
+       if(this.cotizacion.manoObra>0 || this.cotizacion.administrativos>0 || this.cotizacion.utilidad>0 ||this.cotizacion.impuestos>0){
+        this.subtarea.estado=1
+        this.api.patch(`/Subtareas`,this.subtarea)
+        .subscribe((okay)=>{
+          this.toast.showSuccess("Cotización terminada con exito")
+        })
+       }
+       else{
+        this.toast.showError("Debes ingresar conceptos")
+       }
+     }
+     else{
+      this.toast.showError("No tienes productos añadidos")
+     }
    }
 
 }

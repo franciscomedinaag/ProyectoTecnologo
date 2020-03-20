@@ -14,7 +14,7 @@ export class AuthService {
   });
 
   registerUser(name: string, email: string, password: string) {
-    const url_api = "http://localhost:3000/api/Usuarios";
+    const url_api = "http://localhost:3001/api/Usuarios";
     return this.htttp
       .post(
         url_api,
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   loginuser(email: string, password: string): Observable<any> {
-    const url_api = "http://localhost:3000/api/Usuarios/login?include=user";
+    const url_api = "http://localhost:3001/api/Usuarios/login?include=user";
     return this.htttp
       .post(
         url_api,
@@ -64,7 +64,7 @@ export class AuthService {
 
   logoutUser() {
     let accessToken = localStorage.getItem("accessToken");
-    const url_api = `http://localhost:3000/api/Usuarios/logout?access_token=${accessToken}`;
+    const url_api = `http://localhost:3001/api/Usuarios/logout?access_token=${accessToken}`;
     localStorage.removeItem("accessToken");
     localStorage.removeItem("currentUser");
     return this.htttp.post(url_api, { headers: this.headers });

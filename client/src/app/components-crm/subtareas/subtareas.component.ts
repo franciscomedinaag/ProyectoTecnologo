@@ -34,6 +34,7 @@ export class SubtareasComponent implements OnInit {
   private estado=0;
   private userTel:any;
   private allSubtareas:any;
+  private efe:any;
 
 
   constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService, private router:Router) { }
@@ -139,31 +140,77 @@ export class SubtareasComponent implements OnInit {
     else{
       let fin=this.subtarea.fechaFin.split("-");
       let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
+      this.efe=f;
       this.subtarea.fechaFin=f;
-      this.api.post('/Subtareas',this.subtarea)
-      .subscribe((okay:any)=>{
-        if(okay.categoriaId==5){
-          let cotizacion:any={
-            manoObra:0,
-            administrativos:0,
-            utilidad:0,
-            impuestos:0,
-            subtareaId:okay.id,
-          }  
-          this.api.post(`/Cotizaciones`,cotizacion)
-          .subscribe((coti)=>{
-          })  
-        }
-        this.subtarea={ fechaInicio:"",
-        fechaFin:"",
-        titulo:"",
-        descripcion:"",
-        estado:0,
-        tratoId:"",
-        categoriaId:""}
-        this.getSub()
-        this.toast.showSuccess("Subtarea creada")
-      })
+      if(this.subtarea.categoriaId==5){
+        this.api.get(`/Subtareas`,true,{where:{tratoId:this.subtarea.tratoId,categoriaId:5}})
+        .subscribe((subs:any)=>{
+          subs.forEach(s => {
+            this.api.get(`/Cotizaciones`,true,{where:{subtareaId:s.id}})
+            .subscribe((coti:any)=>{
+              console.log("coti", coti)
+              let cotiz=coti[0]
+              cotiz.definitivo=false
+              this.api.patch(`/Cotizaciones`,cotiz)
+              .subscribe((okay)=>{})
+            })
+          });
+          console.log("def efe", this.efe)
+          this.subtarea.fechaFin=this.efe
+          this.api.post('/Subtareas',this.subtarea)
+          .subscribe((okay:any)=>{
+          if(okay.categoriaId==5){
+            let cotizacion:any={
+              manoObra:0,
+              administrativos:0,
+              utilidad:0,
+              impuestos:0,
+              subtareaId:okay.id,
+              definitivo:true
+            }  
+            this.api.post(`/Cotizaciones`,cotizacion)
+            .subscribe((coti)=>{
+            })  
+          }
+          this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
+          this.getSub()
+          this.toast.showSuccess("Subtarea creada")
+        })
+        })
+      }
+      else{
+        this.api.post('/Subtareas',this.subtarea)
+        .subscribe((okay:any)=>{
+          if(okay.categoriaId==5){
+            let cotizacion:any={
+              manoObra:0,
+              administrativos:0,
+              utilidad:0,
+              impuestos:0,
+              subtareaId:okay.id,
+              definitivo:true
+            }  
+            this.api.post(`/Cotizaciones`,cotizacion)
+            .subscribe((coti)=>{
+            })  
+          }
+          this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
+          this.getSub()
+          this.toast.showSuccess("Subtarea creada")
+        })
+      }
     }
   }
 

@@ -100,24 +100,54 @@ export class FichaTratoComponent implements OnInit {
     if(!this.trato.reporte){
       this.trato.reporte=" "
     }
-    let mess
-      if(estado){mess='¿Desea cerrar el trato?'}
-      else{mess='¿Desea dar por perdido el trato?'}
+    let ready=false;
+     let mess;
+     if(estado){mess='¿Desea cerrar el trato?'}
+     else{mess='¿Desea dar por perdido el trato?'}
 
+     if(estado){
+       trato.subtareas.forEach(s => {
+         if(s.estado==1 && s.categoriaId==5){
+           this.api.get(`/Cotizaciones`,true,{where:{subtareaId:s.id}})
+           .subscribe((coti:any)=>{
+             if (coti[0].definitivo){
+               ready=true;
+               if(confirm(mess)){
+               let fecha=new Date().toISOString();
+               trato.fechaFin=fecha;
+               if(trato.nota==""){trato.nota=" "}
+               if(trato.reporte==""){trato.reporte=" "}
+               if(estado){trato.estado=1}
+               else{trato.estado=2}
+                 this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+                   this.isFrecuent(trato.clientId)
+                   this.getTrato();
+                   this.toast.showSuccess("Trato terminado")
+                 })
+               }
+              }
+            })
+          }
+        });
+        if(!ready){
+          this.toast.showWarning("El trato no cuenta con una cotización definitiva terminada")
+        }
+     }
+
+     else{
       if(confirm(mess)){
-      let fecha=new Date().toISOString();
-      trato.fechaFin=fecha;
-
-      if(estado){
-        trato.estado=1
-        this.isFrecuent(this.trato.clientId);
-      }
-      else{trato.estado=2}
-
-      this.api.patch('/Tratos',trato).subscribe((edited)=>{
-        this.getTrato();
-      })
-    }
+        let fecha=new Date().toISOString();
+        trato.fechaFin=fecha;
+        if(trato.nota==""){trato.nota=" "}
+        if(trato.reporte==""){trato.reporte=" "}
+        if(estado){trato.estado=1}
+        else{trato.estado=2}
+          this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+            this.isFrecuent(trato.clientId)
+            this.getTrato();
+          })
+        }
+     }
   }
 
 
@@ -167,7 +197,6 @@ export class FichaTratoComponent implements OnInit {
     archivo.definitive=!archivo.definitive;
     this.api.patch('/Archivos',archivo)
         .subscribe((uploaded)=>{
-          console.log("Uploaded: ",archivo)
           this.toast.showSuccess("¡Archivo movido!")
           this.getTrato();
         },err=>{
@@ -190,7 +219,6 @@ export class FichaTratoComponent implements OnInit {
      let frecuente=0;
      let sixAgo=new Date();
      sixAgo.setDate(sixAgo.getDate()-180);
-     console.log("los tratos", this.clientObj.tratos);
      this.clientObj.tratos.forEach(trato => {
         if(trato.estado==1){
           if(trato.fechaFin>sixAgo.toISOString()){
@@ -204,11 +232,7 @@ export class FichaTratoComponent implements OnInit {
       });
       if(this.frecuent){
        this.frecuent=false;
-       console.log("hacer frecuente al cliente")
        this.api.patch('/Clients',this.clientObj).subscribe((okay)=>{})
-     }
-     else{
-       console.log("no hacerlo frecuente AUN")
      }
    });
   }
@@ -233,30 +257,72 @@ export class FichaTratoComponent implements OnInit {
       let fin=this.subtarea.fechaFin.split("-");
       let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
       this.subtarea.fechaFin=f;
-      this.api.post('/Subtareas',this.subtarea)
-      .subscribe((okay:any)=>{
-        if(okay.categoriaId==5){
-          let cotizacion:any={
-            manoObra:0,
-            administrativos:0,
-            utilidad:0,
-            impuestos:0,
-            subtareaId:okay.id,
-          }  
-          this.api.post(`/Cotizaciones`,cotizacion)
-          .subscribe((coti)=>{
-          })  
-        }
-        this.subtarea={ fechaInicio:"",
-        fechaFin:"",
-        titulo:"",
-        descripcion:"",
-        estado:0,
-        tratoId:"",
-        categoriaId:""}
-        this.getTrato()
-        this.toast.showSuccess("Subtarea creada")
-      })
+      if(this.subtarea.categoriaId==5){
+        this.api.get(`/Subtareas`,true,{where:{tratoId:this.trato.id,categoriaId:5}})
+        .subscribe((subs:any)=>{
+          subs.forEach(s => {
+            this.api.get(`/Cotizaciones`,true,{where:{subtareaId:s.id}})
+            .subscribe((coti:any)=>{
+              let cotiz=coti[0]
+              cotiz.definitivo=false
+              this.api.patch(`/Cotizaciones`,cotiz)
+              .subscribe((okay)=>{})
+            })
+          });
+          this.api.post('/Subtareas',this.subtarea)
+        .subscribe((okay:any)=>{
+          if(okay.categoriaId==5){
+            let cotizacion:any={
+              manoObra:0,
+              administrativos:0,
+              utilidad:0,
+              impuestos:0,
+              subtareaId:okay.id,
+              definitivo:true
+            }  
+            this.api.post(`/Cotizaciones`,cotizacion)
+            .subscribe((coti)=>{
+            })  
+          }
+          this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
+          this.getTrato()
+          this.toast.showSuccess("Subtarea creada")
+        })
+        })
+      }
+      else{
+        this.api.post('/Subtareas',this.subtarea)
+        .subscribe((okay:any)=>{
+          if(okay.categoriaId==5){
+            let cotizacion:any={
+              manoObra:0,
+              administrativos:0,
+              utilidad:0,
+              impuestos:0,
+              subtareaId:okay.id,
+              definitivo:true
+            }  
+            this.api.post(`/Cotizaciones`,cotizacion)
+            .subscribe((coti)=>{
+            })  
+          }
+          this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
+          this.getTrato()
+          this.toast.showSuccess("Subtarea creada")
+        })
+      }
     }
   }
 

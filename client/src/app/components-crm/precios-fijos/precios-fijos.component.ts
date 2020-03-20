@@ -16,7 +16,8 @@ export class PreciosFijosComponent implements OnInit {
     precio:null,
     fr:null,
     fo:null,
-    al:null
+    al:null,
+    deleted:false
   }
   private visible:any={
     clave:null,
@@ -25,14 +26,16 @@ export class PreciosFijosComponent implements OnInit {
     precio:null,
     fr:null,
     fo:null,
-    al:null
+    al:null,
+    deleted:false
   }
 
   private tablon:any={
     nombre:null,
     vertical:null,
     horizontal:null,
-    precio:null
+    precio:null,
+    deleted:false
   }
 
   private productos:any=[];
@@ -69,7 +72,8 @@ export class PreciosFijosComponent implements OnInit {
           precio:null,
           fr:null,
           fo:null,
-          al:null
+          al:null,
+          deleted:false
         }
         this.getProductos()
       })
@@ -80,21 +84,22 @@ export class PreciosFijosComponent implements OnInit {
   }
 
   getProductos(){
-    this.api.get(`/ProductosFijos`,true)
+    this.api.get(`/ProductosFijos`,true,{where:{deleted:false}})
     .subscribe((productos)=>{
       this.productos=productos
     })
   }
 
-  onDelete(fileId, id){
+  onDelete(producto){
 
     let data:any={
-      id:fileId
+      id:producto.imagen
     }
     if(confirm("¿Deseas eliminar este producto?")){
       this.api.post('/ProductosFijos/deleteFile',data)
       .subscribe((okay)=>{
-        this.api.delete(`/ProductosFijos/${id}`)
+        producto.deleted=true
+        this.api.patch(`/ProductosFijos`,producto)
         .subscribe(()=>{
           this.getProductos()
         })
@@ -112,15 +117,16 @@ export class PreciosFijosComponent implements OnInit {
   }
 
   getTabs(){
-    this.api.get(`/Tablones`)
+    this.api.get(`/Tablones`,true,{where:{deleted:false}})
     .subscribe((tablones)=>{
       this.tablones=tablones
     })
   }
 
-  deleteTab(id){
+  deleteTab(tablon){
     if(confirm("¿Deseas eliminar este producto?")){
-      this.api.delete(`/Tablones/${id}`).subscribe(()=>{
+      tablon.deleted=true
+      this.api.patch(`/Tablones/`, tablon).subscribe(()=>{
         this.getTabs()
       })
     }
@@ -140,7 +146,7 @@ export class PreciosFijosComponent implements OnInit {
         this.api.post(`/Tablones`, this.tablon)
         .subscribe((okay)=>{
           console.log(okay)
-          this.tablon={}
+          this.tablon={deleted:false}
           this.toast.showSuccess("Tablon creado")
           this.getTabs()
         })

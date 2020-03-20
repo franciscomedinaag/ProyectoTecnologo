@@ -21,6 +21,10 @@
       "impuestos": {
         "type": "number",
         "required": "true"
+      },
+      "definitivo": {
+        "type": "boolean",
+        "required": "true"
       }
     },
     "validations": [],

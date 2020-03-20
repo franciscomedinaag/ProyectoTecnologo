@@ -124,7 +124,6 @@ export class TratosComponent implements OnInit {
         this.fullI=this.tratos;
         }
 
-
         this.tratos.forEach(trato => {
           for(let i = 0; i < trato.subtareas.length; i++) {
             for(let j = 0; j < trato.subtareas.length - 1; j++) {
@@ -137,10 +136,12 @@ export class TratosComponent implements OnInit {
           }
           let twoAgo=new Date();
           twoAgo.setDate(twoAgo.getDate()-60);
-          if(trato.subtareas[0].fechaFin<twoAgo.toISOString()){
-            this.disclaimer.nombre=trato.nombre
-            this.disclaimer.show=true
-            this.disclaimer.id=trato.id
+          if(trato.subtareas[0]){
+            if(trato.subtareas[0].fechaFin<twoAgo.toISOString()){
+              this.disclaimer.nombre=trato.nombre
+              this.disclaimer.show=true
+              this.disclaimer.id=trato.id
+            }
           }
 
         });
@@ -233,36 +234,56 @@ export class TratosComponent implements OnInit {
    
    assign(trato, estado){
      let ready=false;
+     let mess;
+     if(estado){mess='¿Desea cerrar el trato?'}
+     else{mess='¿Desea dar por perdido el trato?'}
+
      if(estado){
        trato.subtareas.forEach(s => {
          if(s.estado==1 && s.categoriaId==5){
-          ready=true;
-         }
-       });
+           this.api.get(`/Cotizaciones`,true,{where:{subtareaId:s.id}})
+           .subscribe((coti:any)=>{
+             if (coti[0].definitivo){
+               ready=true;
+               console.log("terminable")
+               if(confirm(mess)){
+               let fecha=new Date().toISOString();
+               trato.fechaFin=fecha;
+               if(trato.nota==""){trato.nota=" "}
+               if(trato.reporte==""){trato.reporte=" "}
+               if(estado){trato.estado=1}
+               else{trato.estado=2}
+                 this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+                   this.isFrecuent(trato.clientId)
+                   this.getTratos();
+                   this.toast.showSuccess("Trato terminado")
+                 })
+               }
+              }
+            })
+          }
+        });
+        if(!ready){
+          this.toast.showWarning("El trato no cuenta con una cotización definitiva terminada")
+        }
      }
 
-     if(ready){
-      let mess;
-      if(estado){mess='¿Desea cerrar el trato?'}
-      else{mess='¿Desea dar por perdido el trato?'}
-      
+     else{
       if(confirm(mess)){
-      let fecha=new Date().toISOString();
-      trato.fechaFin=fecha;
-      if(trato.nota==""){trato.nota=" "}
-      if(trato.reporte==""){trato.reporte=" "}
-      if(estado){trato.estado=1}
-      else{trato.estado=2}
+        let fecha=new Date().toISOString();
+        trato.fechaFin=fecha;
+        if(trato.nota==""){trato.nota=" "}
+        if(trato.reporte==""){trato.reporte=" "}
+        if(estado){trato.estado=1}
+        else{trato.estado=2}
+  
+          this.api.patch('/Tratos',trato).subscribe( (edited)=>{
+            this.isFrecuent(trato.clientId)
+            this.getTratos();
+          })
+        }
+     }
 
-        this.api.patch('/Tratos',trato).subscribe( (edited)=>{
-          this.isFrecuent(trato.clientId)
-          this.getTratos();
-        })
-      }
-    }
-    else{
-      this.toast.showError("El trato no cuenta con una cotización terminada")
-    }
   }
 
   saveTrato(){
