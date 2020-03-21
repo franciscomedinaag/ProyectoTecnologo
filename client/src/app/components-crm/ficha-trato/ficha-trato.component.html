@@ -39,7 +39,8 @@
     </div>
     <div class="row align-items-center">
         <div class="col text-center">
-            <h4  data-toggle="modal" data-target="#subModal" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación<small>(Agregar)</small></h4>
+          <h4 *ngIf="trato.estado!=0" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación</h4>  
+          <h4 *ngIf="trato.estado==0" data-toggle="modal" data-target="#subModal" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación<small>(Agregar)</small></h4>
         </div>
     </div>
     <hr>

@@ -163,7 +163,12 @@ export class CotizacionComponent implements OnInit {
         this.subtarea.estado=1
         this.api.patch(`/Subtareas`,this.subtarea)
         .subscribe((okay)=>{
-          this.toast.showSuccess("Cotización terminada con exito")
+          this.cotizacion.total=this.total
+          this.api.patch(`/Cotizaciones`,this.cotizacion)
+          .subscribe((edited)=>{
+            this.toast.showSuccess("Cotización terminada con exito")
+            this.cotizacion=edited
+          })
         })
        }
        else{

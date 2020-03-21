@@ -155,7 +155,6 @@ export class SubtareasComponent implements OnInit {
               .subscribe((okay)=>{})
             })
           });
-          console.log("def efe", this.efe)
           this.subtarea.fechaFin=this.efe
           this.api.post('/Subtareas',this.subtarea)
           .subscribe((okay:any)=>{
@@ -166,7 +165,8 @@ export class SubtareasComponent implements OnInit {
               utilidad:0,
               impuestos:0,
               subtareaId:okay.id,
-              definitivo:true
+              definitivo:true,
+              total:0
             }  
             this.api.post(`/Cotizaciones`,cotizacion)
             .subscribe((coti)=>{
@@ -194,7 +194,8 @@ export class SubtareasComponent implements OnInit {
               utilidad:0,
               impuestos:0,
               subtareaId:okay.id,
-              definitivo:true
+              definitivo:true,
+              total:0
             }  
             this.api.post(`/Cotizaciones`,cotizacion)
             .subscribe((coti)=>{

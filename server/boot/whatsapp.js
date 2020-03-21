@@ -1,7 +1,7 @@
 module.exports = function(Schedule) {
     var http = require('http');
     var schedule = require('node-schedule');
-    console.log("about to set the cronjob")
+    console.log("listening to send the twilio message")
     
 //     var j = schedule.scheduleJob('*/1 * * * *', function(){ 
 //         var body="Tareas agendadas para hoy:"

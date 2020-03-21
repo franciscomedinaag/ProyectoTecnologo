@@ -47,6 +47,8 @@ export class FichaTratoComponent implements OnInit {
   }
   private hoyGuion:any;
   private categorias:any=[];
+  private efe:any;
+
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, 
     private toast:ToastService, private router:Router) { }
@@ -130,7 +132,7 @@ export class FichaTratoComponent implements OnInit {
           }
         });
         if(!ready){
-          this.toast.showWarning("El trato no cuenta con una cotización definitiva terminada")
+          this.toast.showWarning("El trato debe contar con una cotización definitiva terminada")
         }
      }
 
@@ -256,7 +258,9 @@ export class FichaTratoComponent implements OnInit {
     else{
       let fin=this.subtarea.fechaFin.split("-");
       let f= new Date(fin[2], fin[1] - 1, fin[0]).toISOString();
+      this.efe=f;
       this.subtarea.fechaFin=f;
+      console.log("sub",this.subtarea.fechaFin)
       if(this.subtarea.categoriaId==5){
         this.api.get(`/Subtareas`,true,{where:{tratoId:this.trato.id,categoriaId:5}})
         .subscribe((subs:any)=>{
@@ -269,6 +273,7 @@ export class FichaTratoComponent implements OnInit {
               .subscribe((okay)=>{})
             })
           });
+          this.subtarea.fechaFin=this.efe;
           this.api.post('/Subtareas',this.subtarea)
         .subscribe((okay:any)=>{
           if(okay.categoriaId==5){
@@ -278,7 +283,8 @@ export class FichaTratoComponent implements OnInit {
               utilidad:0,
               impuestos:0,
               subtareaId:okay.id,
-              definitivo:true
+              definitivo:true,
+              total:0
             }  
             this.api.post(`/Cotizaciones`,cotizacion)
             .subscribe((coti)=>{
@@ -306,7 +312,8 @@ export class FichaTratoComponent implements OnInit {
               utilidad:0,
               impuestos:0,
               subtareaId:okay.id,
-              definitivo:true
+              definitivo:true,
+              total:0
             }  
             this.api.post(`/Cotizaciones`,cotizacion)
             .subscribe((coti)=>{
