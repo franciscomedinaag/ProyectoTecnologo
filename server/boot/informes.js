@@ -3,6 +3,7 @@ module.exports = function(Report) {
     var schedule = require('node-schedule');
     console.log("listening to create the report")
     
+    // var j = schedule.scheduleJob('* * 29 * *', function(){ cada dia 29 del mes}
     var j = schedule.scheduleJob('*/1 * * * *', function(){ 
         var hoy=new Date().toLocaleDateString();
         hoy=hoy.split('-');
@@ -13,7 +14,7 @@ module.exports = function(Report) {
             hoy[1]='0'+hoy[1]
         }
         let hoyString=hoy[0]+'-'+hoy[1]+'-'+hoy[2]
-
+        console.log(hoy)
         var bimestre="NA"
         let mes1=" "
         let mes2=" "
@@ -61,8 +62,7 @@ module.exports = function(Report) {
             }
         }
 
-        if(hoy[2]=='21'){//dia del mes
-            if(bimestre!="N/A"){
+            if(bimestre!="NA"){
                 Report.models.Usuario.find({where:{active:true,realm:'user'}}, function(err,usuarios){
                     if(err) return callback(err)
 
@@ -76,7 +76,10 @@ module.exports = function(Report) {
                             intentos:0,
                             clientes:0,
                             tareas1:0,
-                            tareas2:0
+                            tareas2:0,
+                            vendedorId:user.id,
+                            bimestre:bimestre,
+                            anio:hoy[0]
                         }
                         let clientes=[]
 
@@ -97,9 +100,12 @@ module.exports = function(Report) {
                                 let mesInicio=stringInicio.split('T')[0].split('-')[1]
                                 let mesFin=stringFin.split('T')[0].split('-')[1]
 
-                                if(mesInicio==mes1 || mesInicio==mes2){informe.abiertos++}
+                                let añoInicio = stringInicio.split('T')[0].split('-')[0]
+                                let añoFin = stringFin.split('T')[0].split('-')[0]
 
-                                if(mesFin==mes1 || mesFin==mes2 ){
+                                if((mesInicio==mes1 || mesInicio==mes2) && (añoInicio==informe.anio) ){informe.abiertos++}
+
+                                if((mesFin==mes1 || mesFin==mes2) && (añoFin==informe.anio) ){
                                     if(trato.estado==1){  
                                         informe.cerrados++
                                         trato.toJSON().subtareas.forEach(sub=>{
@@ -128,11 +134,17 @@ module.exports = function(Report) {
                             informe.clientes=removeDuplicate(clientes).length                   
                             informe.intentos=informe.intentos/informe.cerrados
                             console.log("el informe de ", user.username, "dice: ", informe)
+                            // Report.models.Informe.create(informe, function(err,informe){
+                            //     if(err) return err
+
+                            //     console.log("created for: ", informe.vendedorId)
+                            // })
+
                         })
                     });
                 })
             }
-        }
+        
    });
 
 

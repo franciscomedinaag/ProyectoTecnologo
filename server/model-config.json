@@ -111,6 +111,10 @@
     "dataSource": "db",
     "public":true
   },
+  "Informe": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

@@ -1,36 +1,56 @@
 <app-navbar-crm></app-navbar-crm>
 <div class="container-fluid" style="background-color: white;">
-<header>
-    <div class="row">
-        <div style="background-color: crimson;" class="col-sm-12 head">
-            header
+    <div class="row pt-4 pb-4 ">
+        <div class="col">
+           <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> Informes bimestrales </h2>             
         </div>
     </div>
-</header>
-<content>
-    <div class="row mid ">
-        <div style="background-color: blue;" class="col-sm-8">
-            contenido
+    <div class="row pb-4">
+        <div *ngFor="let i of informes" class="col-sm-3 text-center">
+            <div class="card mb-3">
+              <img class="producto" src="assets/default/informes.PNG" class="card-img-top" alt="...">
+              <div class="card-body">
+                <strong><h5 style="height: 50px; font-weight:bold;" class="card-title"><span>{{i.bimestre}} </span> <span> {{i.anio}}</span></h5></strong>
+                <a data-toggle="modal" data-target="#seeReport" (click)="report=i" class="btn btn-primary btn-block mr-2 text-white">Visualizar</a>
+              </div>
+            </div>
         </div>
-        <div style="background-color: blueviolet;" class="col-sm-4">
-            sidenav
+        <div *ngIf="informes.length==0" class="col" style="height: 70vh;">
+           <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> Aún no cuentas con informes bimestrales, 
+            recuerda que se generan el ultimo dia de cada bimestre </h4>             
         </div>
     </div>
-</content>
-<footer>
-
-    <div class="row foot pb-3">
-        <article style="background-color: yellow;" class="col-sm-4">
-            footer1
-        </article>
-        <article style="background-color: orange;" class="col-sm-4">
-            footer2
-        </article>
-        <article style="background-color: orangered;" class="col-sm-4">
-            footer3
-        </article>
-    </div>
-
-</footer>
 </div>
 <app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="seeReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle">Informe bimestral</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="row">
+                  <div class="col-sm-6 text-center">
+                      <h5 class="text-center">Este bimestre: </h5>
+                      <p>Abriste <strong>{{report.abiertos}}</strong> tratos</p>
+                      <p>Cerrate <strong>{{report.cerrados}}</strong> tratos</p>
+                      <p>Perdiste <strong>{{report.perdidos}}</strong> tratos</p>
+                      <p>Vendiste <strong>{{report.total | currency}}</strong> </p>
+                      <p>Clientes Reales <strong>{{report.clientes}}</strong> </p>
+                      <p>Promedio de <strong>{{report.intentos}}</strong> cotizaciones por trato </p>
+                      <p><strong>{{report.tareas1}}</strong> tareas logradas (<strong>{{  (100*report.tareas1)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                      <p><strong>{{report.tareas2}}</strong> tareas vencidas (<strong>{{  (100*report.tareas2)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                  </div>
+              </div>               
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
