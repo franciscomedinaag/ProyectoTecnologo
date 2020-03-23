@@ -4,6 +4,9 @@
         <div class="col">
            <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> Informes bimestrales </h2>             
         </div>
+        <div class="col">
+          <button data-toggle="modal" data-target="#seePromedio" class="btn btn-primary">Promedio de datos</button>
+        </div>
     </div>
     <div class="row pb-4">
         <div *ngFor="let i of informes" class="col-sm-3 text-center">
@@ -15,9 +18,11 @@
               </div>
             </div>
         </div>
-        <div *ngIf="informes.length==0" class="col" style="height: 70vh;">
-           <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> Aún no cuentas con informes bimestrales, 
-            recuerda que se generan el ultimo dia de cada bimestre </h4>             
+        <div class="row">
+          <div *ngIf="informes.length==0" class="col" style="height: 70vh;">
+             <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> Aún no cuentas con informes bimestrales, 
+              recuerda que se generan el ultimo dia de cada bimestre </h4>             
+          </div>
         </div>
     </div>
 </div>
@@ -28,7 +33,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle">Informe bimestral</h3>
+          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle"> {{report.bimestre}} {{report.anio}} Informe Bimestral</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -37,15 +42,68 @@
               <div class="row">
                   <div class="col-sm-6 text-center">
                       <h5 class="text-center">Este bimestre: </h5>
-                      <p>Abriste <strong>{{report.abiertos}}</strong> tratos</p>
-                      <p>Cerrate <strong>{{report.cerrados}}</strong> tratos</p>
-                      <p>Perdiste <strong>{{report.perdidos}}</strong> tratos</p>
-                      <p>Vendiste <strong>{{report.total | currency}}</strong> </p>
-                      <p>Clientes Reales <strong>{{report.clientes}}</strong> </p>
-                      <p>Promedio de <strong>{{report.intentos}}</strong> cotizaciones por trato </p>
-                      <p><strong>{{report.tareas1}}</strong> tareas logradas (<strong>{{  (100*report.tareas1)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
-                      <p><strong>{{report.tareas2}}</strong> tareas vencidas (<strong>{{  (100*report.tareas2)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                      <p [className]="report.abiertos>=historico.abiertos ? 'text-success' : 'text-danger'">
+                        Abriste <strong>{{report.abiertos}}</strong> tratos</p>
+                      <p [className]="report.cerrados>=historico.cerrados ? 'text-success' : 'text-danger'">
+                        Cerrate <strong>{{report.cerrados}}</strong> tratos</p>
+                      <p [className]="report.vencidos<=historico.vencidos ? 'text-success' : 'text-danger'">
+                        Perdiste <strong>{{report.vencidos}}</strong> tratos</p>
+                      <p [className]="report.total>=historico.total ? 'text-success' : 'text-danger'">
+                        Vendiste <strong>{{report.total | currency}}</strong> </p>
+                      <p [className]="report.clientes>=historico.clientes ? 'text-success' : 'text-danger'">
+                        Clientes Reales <strong>{{report.clientes}}</strong> </p>
+                      <p [className]="report.intentos<=historico.intentos ? 'text-success' : 'text-danger'">
+                        Promedio de <strong>{{report.intentos}}</strong> cotizaciones por trato </p>
+                      <p [className]="report.tareas1>=historico.tareas1 ? 'text-success' : 'text-danger'">
+                        <strong>{{report.tareas1}}</strong> tareas logradas (<strong>{{  (100*report.tareas1)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                      <p [className]="report.tareas2<=historico.tareas2 ? 'text-success' : 'text-danger'">
+                        <strong>{{report.tareas2}}</strong> tareas vencidas (<strong>{{  (100*report.tareas2)/(report.tareas1+report.tareas2) | number:'1.0-0' }}% </strong> )</p>
                   </div>
+
+                  <div class="col-sm-6 text-center">
+                    <h5 class="text-center">Tu promedio al bimestre: </h5>
+                    <p>Abres <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Cierras <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Pierdes <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Vendes <strong>{{historico.total | currency}}</strong> </p>
+                    <p>Clientes Reales <strong>{{historico.clientes | number:'1.0-1'}}</strong> </p>
+                    <p>Promedio de <strong>{{historico.intentos | number:'1.0-1'}}</strong> cotizaciones por trato </p>
+                    <p><strong>{{historico.tareas1 | number:'1.0-1'}}</strong> tareas logradas (<strong>{{  (100*historico.tareas1)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                    <p><strong>{{historico.tareas2 | number:'1.0-1'}}</strong> tareas vencidas (<strong>{{  (100*historico.tareas2)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                </div>
+              </div>               
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="seePromedio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle">Informe bimestral</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="row">  
+                  <div class="col text-center">
+                    <h5 class="text-center">Tu promedio al bimestre: </h5>
+                    <p>Abres <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Cierras <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Pierdes <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Vendes <strong>{{historico.total | currency}}</strong> </p>
+                    <p>Clientes Reales <strong>{{historico.clientes | number:'1.0-1'}}</strong> </p>
+                    <p>Promedio de <strong>{{historico.intentos | number:'1.0-1'}}</strong> cotizaciones por trato </p>
+                    <p><strong>{{historico.tareas1 | number:'1.0-1'}}</strong> tareas logradas (<strong>{{  (100*historico.tareas1)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                    <p><strong>{{historico.tareas2 | number:'1.0-1'}}</strong> tareas vencidas (<strong>{{  (100*historico.tareas2)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                </div>
               </div>               
         </div>
         <div class="modal-footer">
