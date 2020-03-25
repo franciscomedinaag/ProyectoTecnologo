@@ -1,0 +1,104 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container-fluid" style="background-color: white;">
+    <div class="row pt-4 pb-4 ">
+        <div class="col">
+           <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> Informes Administrador </h2>             
+        </div>
+        <div class="col">
+          <button data-toggle="modal" data-target="#seePromedio" class="btn btn-primary">Promedio de datos</button>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div *ngFor="let i of informes" class="col-sm-3 text-center">
+            <div class="card mb-3">
+              <img class="producto" src="assets/default/informes.PNG" class="card-img-top" alt="...">
+              <div class="card-body">
+                <strong><h5 style="height: 50px; font-weight:bold;" class="card-title"><span>{{i.bimestre}} </span> <span> {{i.anio}}</span></h5></strong>
+                <a data-toggle="modal" data-target="#seeReport" (click)="report=i" class="btn btn-primary btn-block mr-2 text-white">Visualizar</a>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div *ngIf="informes.length==0" class="col" style="height: 70vh;">
+             <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> Aún no cuentas con informes bimestrales, 
+              recuerda que se generan el ultimo dia de cada bimestre </h4>             
+          </div>
+        </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="seeReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle"> {{report.bimestre}} {{report.anio}} Informe Bimestral</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="row">
+                  <div class="col-sm-6 text-center">
+                      <h5 class="text-center">Este bimestre: </h5>
+                      <p [className]="report.abiertos>=historico.abiertos ? 'text-success' : 'text-danger'">
+                        Se abrieron <strong>{{report.abiertos}}</strong> tratos</p>
+                      <p [className]="report.cerrados>=historico.cerrados ? 'text-success' : 'text-danger'">
+                        Se cerraron <strong>{{report.cerrados}}</strong> tratos</p>
+                      <p [className]="report.vencidos<=historico.vencidos ? 'text-success' : 'text-danger'">
+                        Se perdieron <strong>{{report.vencidos}}</strong> tratos</p>
+                      <p [className]="report.total>=historico.total ? 'text-success' : 'text-danger'">
+                        Se vendió un total de: <strong>{{report.total | currency}}</strong> </p>
+                      <p> La mayoría de los tratos perdidos fueron en la etapa de 
+                        <strong>{{categorias ? categorias[report.cual - 1].nombre : 'NA'}}</strong> </p>
+                  </div>
+
+                  <div class="col-sm-6 text-center">
+                    <h5 class="text-center">El promedio al bimestre: </h5>
+                    <p>Se abren <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se cierran <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se pierden <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se venden <strong>{{historico.total | currency}}</strong> </p>
+                    <p> La mayoría de los tratos perdidos son en la etapa de 
+                      <strong>{{categorias ? categorias[historico.cual - 1].nombre : 'NA'}}</strong> </p>
+                </div>
+              </div>               
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="seePromedio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" style="margin-left: 25%;" id="exampleModalLongTitle">Informe bimestral</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="row">  
+                  <div class="col text-center">
+                    <h5 class="text-center">El promedio al bimestre: </h5>
+                    <p>Se abren <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se cierran <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se pierden <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Se venden <strong>{{historico.total | currency}}</strong> </p>
+                    <p> La mayoría de los tratos perdidos son en la etapa de 
+                        <strong>{{categorias ? categorias[historico.cual - 1].nombre : 'NA'}}</strong> </p>
+                </div>
+              </div>               
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

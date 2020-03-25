@@ -59,7 +59,7 @@
           <a class="nav-link" routerLink="usuarios">Panel sitio </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="usuarios">Informes bimestrales </a>
+          <a class="nav-link" [routerLink]="['/informesadmn',this.user.id]">Informes bimestrales </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>

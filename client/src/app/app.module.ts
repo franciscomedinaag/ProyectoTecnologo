@@ -41,6 +41,7 @@ import { FichaTratoComponent } from './components-crm/ficha-trato/ficha-trato.co
 import { SubtareasComponent } from './components-crm/subtareas/subtareas.component';
 import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
 import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
+import { InformeAdminComponent } from './components-crm/informe-admin/informe-admin.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.comp
     FichaTratoComponent,
     SubtareasComponent,
     PreciosFijosComponent,
-    CotizacionComponent
+    CotizacionComponent,
+    InformeAdminComponent
   ],
   imports: [
     BrowserModule,
