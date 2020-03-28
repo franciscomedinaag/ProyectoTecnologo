@@ -16,12 +16,14 @@
     width: 120px;
     margin:5px;
 }
-
-.rowColor{
-    background-color: rgb(218, 175, 68);
+.cardB{
+    width:40%
 }
 
-.fa-spinner, .mx-5 {
-    margin-left: 75% !important;
-    margin-top: 10%;
+.producto{
+    max-height: 100px;
+}
+
+.card-img-top {
+    height: 25vh;
 }

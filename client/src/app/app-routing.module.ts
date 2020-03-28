@@ -16,12 +16,14 @@ import { SubtareasComponent } from './components-crm/subtareas/subtareas.compone
 import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
 import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
 import { InformeAdminComponent } from './components-crm/informe-admin/informe-admin.component';
+import { PanelComponent } from './components-crm/panel/panel.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
 import { ContactoComponent } from './components-web/contacto/contacto.component';
 import { MueblesComponent } from './components-web/muebles/muebles.component';
 import { NosotrosComponent } from './components-web/nosotros/nosotros.component';
+import { MobiliarioCrmComponent } from './components-crm/mobiliario-crm/mobiliario-crm.component';
 
 const routes: Routes = [
   //CRM
@@ -39,6 +41,8 @@ const routes: Routes = [
   {path: 'subtareas',component: SubtareasComponent},
   {path: 'preciosfijos',component: PreciosFijosComponent},
   {path: 'cotizacion/:tratoId/:subId',component: CotizacionComponent},
+  {path: 'panel',component: PanelComponent},
+  {path: 'panelmobiliario',component: MobiliarioCrmComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},

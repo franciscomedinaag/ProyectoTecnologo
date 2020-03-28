@@ -56,7 +56,10 @@
           <a class="nav-link" [routerLink]="['/preciosfijos']">Productos fijos </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="usuarios">Panel sitio </a>
+          <a class="nav-link" [routerLink]="['/panel']">Panel sitio </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/panelmobiliario']">Mobiliario sitio </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/informesadmn',this.user.id]">Informes bimestrales </a>
@@ -65,15 +68,11 @@
           <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" routerLink="inicio">Ir al sitio web </a>
-        </li>
-        <li class="nav-item ">
           <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
         </li>
         <li class="nav-item">
           <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
         </li>
       </ul>
-
     </div>
   </nav>

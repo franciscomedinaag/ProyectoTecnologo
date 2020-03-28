@@ -1,0 +1,118 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pb-5 pt-5">
+        <div class="col text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Mobiliario del sitio web 
+                <button data-toggle="modal" data-target="#addMob" class="btn btn-primary">Agregar</button></h2>
+        </div>
+    </div>
+    <div class="row pb-4 justify-content-center">
+        <div *ngFor="let m of mobiliario" class="col-sm-3 text-center">
+            <div class="card mb-3 mr-3">
+                <img class="producto" [src]="api.baseURL+m.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+              <div class="card-body">
+                <strong><h5 style="height: 50px; font-weight:bold;" class="card-title"><span>{{m.nombre}} </span></h5></strong>
+                <a data-toggle="modal" data-target="#seeMob" (click)="mob=m" class="btn btn-primary cardB mr-2 text-white">Ver</a>
+                <a (click)="deleteMob(m.imagen, m.id)" class="btn btn-danger cardB mr-2 text-white">Borrar</a>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div *ngIf="mobiliario.length==0" class="col" style="height: 65vh;">
+             <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> 
+                Aún no hay mobiliario registrado para el sitio web </h4>             
+          </div>
+        </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="addMob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Añadir mueble</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">       
+            <form class="form-product">
+                <div class="form-group">
+                    <label for="descripcion">Nombre: </label>
+                    <input  [(ngModel)]="mueble.nombre" name="titulo" type="text" class="form-control" 
+                    id="titulo" placeholder="Ingresa el titulo" >
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        Categoria:
+                        <ng-select class="custom"
+                        [items]="categorias"
+                        [multiple]="false"
+                        [(ngModel)]="mueble.categoria"
+                        name="categoria"
+                        placeholder="Categoria del mueble">
+                        </ng-select>     
+                    </div>
+                    <label for="descripcion">Descripción: </label>
+                    <textarea rows=3 [(ngModel)]="mueble.descripcion" name="subtitulo" type="text" class="form-control" 
+                    id="subtitulo" placeholder="Ingresa el subtitulo"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Imagen: </label>
+                    <template-file-chooser [fileType] ="'site'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                </div>  
+            </form>    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createCar()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="seeMob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf="nom" (click)="nom=!nom" class="modal-title" id="exampleModalLongTitle">{{mob.nombre}}
+          <i class="fa fa-pencil" aria-hidden="true"></i></h5>
+          <input class="text-center" *ngIf="!nom" type="text" [(ngModel)]="mob.nombre" (blur)="nom=!nom;validate()">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="form-group">
+                <strong>Descripcion: </strong>
+                <span *ngIf="desc" (click)="desc=!desc" >{{mob.descripcion}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <input class="text-center" *ngIf="!desc" type="text" [(ngModel)]="mob.descripcion" (blur)="desc=!desc;validate()">
+              </div>  
+              <div class="form-group">
+                <strong>Categoria: </strong>
+                <span *ngIf="cat" (click)="cat=!cat" >{{mob.categoria}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <ng-select 
+                    *ngIf="!cat"
+                    class="custom"
+                    [items]="categorias"
+                    [multiple]="false"
+                    [(ngModel)]="mob.categoria"
+                    name="categoria"
+                    placeholder="Categoria del mueble"
+                    (change)="cat=!cat;validate()">
+                </ng-select>
+              </div> 
+              <div class="form-group">
+                <strong>Imagen:  </strong>
+                <img style="height: 30vh; width: 40vh;" class="producto" [src]="api.baseURL+mob.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+              </div>           
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -24,3 +24,8 @@ h4:hover{
 .sender{
     width:130px;
 }
+
+.fa-spinner, .mx-5 {
+    margin-left: 75% !important;
+    margin-top: 10%;
+}

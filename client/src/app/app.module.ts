@@ -42,6 +42,8 @@ import { SubtareasComponent } from './components-crm/subtareas/subtareas.compone
 import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fijos.component';
 import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
 import { InformeAdminComponent } from './components-crm/informe-admin/informe-admin.component';
+import { PanelComponent } from './components-crm/panel/panel.component';
+import { MobiliarioCrmComponent } from './components-crm/mobiliario-crm/mobiliario-crm.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { InformeAdminComponent } from './components-crm/informe-admin/informe-ad
     SubtareasComponent,
     PreciosFijosComponent,
     CotizacionComponent,
-    InformeAdminComponent
+    InformeAdminComponent,
+    PanelComponent,
+    MobiliarioCrmComponent
   ],
   imports: [
     BrowserModule,

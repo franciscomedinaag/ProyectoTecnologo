@@ -173,6 +173,7 @@ export class FichaTratoComponent implements OnInit {
         .subscribe((uploaded)=>{
           this.toast.showSuccess("Archivo subido")
           this.getTrato()
+          this.show(true)
       },err=>{
           this.toast.showError("Archivo muy grande!")
       })

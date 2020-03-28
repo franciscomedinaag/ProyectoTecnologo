@@ -119,6 +119,18 @@
     "dataSource": "db",
     "public":true
   },
+  "Carrusel": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Mobiliario": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Sitio": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

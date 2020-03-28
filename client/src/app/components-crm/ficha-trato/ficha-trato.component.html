@@ -99,7 +99,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Archivos del trato</h5>
+          <h5  *ngIf="defButton" class="modal-title" id="exampleModalLongTitle">Archivos NO definitivos</h5>
+          <h5  *ngIf="!defButton" class="modal-title" id="exampleModalLongTitle">Archivos definitivos</h5>
           <button class="btn btn-secondary" style="margin-left: 10%;" (click)="toUpload=true;">Subir archivo</button>
           <button *ngIf="defButton" class="btn btn-primary" style="margin-left: 10%;" 
           (click)="show(true);defButton=!defButton" >Ver definitivos</button>

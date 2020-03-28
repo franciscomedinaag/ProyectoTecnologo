@@ -40,6 +40,7 @@ export class FichaClienteComponent implements OnInit {
     to:" ",
     attachment:" "
   };
+  private sending=false;
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
 
@@ -196,24 +197,31 @@ export class FichaClienteComponent implements OnInit {
   }
 
   sendMail(data){
+    this.sending=true
     if(data.subject==" " || data.to==" "){
      this.toast.showError("No se han llenado todos los campos");
+     this.sending=false
     }
     else{
       data.attachment=this.attachment;
       data.ext=this.ext;
       if(data.ext==" "){
-        let base=this.api.baseURL
-        data.attachment=base+data.attachment;
+        if(!(data.attachment==" ")){
+          let base=this.api.baseURL
+          data.attachment=base+data.attachment;
+        }
       }
       
       this.api.post('/Mails/sendEmail',{data:data}).subscribe((okay)=>{
         this.toast.showSuccess("Correo mandado con exito")
         this.attachment=" ";
         this.ext=" ";
+        this.sending=false
+
       },
       (err) => {
         this.toast.showError("Revisa tu conexión de red")
+        this.sending=false
       });
 
       this.data={}

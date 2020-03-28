@@ -22,6 +22,7 @@ export class FileChooserComponent implements OnInit {
   ngOnInit() {}
 
   onFileChange(event) {
+    console.log("filetype", this.fileType)
     this.loading = true;
 		let reader = new FileReader();
 		if(event.target.files != null && event.target.files.length > 0) {

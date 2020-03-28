@@ -143,9 +143,11 @@ export class UsuariosComponent implements OnInit {
         return
       }
 
-      this.api.get(`/Usuarios`,true,{where:{username:this.user.username}})
+      this.api.get(`/Usuarios`,true,{where:{email:this.user.email}})
       .subscribe((found:Array<any>)=>{
+        console.log(found)
         if(found.length==0){
+          console.log(this.user)
           this.api.post('/Usuarios',this.user)
           .subscribe((done)=>{
             this.toast.showSuccess("Usuario creado")
