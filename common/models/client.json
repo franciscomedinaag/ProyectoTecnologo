@@ -66,22 +66,14 @@
         "type": "hasMany",
         "model": "Trato",
         "foreignKey": "clientId" 
-        }
-    },
-    "acls": [
-      {
-        "accessType": "*",
-        "principalType": "ROLE",
-        "principalId": "$unauthenticated",
-        "permission": "DENY"
       },
-      {
-        "accessType": "*",
-        "principalType": "ROLE",
-        "principalId": "$authenticated",
-        "permission": "ALLOW"
+      "mensajes": {
+        "type": "hasMany",
+        "model": "Mensaje",
+        "foreignKey": "clientId" 
       }
-    ],
+    },
+    "acls": [],
     "methods": {
       "prototype.getClient": {
         "accepts": [],
@@ -116,6 +108,29 @@
           {
             "path": "/getFullClients",
             "verb": "get"
+          }
+        ]
+      },
+      "checkIfExist": {
+        "accepts": [  { 
+          "arg": "data",
+          "type": "object",
+          "root": true,
+          "description": "buscar cliente"
+          }],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "clients a retornar"
+          }
+        ],
+        "description": "Traer clientes con sus include",
+        "http": [
+          {
+            "path": "/checkIfExist",
+            "verb": "post"
           }
         ]
       },

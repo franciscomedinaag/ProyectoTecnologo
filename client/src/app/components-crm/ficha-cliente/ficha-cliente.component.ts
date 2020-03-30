@@ -13,7 +13,7 @@ import { IfStmt } from '@angular/compiler';
 export class FichaClienteComponent implements OnInit {
 
   private id:any;
-  private client:any={};
+  private client:any={mensajes:[]};
 
   private neg:boolean=true;
   private emp:boolean=true;

@@ -19,7 +19,7 @@ export class MobiliarioCrmComponent implements OnInit {
     categoria:'',
     fullImagen:{}
   }
-  private categorias=['Escritorios','Sillas','Peninsulas','Cocinas','Archiveros','Ejecutivos','Estantes','Otros',]
+  private categorias=['Escritorios','Sillas','Peninsulas','Cocinas','Archiveros','Ejecutivos','Estantes','Butacas','Otros']
   private desc=true
   private nom=true
   private cat=true

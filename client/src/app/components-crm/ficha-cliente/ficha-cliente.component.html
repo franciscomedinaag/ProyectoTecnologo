@@ -90,6 +90,16 @@
                 </div>
             </div>
             </div>
+
+            <div *ngIf="client.mensajes.length>0">
+              <h4 style="color:#33ACE2;font-weight: bold;">Mensajes desde sitio web: </h4>
+              <ul>
+                <li *ngFor="let m of client.mensajes">
+                  {{m.mensaje}} / {{m.fecha.split('T')[0]}}
+                </li>
+              </ul>
+            </div>
+
         </div>
         <div class="col-sm-4 "  >
           <h4 class="text-center" style="color:#33ACE2;font-weight: bold;">Historial: </h4>

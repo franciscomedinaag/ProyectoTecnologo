@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #33ACE2">
     <a class="navbar-brand" href="#">
-      <img src="assets/logo-blanco.png" alt="COR" width="30" height="30">
+      <img src="../../../../assets/default/white-logo.png" alt="COR" width="30" height="30">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -16,19 +16,25 @@
             Muebles
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" [routerLink]="['/muebles', 1]">Cocinas Integrales</a>
-            <a class="dropdown-item" [routerLink]="['/muebles',2]">Escritorios</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 3]">Butacas</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 1]">Escritorios</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 2]">Sillas</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 3]">Peninsulas</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 4]">Cocinas Integrales</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 5]">Archiveros</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 6]">Ejecutivos</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 7]">Estantes</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 8]">Butacas</a>
+            <a class="dropdown-item" [routerLink]="['/muebles', 9]">Otros</a>
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link " routerLink="contacto">Contacto</a>
+          <a class="nav-link " [routerLink]="['/contacto']">Contacto</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " routerLink="nosotros">Nosotros</a>
+          <a class="nav-link " [routerLink]="['/nosotros']">Nosotros</a>
         </li>
         <li class="pt-2 pl-5" style="width: 30px">    
-          <i class="fa fa-facebook-official" aria-hidden="true"></i>
+          <a class="nav-link" href="https://www.facebook.com/mueblescor/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
         </li>
       </ul>
     </div>
