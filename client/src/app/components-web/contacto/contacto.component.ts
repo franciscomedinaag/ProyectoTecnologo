@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactoComponent implements OnInit {
 
+  title:string="Que pedo con el mapa"
+  lat:number=51.6712
+  lang:number=7.80900
+
+  
+  
   constructor() { }
-
+  
   ngOnInit() {
+    
   }
-
+  
 }

@@ -1,15 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
+
+//EXT
 import {ToastrModule} from 'ngx-toastr';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DpDatePickerModule} from 'ng2-date-picker';
+
 //CRM
 import { LoginComponent } from './components-crm/login/login.component';
 import { ClientesComponent } from './components-crm/clientes/clientes.component';
@@ -44,6 +45,7 @@ import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.comp
 import { InformeAdminComponent } from './components-crm/informe-admin/informe-admin.component';
 import { PanelComponent } from './components-crm/panel/panel.component';
 import { MobiliarioCrmComponent } from './components-crm/mobiliario-crm/mobiliario-crm.component';
+import { HereMapComponent } from './components-web/here-map/here-map.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,8 @@ import { MobiliarioCrmComponent } from './components-crm/mobiliario-crm/mobiliar
     CotizacionComponent,
     InformeAdminComponent,
     PanelComponent,
-    MobiliarioCrmComponent
+    MobiliarioCrmComponent,
+    HereMapComponent
   ],
   imports: [
     BrowserModule,

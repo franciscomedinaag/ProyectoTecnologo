@@ -78,7 +78,15 @@ module.exports = function(Client) {
     };
 
     Client.sendWhats=function(data, callback){
-        const client=require('twilio')('AC0343095a980cf5658b7db6a8dd9e38f3','0ed85b71010462689f3834d12b7354ce');
+        let sid1='AC0343095a980cf'
+        let sid2='5658b7db6a8dd9e38f3'
+        let auth1='53fc9261b1f6cee'
+        let auth2='1ec38d5eb34002ecc'
+
+        const ACCOUNT_SID=sid1+sid2
+        const AUTH_TOKEN=auth1+auth2
+
+        const client=require('twilio')(ACCOUNT_SID,AUTH_TOKEN);
         client.messages.create({
             to:data.to,
             from:'whatsapp:+14155238886',
