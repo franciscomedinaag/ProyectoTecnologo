@@ -113,9 +113,11 @@
         <div class="col-sm-3 " >
             <h4  style="color:#33ACE2;font-weight: bold;"  data-toggle="modal" data-target="#addNote">Notas: <small style="font-size: small;"> (Agregar) </small></h4>           
             <ul>
-                <li *ngFor="let n of client.notas"  class="text-start" (click)="deleteNote(n.id)">
-                    {{n.nota}} <i class="fa fa-minus-circle fa-sm" aria-hidden="true"></i>
-                    <br>
+                <li *ngFor="let n of client.notas"  class="text-start" >
+                  <span [className]="n.nota.length>=27 ? 'text-primary' : ' '"> 
+                    <span data-toggle="modal" data-target="#seeNote" (click)="nota=n.nota" >{{n.nota.length>=27 ? '(Ver nota)' : n.nota}}</span> <i (click)="deleteNote(n.id)" class="fa fa-minus-circle fa-sm" aria-hidden="true"></i>
+                  </span>
+                  <br>
                 </li>
             </ul>
 
@@ -208,6 +210,27 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" (click)="sendMail(data)" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="seeNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Nota del cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">    
+            {{nota}} 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createNote(note)" class="btn btn-primary">Enviar</button>
         </div>
       </div>
     </div>

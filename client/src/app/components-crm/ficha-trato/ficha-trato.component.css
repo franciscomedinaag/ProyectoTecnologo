@@ -36,3 +36,7 @@ h3:hover{
 .tit{
     color:#33ACE2;
 }
+
+.smallText{
+    font-size: small;
+}

@@ -33,6 +33,7 @@ export class FichaClienteComponent implements OnInit {
   private ext:any=" "
   private catalogos:any=[];
   private historial:any=[]
+  private nota:string=""
 
   private data:any={
     subject:" ",

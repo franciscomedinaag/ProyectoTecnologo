@@ -78,13 +78,12 @@ module.exports = function(Client) {
     };
 
     Client.sendWhats=function(data, callback){
-        let sid1='AC0343095a980cf'
-        let sid2='5658b7db6a8dd9e38f3'
-        let auth1='53fc9261b1f6cee'
-        let auth2='1ec38d5eb34002ecc'
 
-        const ACCOUNT_SID=sid1+sid2
-        const AUTH_TOKEN=auth1+auth2
+        // const ACCOUNT_SID='AC0343095a980cf5658b7db6a8dd9e38f3'
+        // const AUTH_TOKEN='e7964159b032399f9ee3a78e96f149af'
+
+        const ACCOUNT_SID= process.env.TWILIO_ACCOUNT_SID
+        const AUTH_TOKEN=process.env.TWILIO_AUTH_TOKEN
 
         const client=require('twilio')(ACCOUNT_SID,AUTH_TOKEN);
         client.messages.create({
