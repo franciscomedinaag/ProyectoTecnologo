@@ -120,6 +120,31 @@
           }
         ]
       },
+      "generateTotal": {
+        "accepts": [
+          {
+            "arg": "data",
+            "type": "object",
+            "root": true,
+            "description": "id y fechas del vendedor"
+          }
+        ],
+        "returns": [
+          {
+            "arg": "vendido",
+            "type": "number",
+            "root": true,
+            "description": "vendido en el bimestre actual"
+          }
+        ],
+        "description": " Calcular lo vendido en el bimestre actual",
+        "http": [
+          {
+            "path": "/generateTotal",
+            "verb": "post"
+          }
+        ]
+      },
       "prototype.getTrato": {
         "accepts": [],
         "returns": [

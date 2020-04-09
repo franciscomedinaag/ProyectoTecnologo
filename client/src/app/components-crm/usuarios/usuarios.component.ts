@@ -27,9 +27,15 @@ export class UsuariosComponent implements OnInit {
   there:boolean=false;
   cant:number=0;
 
+  private hoy:any=new Date().toLocaleDateString();
+  private hoyString:any
+  private mes1:any
+  private mes2:any
+
   constructor(private api:DataApiService, private auth:AuthService, private router:Router, private toast:ToastService) { }
 
   ngOnInit() {
+    this.getFechas();
     this.getUsers();
     this.getAdmin();
     this.getMeta();
@@ -44,6 +50,7 @@ export class UsuariosComponent implements OnInit {
       .subscribe((usuarios)=>{
         this.activos=usuarios;
         this.vendedores=this.activos;
+        this.sortBySold(true);
       })
     }
     else{
@@ -51,8 +58,96 @@ export class UsuariosComponent implements OnInit {
     .subscribe((usuarios)=>{
       this.inactivos=usuarios;
       this.vendedores=this.inactivos;
+      this.sortBySold(false);
     })
     }
+  }
+
+  sortBySold(act){
+    if(act){
+      this.activos.forEach((act,i) => {
+        let data={
+          mes1:this.mes1,
+          mes2:this.mes2,
+          anio:this.hoy[2],
+          vendedorId:act.id
+        }
+        this.api.post(`/Tratos/generateTotal`,{data:data})
+        .subscribe((vendido)=>{
+          act.vendido=vendido
+          this.activos.sort((a, b) => (a.vendido < b.vendido) ? 1 : -1)
+        })
+      });
+    }
+    else{
+      this.inactivos.forEach((act,i) => {
+        let data={
+          mes1:this.mes1,
+          mes2:this.mes2,
+          anio:this.hoy[2],
+          vendedorId:act.id
+        }
+        this.api.post(`/Tratos/generateTotal`,{data:data})
+        .subscribe((vendido)=>{
+          act.vendido=vendido
+          this.inactivos.sort((a, b) => (a.vendido < b.vendido) ? 1 : -1)
+        })
+      });
+    }
+  }
+
+  getFechas(){
+        this.hoy=this.hoy.split('/');
+
+        if(this.hoy[0].length<2){
+            this.hoy[0]='0'+this.hoy[0]
+        }
+        if(this.hoy[1].length<2){
+            this.hoy[1]='0'+this.hoy[1]
+        }
+        this.hoyString=this.hoy[0]+'-'+this.hoy[1]+'-'+this.hoy[2]
+
+        switch(this.hoy[1]){
+            case '01':
+            case '02':
+                this.mes1="01"
+                this.mes2="02"
+                break;
+            
+            case '03':
+            case '04':
+                this.mes1="03"
+                this.mes2="04"
+                break;
+            
+            case '05':
+            case '06':
+                this.mes1="05"
+                this.mes2="06"
+                break;
+            
+            case '07':
+            case '08':          
+                this.mes1="07"
+                this.mes2="08"
+                break;
+            
+            case '09':
+            case '10':
+                this.mes1="09"
+                this.mes2="10"
+                break;
+            
+            case '11':
+            case '12':
+                this.mes1="11"
+                this.mes2="12"
+                break;
+            
+            default:
+                break;
+            
+        }
   }
 
   getAdmin(){
@@ -145,9 +240,7 @@ export class UsuariosComponent implements OnInit {
 
       this.api.get(`/Usuarios`,true,{where:{email:this.user.email}})
       .subscribe((found:Array<any>)=>{
-        console.log(found)
         if(found.length==0){
-          console.log(this.user)
           this.api.post('/Usuarios',this.user)
           .subscribe((done)=>{
             this.toast.showSuccess("Usuario creado")

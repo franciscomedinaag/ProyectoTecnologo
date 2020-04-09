@@ -124,7 +124,7 @@ module.exports = function(Report) {
                     }
                 }
             })
-            // console.log("INFORME DEL ADMIN: ", informe)
+            console.log("INFORME DEL ADMIN: ", informe)
             // Report.models.InformeAdmin.create(informe, function(err,informe){
             //         if(err) return err
 
@@ -205,7 +205,7 @@ module.exports = function(Report) {
 
                 informe.clientes=removeDuplicate(clientes).length                   
                 informe.intentos=informe.intentos/informe.cerrados
-                // console.log("el informe de ", user.username, "dice: ", informe)
+                console.log("el informe de ", user.username, "dice: ", informe)
                 // Report.models.Informe.create(informe, function(err,informe){
                 //     if(err) return err
 

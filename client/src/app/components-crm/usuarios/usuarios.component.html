@@ -62,10 +62,10 @@
                     <td><a [routerLink]="['/miperfil',admin.id]">Perfil</a></td>
                     <td class="text-center">N/A</td>
                   </tr>
-                  <tr *ngFor="let a of vendedores; let i=index">
-                    <th scope="row">VEND</th>
+                  <tr *ngFor="let a of vendedores; let i=index" [className]="a.vendido<meta.cantidad ? 'table-danger' : ' '">
+                    <th scope="row">{{i + 1}}</th>
                     <td>{{a.username}}</td>
-                    <td>calculo</td>
+                    <td>{{a.vendido | currency}}</td>
                     <td class="text-center"><a [routerLink]="['/informesven',a.id]">Ver</a> </td>
                     <td><a [routerLink]="['/miperfil',a.id]">Perfil</a></td>
                     <td *ngIf="showAct" class="text-center" (click)="changeState(a,false)"><i class="fa fa-window-close-o" aria-hidden="true"></i></td>

@@ -49,6 +49,7 @@ export class FichaTratoComponent implements OnInit {
   private categorias:any=[];
   private efe:any;
 
+  private sugerencia:any="Tal vez lo siguiente en realizar sea "
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, 
     private toast:ToastService, private router:Router) { }
@@ -75,6 +76,49 @@ export class FichaTratoComponent implements OnInit {
          }
        });
        this.trato.archivos=this.defFiles;
+
+       if(!this.trato.subtareas.length){
+         this.sugerencia+=" llamada"
+       }
+       else{
+        let ultima=this.trato.subtareas[this.trato.subtareas.length-1]
+        if((ultima.categoriaId==3 || ultima.categoriaId==4) && ultima.estado!=2){
+          if(ultima.categoriaId==1 && ultima.estado!=2){
+            if(ultima.categoriaId==2 && ultima.estado!=2){
+              if(ultima.categoriaId==5 && ultima.estado!=2){
+                if(ultima.categoriaId==6 && ultima.estado!=2){
+                  if(ultima.categoriaId==7 && ultima.estado!=2){
+                    if(ultima.categoriaId==8 && ultima.estado!=2){
+                      this.sugerencia+="terminar el trato "
+                    }
+                    else{
+                      this.sugerencia+="enviar los productos"
+                    }
+                  }
+                  else{
+                    this.sugerencia+="realizar servicio al cliente"
+                  }
+                }
+                else{
+                  this.sugerencia+="enviar documentacion"
+                }
+              }
+              else{
+                this.sugerencia+="realizar la cotización"
+              }
+            }
+            else{
+              this.sugerencia+="diseñar los productos"
+            }
+          }
+          else{
+            this.sugerencia+="programar una reunión"
+          }
+        }
+        else{
+          this.sugerencia+="realizar una llamada"
+        }
+       }
       })
   }
 
