@@ -38,9 +38,14 @@
         </div>
     </div>
     <div class="row align-items-center">
-        <div class="col text-center">
+        <div class="col-sm-8 text-center">
           <h4 *ngIf="trato.estado!=0" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación</h4>  
           <h4 *ngIf="trato.estado==0" data-toggle="modal" data-target="#subModal" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación<small>(Agregar)</small></h4>
+        </div>
+        <div class="col-sm-4">
+          <p class=" pl-3 text-success" *ngIf="trato.estado==0"  style="font-weight: bold; background-color: rgb(188, 252, 188);">
+            Sugerencia: <span style="font-weight: normal;">{{sugerencia}}</span>
+          </p>
         </div>
     </div>
     <hr>
@@ -102,10 +107,11 @@
           <h5  *ngIf="defButton" class="modal-title" id="exampleModalLongTitle">Archivos NO definitivos</h5>
           <h5  *ngIf="!defButton" class="modal-title" id="exampleModalLongTitle">Archivos definitivos</h5>
           <button class="btn btn-secondary" style="margin-left: 10%;" (click)="toUpload=true;">Subir archivo</button>
-          <button *ngIf="defButton" class="btn btn-primary" style="margin-left: 10%;" 
+          
+          <button *ngIf="defButton" class="btn btn-block btn-primary ml-2" 
           (click)="show(true);defButton=!defButton" >Ver definitivos</button>
-          <button *ngIf="!defButton" class="btn btn-secondary" style="margin-left: 10%;"
-           (click)="show(false);defButton=!defButton" >Ver no definitivos</button>
+          <button *ngIf="!defButton" class="btn btn-block btn-secondary ml-2" 
+           (click)="show(false);defButton=!defButton" >No definitivos</button>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
