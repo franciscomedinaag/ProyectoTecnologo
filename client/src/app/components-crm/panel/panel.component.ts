@@ -12,11 +12,14 @@ export class PanelComponent implements OnInit {
 
   private sitioEdit:any={
     numero:0,
-    direccion:"",
+    direccion:" ",
     cp:0,
-    imagenInicio:"",
-    textoInicio:"",
-    fullInicio:{}
+    imagenInicio:" ",
+    textoInicio:" ",
+    fullInicio:{},
+    mision:" ",
+    vision:" ",
+    compromiso:" "
   }
   private sitio:any={}
   private setImg=false

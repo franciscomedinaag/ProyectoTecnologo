@@ -16,15 +16,15 @@
             Muebles
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" [routerLink]="['/muebles', 1]">Escritorios</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 2]">Sillas</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 3]">Peninsulas</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 4]">Cocinas Integrales</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 5]">Archiveros</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 6]">Ejecutivos</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 7]">Estantes</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 8]">Butacas</a>
-            <a class="dropdown-item" [routerLink]="['/muebles', 9]">Otros</a>
+            <a class="dropdown-item" (click)="getTitulo(1)" [routerLink]="['/muebles', 1]">Escritorios</a>
+            <a class="dropdown-item" (click)="getTitulo(2)" [routerLink]="['/muebles', 2]">Sillas</a>
+            <a class="dropdown-item" (click)="getTitulo(3)" [routerLink]="['/muebles', 3]">Peninsulas</a>
+            <a class="dropdown-item" (click)="getTitulo(4)" [routerLink]="['/muebles', 4]">Cocinas Integrales</a>
+            <a class="dropdown-item" (click)="getTitulo(5)" [routerLink]="['/muebles', 5]">Archiveros</a>
+            <a class="dropdown-item" (click)="getTitulo(6)" [routerLink]="['/muebles', 6]">Ejecutivos</a>
+            <a class="dropdown-item" (click)="getTitulo(7)" [routerLink]="['/muebles', 7]">Estantes</a>
+            <a class="dropdown-item" (click)="getTitulo(8)" [routerLink]="['/muebles', 8]">Butacas</a>
+            <a class="dropdown-item" (click)="getTitulo(9)" [routerLink]="['/muebles', 9]">Otros</a>
           </div>
         </li>
         <li class="nav-item">

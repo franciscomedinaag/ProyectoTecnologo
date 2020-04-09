@@ -11,6 +11,7 @@ export class InicioComponent implements OnInit {
 
   private sitio:any={}
   private carrusels:any=[{}]
+  private first={}
 
   constructor(private api:DataApiService) { }
 
@@ -28,8 +29,11 @@ export class InicioComponent implements OnInit {
 
   getCarrusel(){
     this.api.get(`/Carrusels`,false,{where:{type:0}})
-    .subscribe((carrusels)=>{
+    .subscribe((carrusels:any)=>{
+      this.first=carrusels[0]
       this.carrusels=carrusels
+      this.carrusels.shift()
+      // console.log(this.carrusels)
     })
   }
 

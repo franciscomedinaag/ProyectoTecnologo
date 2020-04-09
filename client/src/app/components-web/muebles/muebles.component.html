@@ -1,5 +1,68 @@
 <app-navbar-website></app-navbar-website>
-<div class="container">
-<p>muebles works!</p>
+<div class="container" style="background-color: white;">
+<div class="row pb-4 align-items-center" style="height: 40vh; background-image: url(assets/default/muebleria.jpg);  object-fit: fill;">
+    <div class="col">
+        <h1 class="ml-5" style="font-weight: bold; color:white;  -webkit-text-stroke-width: 2px; -webkit-text-stroke-color:black;">
+            {{categoria}}
+        </h1>
+    </div>
+</div>
+<div class="row pb-2 pt-2 align-items-center ">
+    <div class="col text-justify">
+        <h4 class="text-center"> " {{descripcion}} " . </h4>
+    </div>
+</div>
+<div class="row pb-4 justify-content-center">
+    <div *ngFor="let m of mobiliario" class="col-sm-3 text-center">
+        <div class="card mb-3 mr-3">
+            <img class="producto " style="object-fit: fill; height:20vh" [src]="api.baseURL+m.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+          <div class="card-body">
+            <strong><h5 style="height: 50px; font-weight:bold;" class="card-title"><span>{{m.nombre}} </span></h5></strong>
+            <a data-toggle="modal" data-target="#seeMob" (click)="mob=m" class="btn btn-primary btn-block text-white">Ver</a>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+      <div *ngIf="mobiliario.length==0" class="col" style="height: 65vh;">
+         <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> 
+            Aún no hay mobiliario registrado para el sitio web </h4>             
+      </div>
+    </div>
+</div>
 </div>
 <app-footer-website></app-footer-website>
+
+
+<div class="modal fade" id="seeMob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{mob.nombre}} </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"> 
+            <div class="row">
+                <div class="col text-center">
+                    <div class="form-group">
+                      <strong>Descripcion: </strong>
+                      <span  >{{mob.descripcion}}</span>
+                    </div>  
+                    <div class="form-group">
+                      <strong>Categoria: </strong>
+                      <span >{{mob.categoria}} </span>
+                      
+                    </div> 
+                    <div class="form-group">
+                      <img style="height: 30vh; width: 40vh;" class="producto" [src]="api.baseURL+mob.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+                    </div>           
+                </div>
+            </div>    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
