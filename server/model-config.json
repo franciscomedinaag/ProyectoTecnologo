@@ -135,6 +135,14 @@
     "dataSource": "db",
     "public":true
   },
+  "Cerrado": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Perdido": {
+    "dataSource": "db",
+    "public":true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true
@@ -146,7 +154,8 @@
       "remoting": {
         "sharedMethods": {
           "*": false,
-          "sendEmail":true
+          "sendEmail":true,
+          "sendPoll":true
         }
       }
     }

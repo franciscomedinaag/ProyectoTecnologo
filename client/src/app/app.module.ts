@@ -46,6 +46,8 @@ import { InformeAdminComponent } from './components-crm/informe-admin/informe-ad
 import { PanelComponent } from './components-crm/panel/panel.component';
 import { MobiliarioCrmComponent } from './components-crm/mobiliario-crm/mobiliario-crm.component';
 import { HereMapComponent } from './components-web/here-map/here-map.component';
+import { PerdidoComponent } from './components-crm/perdido/perdido.component';
+import { CerradoComponent } from './components-crm/cerrado/cerrado.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { HereMapComponent } from './components-web/here-map/here-map.component';
     InformeAdminComponent,
     PanelComponent,
     MobiliarioCrmComponent,
-    HereMapComponent
+    HereMapComponent,
+    PerdidoComponent,
+    CerradoComponent
   ],
   imports: [
     BrowserModule,

@@ -251,7 +251,49 @@ export class TratosComponent implements OnInit {
                trato.fechaFin=fecha;
                if(trato.nota==""){trato.nota=" "}
                if(trato.reporte==""){trato.reporte=" "}
-               if(estado){trato.estado=1}
+               if(estado){
+                 trato.estado=1
+                 console.log("programar correo") 
+                 //crear registro de encuesta
+                 this.api.get('/Cerrados',true,{where:{tratoId:trato.id}}).subscribe((encuestas:any)=>{
+                  if(!encuestas.length){
+                    let hoy:any=new Date().toLocaleDateString()
+                    hoy=hoy.split('/')
+                    hoy[1]=Number(hoy[1])
+                    if(hoy[1]>=9){
+                      hoy[1]=(hoy[1]+4)-12
+                      hoy[2]=Number(hoy[2])+1
+                    }
+                    else{
+                      hoy[1]=hoy[1]+4
+                    }
+
+                    hoy[1]=hoy[1].toString()
+
+                    if(hoy[0].length<2){
+                      hoy[0]='0'+hoy[0]
+                    }
+                    if(hoy[1].length<2){
+                      hoy[1]='0'+hoy[1]
+                    }
+
+                    if(hoy[0]=='30' || hoy[0]=='31'){
+                      hoy[0]='29'
+                    }
+
+                    //fecha actual mas cuatro meses
+                    let cerrado={
+                      respuesta1:"0",
+                      respuesta2:"0",
+                      respuesta3:"...",
+                      tratoId:trato.id,
+                      fechaEnvio:hoy[0]+'-'+hoy[1]+'-'+hoy[2]
+                    }
+                    console.log("el registro a crear: ",cerrado)
+                    this.api.post('/Cerrados',cerrado).subscribe((okay)=>{})
+                  }
+              })
+              }
                else{trato.estado=2}
                  this.api.patch('/Tratos',trato).subscribe( (edited)=>{
                    this.isFrecuent(trato.clientId)
@@ -275,7 +317,29 @@ export class TratosComponent implements OnInit {
         if(trato.nota==""){trato.nota=" "}
         if(trato.reporte==""){trato.reporte=" "}
         if(estado){trato.estado=1}
-        else{trato.estado=2}
+        else{trato.estado=2
+          let data={
+            to: trato.cliente.email,
+            subject: "Encuesta Trato Perdido",
+            html:'Buen día, por parte de COR muebles te invitamos a llenar esta <a href="https://www.w3schools.com">encuesta</a> para mejorar nuestro servicio ¡Gracias!  '
+          }
+          this.api.post('/Mails/sendPoll',{data:data}).subscribe((okay)=>{
+            this.api.get('/Perdidos',true,{where:{tratoId:trato.id}}).subscribe((encuestas:any)=>{
+              if(!encuestas.length){
+                let perdido={
+                  respuesta1:"0",
+                  respuesta2:"0",
+                  respuesta3:"...",
+                  tratoId:trato.id
+                }
+                this.api.post('/Perdidos',perdido).subscribe((okay)=>{})
+              }
+            })
+          },
+            err=>{
+              this.toast.showError("No se ha mandado la encuesta de trato perdido porque el email de el cliente no es valido")
+            })
+        }
   
           this.api.patch('/Tratos',trato).subscribe( (edited)=>{
             this.isFrecuent(trato.clientId)

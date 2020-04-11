@@ -16,6 +16,14 @@ module.exports = function(Trato) {
         })
     };
 
+    Trato.prototype.getTrato = function(callback) {
+        Trato.findById(this.id,{include:['vendedor','cliente','subtareas']}, function(err,trato){
+            if(err) return callback(err)
+
+            callback(null,trato);
+        })
+    };
+
     Trato.generateTotal = function(data,callback) {
             let vendido=0
 

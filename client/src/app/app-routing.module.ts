@@ -17,6 +17,8 @@ import { PreciosFijosComponent } from './components-crm/precios-fijos/precios-fi
 import { CotizacionComponent } from './components-crm/cotizacion/cotizacion.component';
 import { InformeAdminComponent } from './components-crm/informe-admin/informe-admin.component';
 import { PanelComponent } from './components-crm/panel/panel.component';
+import { PerdidoComponent } from './components-crm/perdido/perdido.component';
+import { CerradoComponent } from './components-crm/cerrado/cerrado.component';
 
 //sitio Web
 import { InicioComponent } from './components-web/inicio/inicio.component';
@@ -43,6 +45,8 @@ const routes: Routes = [
   {path: 'cotizacion/:tratoId/:subId',component: CotizacionComponent},
   {path: 'panel',component: PanelComponent},
   {path: 'panelmobiliario',component: MobiliarioCrmComponent},
+  {path: 'perdido/:id',component: PerdidoComponent},
+  {path: 'cerrado/:id',component: CerradoComponent},
 
   //sitio Web
   {path: 'inicio',component: InicioComponent},
