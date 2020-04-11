@@ -17,9 +17,14 @@ module.exports = function(Subtarea) {
             if(err) return callback(err)
 
             let filtered=[]
-            Subtareas.forEach(s => {         
-                if(s.toJSON().trato.vendedorId==vendedorId){
+            
+            Subtareas.forEach((s,index) => {      
+                if(s.toJSON().trato!=undefined){  
+                console.log("ola",index,": ",s.toJSON().trato.vendedorId) 
+                let v=s.toJSON().trato.vendedorId
+                if(v==vendedorId){
                     filtered.push(s)
+                }
                 }
             });  
              

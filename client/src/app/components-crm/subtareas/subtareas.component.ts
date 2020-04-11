@@ -92,6 +92,7 @@ export class SubtareasComponent implements OnInit {
     this.subtareas=[]
     this.api.post('/Subtareas/getSubtareas', {data:data})
     .subscribe((subtareas)=>{
+      console.log("las subtareas: ", subtareas)
       this.allSubtareas=subtareas
       this.allSubtareas.forEach(s => {
         s.catName=this.categorias.find(x=>x.id==s.categoriaId).nombre

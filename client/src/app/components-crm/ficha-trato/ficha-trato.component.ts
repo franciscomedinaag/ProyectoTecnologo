@@ -46,6 +46,7 @@ export class FichaTratoComponent implements OnInit {
     categoriaId:""
   }
   private hoyGuion:any;
+  private hoyLocale:any;
   private categorias:any=[];
   private efe:any;
 
@@ -57,8 +58,15 @@ export class FichaTratoComponent implements OnInit {
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
     this.hoyGuion=FichaTratoComponent.setHoy()
+    this.hoyLocale=this.setHoyLocale()
     this.getTrato();
     this.getCategorias();
+  }
+
+  private  setHoyLocale():string{//fecha local en formato ISO
+    let inicio=this.hoyGuion.split("-")
+    let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
+    return i
   }
 
   getTrato(){
@@ -77,49 +85,85 @@ export class FichaTratoComponent implements OnInit {
        });
        this.trato.archivos=this.defFiles;
 
-       if(this.trato.subtareas.length===0){
-         this.sugerencia+=" llamada"
-       }
-       else{
-        let ultima=this.trato.subtareas[this.trato.subtareas.length-1]
-        if((ultima.categoriaId==3 || ultima.categoriaId==4) && ultima.estado!=2){
-          if(ultima.categoriaId==1 && ultima.estado!=2){
-            if(ultima.categoriaId==2 && ultima.estado!=2){
-              if(ultima.categoriaId==5 && ultima.estado!=2){
-                if(ultima.categoriaId==6 && ultima.estado!=2){
-                  if(ultima.categoriaId==7 && ultima.estado!=2){
-                    if(ultima.categoriaId==8 && ultima.estado!=2){
-                      this.sugerencia+="terminar el trato "
-                    }
-                    else{
-                      this.sugerencia+="enviar los productos"
-                    }
-                  }
-                  else{
-                    this.sugerencia+="realizar servicio al cliente"
-                  }
-                }
-                else{
-                  this.sugerencia+="enviar documentacion"
-                }
-              }
-              else{
-                this.sugerencia+="realizar la cotización"
-              }
-            }
-            else{
-              this.sugerencia+="diseñar los productos"
-            }
-          }
-          else{
-            this.sugerencia+="programar una reunión"
-          }
+       this.trato.subtareas.forEach(s => {
+        if(s.fechaFin<this.hoyLocale && s.estado==0){
+          this.setVencida(s)
         }
-        else{
-          this.sugerencia+="realizar una llamada"
+       });
+
+       let sug=""
+
+       switch(this.setSugerencia().toString()){
+         case '1':{
+           sug="llamada de atención al cliente"
+           break
+         }
+         case '3':{
+          sug="una visita o reunion"
+          break
+          }
+        case '4':{
+          sug="diseñar los productos"
+          break
+          } 
+        case '5':{
+          sug="cotizar los productos"
+          break
+          }
+        case '6':{
+          sug="mandar la documentación"
+          break
+          }
+        case '7':{
+          sug="realizar un servicio de instalacion"
+          break
+          }
+        case '8':{
+          sug="enviar los los productos al cliente"
+          break
+          }
+        case '9':{
+          sug="realizar una llamada de atención para mantenimiento"
+          break
+          }
+        default: {
+          sug="default"
+          break
         }
        }
+
+       this.sugerencia+=sug
       })
+  }
+
+  setSugerencia():string{
+    let sugerenciaId:any
+    
+    let ultima=this.trato.subtareas[this.trato.subtareas.length-1].categoriaId
+    sugerenciaId=this.revisarAgendadas(ultima)
+    
+    return sugerenciaId 
+  }
+
+  revisarAgendadas(u:number){
+    if(u==1 || u==2){
+      return 3
+    }
+    if(u==9){
+      return 1
+    }
+    this.trato.subtareas.forEach(s => {
+      if(s.categoriaId==u+1){ //si hay agendada la siguiente
+        this.revisarAgendadas(u+1)
+      }
+     });
+
+     return u+1
+  }
+
+  setVencida(s){
+    s.estado=2;
+    this.api.patch('/Subtareas',s).subscribe((okay)=>{})
   }
 
   assignDesc(trato){
