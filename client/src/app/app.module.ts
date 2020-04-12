@@ -10,6 +10,7 @@ import { FormsModule }   from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {DpDatePickerModule} from 'ng2-date-picker';
+import {ChartsModule} from 'ng2-charts';
 
 //CRM
 import { LoginComponent } from './components-crm/login/login.component';
@@ -90,7 +91,8 @@ import { CerradoComponent } from './components-crm/cerrado/cerrado.component';
     BrowserAnimationsModule,  
     FormsModule,
     DpDatePickerModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ChartsModule
   ],
   providers: [DataApiService, AuthService,ToastService],
   bootstrap: [AppComponent]
