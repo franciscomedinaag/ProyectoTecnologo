@@ -64,9 +64,14 @@ export class GraficasComponent implements OnInit {
         break
       }
       case 3:{
-        this.chartData=[{data:[0,0,0,0,0,0,0,0,0,0,0,0],label:''}]
-        this.barChartData=[{data:[0,0,0,0,0,0,0,0,0,0,0,0],label:''}]
+        this.chartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
+        this.barChartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
+        console.log("this.barChartData[0].data antes del case 3", this.barChartData[0].data)
+
         this.graficas3()
+        console.log(this.barChartData)
+        console.log("this.barChartData[0].data final del case 3", this.barChartData[0].data)
+
         break
       }
       case 4:{
@@ -180,10 +185,12 @@ export class GraficasComponent implements OnInit {
         this.categorias=cats
       })
 
+      console.log("graficos 2", this.barChartData[0].data)
     })
   }
 
   graficas3(){
+    this.barChartData[0].label="Monto vendido en los ultimos 12 meses"
     this.setMonths()
     this.barChartLabels=this.mesesTwelveBefore.reverse()
 
@@ -192,7 +199,7 @@ export class GraficasComponent implements OnInit {
 
     this.api.get(`/Tratos`,true)
     .subscribe((tratos:any)=>{
-      tratos.forEach(async (t,index) => {
+      tratos.forEach((t,index) => {
         /*
           Contar cerrados 
         */
@@ -216,9 +223,11 @@ export class GraficasComponent implements OnInit {
       }
       });
       // this.barChartData=this.chartData
-      // console.log("aqui?")
-      this.barChartData[0].label="Tratos en ultimos 12 meses"
+      console.log("aqui?")
     })
+    console.log("this.barChartData[0].data en la funcion 3", this.barChartData[0].data)
+
+    return
   }
 
   sold(tratoId:number, i){
@@ -226,7 +235,7 @@ export class GraficasComponent implements OnInit {
     .subscribe((vendido:any)=>{
       this.chartData[0].data[i]+= vendido.vendido
       this.barChartData[0].data[i]+=vendido.vendido
-      console.log(i,"data ",  this.barChartData[0].data[i])
+      console.log("this.barChartData[0].data", this.barChartData[0].data)
     })
   }
 
