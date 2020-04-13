@@ -126,6 +126,31 @@
           }
         ]
       },
+      "getTratosEstado": {
+        "accepts": [
+          {
+            "arg": "data",
+            "type": "object",
+            "root": true,
+            "description": "id del vendedor"
+          }
+        ],
+        "returns": [
+          {
+            "arg": "tratos",
+            "type": "object",
+            "root": true,
+            "description": "tratos encontrados"
+          }
+        ],
+        "description": " Traer todos los tratos ",
+        "http": [
+          {
+            "path": "/getTratosEstado",
+            "verb": "post"
+          }
+        ]
+      },
       "generateTotal": {
         "accepts": [
           {
@@ -165,6 +190,24 @@
         "http": [
           {
             "path": "/getTrato",
+            "verb": "get"
+          }
+        ]
+      },
+      "prototype.getSold": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "vendido",
+          "type": "object",
+          "root": true,
+          "description": "lo vendido a retornar"
+          }
+        ],
+        "description": "Traer lo vendido del trato",
+        "http": [
+          {
+            "path": "/getSold",
             "verb": "get"
           }
         ]

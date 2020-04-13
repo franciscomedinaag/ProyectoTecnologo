@@ -26,6 +26,8 @@ export class GraficasComponent implements OnInit {
   private mesesTwelveBefore=[]
   private meses=['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
   private indexMes:any;
+  private showCats=false
+  private categorias=[]
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -47,15 +49,24 @@ export class GraficasComponent implements OnInit {
   }
 
   getChartData(option:number){
+    this.barChartLabels=[]
+    this.barChartData=[{data:[],label:''}]
+    this.showCats=false
+
     switch(option){
       case 1:{
+        this.chartData=[{data:[],label:''}]
         this.graficas1()
         break
       }
       case 2:{
+        this.graficas2()
         break
       }
       case 3:{
+        this.chartData=[{data:[0,0,0,0,0,0,0,0,0,0,0,0],label:''}]
+        this.barChartData=[{data:[0,0,0,0,0,0,0,0,0,0,0,0],label:''}]
+        this.graficas3()
         break
       }
       case 4:{
@@ -84,14 +95,12 @@ export class GraficasComponent implements OnInit {
 
     this.chartLabels=['Abiertos','Cerrados','Perdidos']
     console.log(this.mesesTwelveBefore)
-    console.log("chartLabels: ",this.chartLabels)
     this.barChartLabels=this.chartLabels
   }
 
   graficas1(){
     this.setMonths()
         let año=Number(new Date().toISOString().split('-')[0])
-        console.log(año)
         this.api.get(`/Tratos`,true)
         .subscribe((tratos:any)=>{
           tratos.forEach((t,index) => {
@@ -147,10 +156,78 @@ export class GraficasComponent implements OnInit {
             }
           }
           });
-          console.log("chartData", this.chartData)
           this.barChartData=this.chartData
           this.barChartData[0].label="Tratos en ultimos 12 meses"
         })
+  }
+
+  graficas2(){
+    this.barChartData[0].label='Subtarea actual de los tratos activos'
+    let data={
+      estado:0
+    }
+    this.api.post(`/Tratos/getTratosEstado`,{data:data})
+    .subscribe((abiertos:any)=>{
+      this.barChartLabels=[]
+      abiertos.forEach((t, index) => {
+        this.barChartLabels.push(t.nombre)
+        this.barChartData[0].data.push(t.subtareas[t.subtareas.length - 1].categoriaId)
+      });
+      
+      this.api.get(`/CategoriaSubs`,true)
+      .subscribe((cats:any)=>{
+        this.showCats=true
+        this.categorias=cats
+      })
+
+    })
+  }
+
+  graficas3(){
+    this.setMonths()
+    this.barChartLabels=this.mesesTwelveBefore.reverse()
+
+    let año=Number(new Date().toISOString().split('-')[0])
+    let mes=Number(new Date().toISOString().split('-')[1])
+
+    this.api.get(`/Tratos`,true)
+    .subscribe((tratos:any)=>{
+      tratos.forEach(async (t,index) => {
+        /*
+          Contar cerrados 
+        */
+       if(Number(t.fechaFin.split('-')[0])==año && t.estado==1){
+        //trato termino este año
+          this.sold(t.id,(this.chartData[0].data.length-1)-(mes-Number(t.fechaFin.split('-')[1])))  
+      }
+      else if(Number(t.fechaFin.split('-')[0])==año-1) {
+        //trato termino año pasado
+        let mesesPasado=[]
+        mesesPasado=this.meses
+        mesesPasado=mesesPasado.slice(this.indexMes+1, 12)
+        
+        if(mesesPasado.includes(this.meses[t.fechaFin.split('-')[1]-1])){
+          if(t.estado==1){
+            if((t.fechaFin.split('-')[1]-1)>this.meses.indexOf(this.mesesTwelveBefore[0])){
+              this.sold(t.id,(t.fechaFin.split('-')[1]-1)-(this.meses.indexOf(this.mesesTwelveBefore[0]))) 
+            }
+          } 
+        }
+      }
+      });
+      // this.barChartData=this.chartData
+      // console.log("aqui?")
+      this.barChartData[0].label="Tratos en ultimos 12 meses"
+    })
+  }
+
+  sold(tratoId:number, i){
+    this.api.get(`/Tratos/${tratoId}/getSold`)
+    .subscribe((vendido:any)=>{
+      this.chartData[0].data[i]+= vendido.vendido
+      this.barChartData[0].data[i]+=vendido.vendido
+      console.log(i,"data ",  this.barChartData[0].data[i])
+    })
   }
 
   validatePass(pass1:string, pass2:string){

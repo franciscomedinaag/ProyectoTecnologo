@@ -15,12 +15,12 @@
     </div>
     <div class="row pb-3">
         <div class="col text-center">
-            <button type="button" class="btn ml-3 btn-primary">Cantidad tratos</button>
-            <button type="button" class="btn ml-3 btn-secondary">Estado actual</button>
-            <button type="button" class="btn ml-3 btn-primary">Monto vendido</button>
-            <button type="button" class="btn ml-3 btn-secondary">Encuesta perdidos</button>
-            <button type="button" class="btn ml-3 btn-primary">Encuesta finalizados</button>
-            <button type="button" class="btn ml-3 btn-secondary">Cotizaciones</button>
+            <button type="button" (click)="this.getChartData(1)" class="btn ml-3 btn-primary">Cantidad tratos</button>
+            <button type="button" (click)="this.getChartData(2)" class="btn ml-3 btn-secondary">Estado actual</button>
+            <button type="button" (click)="this.getChartData(3)" class="btn ml-3 btn-primary">Monto vendido</button>
+            <button type="button" (click)="this.getChartData(4)" class="btn ml-3 btn-secondary">Encuesta perdidos</button>
+            <button type="button" (click)="this.getChartData(5)" class="btn ml-3 btn-primary">Encuesta finalizados</button>
+            <button type="button" (click)="this.getChartData(6)" class="btn ml-3 btn-secondary">Cotizaciones</button>
         </div>
     </div>
     <div class="row pb-4">
@@ -33,6 +33,17 @@
             [legend]="barChartLegend"
             [chartType]="barChartType">
           </canvas>
+        </div>
+    </div>
+    <div *ngIf="showCats" class="row pb-3">
+        <div class="col text-center">
+            <div class="text-center card" style="margin-left: 35%; margin-right: 50%; width: 18rem;">
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let c of categorias" class="list-group-item">
+                      <span style="font-size: small;">{{c.id}} - <strong>{{c.nombre}}</strong></span>
+                    </li>
+                </ul>
+              </div>
         </div>
     </div>
 </div>

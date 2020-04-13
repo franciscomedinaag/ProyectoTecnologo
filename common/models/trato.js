@@ -16,11 +16,44 @@ module.exports = function(Trato) {
         })
     };
 
+    Trato.getTratosEstado = function(data,callback) {
+        Trato.find({include:['vendedor','cliente','subtareas'],where:{estado:data.estado}}, function(err,tratos){
+            if(err) return callback(err)
+
+            callback(null,tratos);
+        })
+    };
+
     Trato.prototype.getTrato = function(callback) {
         Trato.findById(this.id,{include:['vendedor','cliente','subtareas']}, function(err,trato){
             if(err) return callback(err)
 
             callback(null,trato);
+        })
+    };
+
+    Trato.prototype.getSold= function(callback) {
+        Trato.findById(this.id,{include:{relation:'subtareas',
+            scope:{
+                include:{
+                    relation:'subtarea'
+                }
+            }
+        }
+        }, function(err,trato){
+            if(err) return callback(err)
+
+            let data={
+                vendido:0
+            }
+            trato.toJSON().subtareas.forEach(sub=>{      
+                if(sub.categoriaId==5 && sub.estado==1){
+                    if(sub.subtarea.definitivo){
+                        data.vendido=sub.subtarea.total
+                    }
+                }   
+            })
+            callback(null,data);
         })
     };
 
