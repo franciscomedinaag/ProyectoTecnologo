@@ -27,6 +27,7 @@ export class GraficasComponent implements OnInit {
   private meses=['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
   private indexMes:any;
   private showCats=false
+  private showComents=false
   private categorias=[]
 
   public barChartOptions: ChartOptions = {
@@ -40,6 +41,8 @@ export class GraficasComponent implements OnInit {
   public barChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }
   ];
+  public otros: any;
+  public comentarios: any=[];
 
   constructor(private auth:AuthService, private api:DataApiService, private toast:ToastService) { }
 
@@ -50,8 +53,11 @@ export class GraficasComponent implements OnInit {
 
   getChartData(option:number){
     this.barChartLabels=[]
-    this.barChartData=[{data:[],label:''}]
+    this.barChartData=[{data:[],label:''},{data:[],label:''}]
     this.showCats=false
+    this.otros=[]
+    this.comentarios=[]
+    this.showComents=false
 
     switch(option){
       case 1:{
@@ -66,18 +72,15 @@ export class GraficasComponent implements OnInit {
       case 3:{
         this.chartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
         this.barChartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
-        console.log("this.barChartData[0].data antes del case 3", this.barChartData[0].data)
-
         this.graficas3()
-        console.log(this.barChartData)
-        console.log("this.barChartData[0].data final del case 3", this.barChartData[0].data)
-
         break
       }
       case 4:{
+        this.graficas4()
         break
       }
       case 5:{
+        this.graficas5()
         break
       }
       case 6:{
@@ -236,6 +239,193 @@ export class GraficasComponent implements OnInit {
       this.chartData[0].data[i]+= vendido.vendido
       this.barChartData[0].data[i]+=vendido.vendido
       console.log("this.barChartData[0].data", this.barChartData[0].data)
+    })
+  }
+
+  graficas4(){
+    this.barChartData[0].label='Motivo de venta'
+    this.barChartData[1].label='Desempeño productos'
+    this.barChartLabels=['Buen precio - Excelente', 'Mejor que competencia - Bueno', 'Atencion - Regular', 'Otro - Deficiente']
+    this.api.get(`/Cerrados`,true)
+    .subscribe((cerrados:any)=>{
+      console.log(cerrados)
+      
+      cerrados.forEach(c => {
+        /*
+        respuesta 1
+        */
+        if(c.respuesta1=='a'){
+          if(typeof this.barChartData[0].data[0]=='number'){
+            this.barChartData[0].data[0]+=1
+          }
+          else{
+            this.barChartData[0].data[0]=1
+          }
+        }
+        else if(c.respuesta1=='b'){
+          if(typeof this.barChartData[0].data[1]=='number'){
+            this.barChartData[0].data[1]+=1
+          }
+          else{
+            this.barChartData[0].data[1]=1
+          }
+        }
+        else if(c.respuesta1=='c'){
+          if(typeof this.barChartData[0].data[2]=='number'){
+            this.barChartData[0].data[2]+=1
+          }
+          else{
+            this.barChartData[0].data[2]=1
+          }
+        }
+        else{
+          if(typeof this.barChartData[0].data[3]=='number'){
+            this.barChartData[0].data[3]+=1
+          }
+          else{
+            this.barChartData[0].data[3]=1
+          }
+         this.otros.push(c.respuesta1)
+        }
+
+
+        /*
+        respuesta 2
+        */
+       if(c.respuesta2=='a'){
+        if(typeof this.barChartData[1].data[0]=='number'){
+          this.barChartData[1].data[0]+=1
+        }
+        else{
+          this.barChartData[1].data[0]=1
+        }
+      }
+      else if(c.respuesta2=='b'){
+        if(typeof this.barChartData[1].data[1]=='number'){
+          this.barChartData[1].data[1]+=1
+        }
+        else{
+          this.barChartData[1].data[1]=1
+        }
+      }
+      else if(c.respuesta2=='c'){
+        if(typeof this.barChartData[1].data[2]=='number'){
+          this.barChartData[1].data[2]+=1
+        }
+        else{
+          this.barChartData[1].data[2]=1
+        }
+      }
+      else{
+        //otros
+        if(typeof this.barChartData[1].data[3]=='number'){
+          this.barChartData[1].data[3]+=1
+        }
+        else{
+          this.barChartData[1].data[3]=1
+        }
+      }
+
+      /*
+        respuesta 3
+      */
+      this.comentarios.push(c.respuesta3)
+      this.showComents=true
+      });
+    })
+  }
+
+
+  graficas5(){
+    this.barChartData[0].label='Motivo de cancelación'
+    this.barChartData[1].label='Atencion del vendedor'
+    this.barChartLabels=['Precio Alto - Excelente', 'Mejor $ competencia - Bueno', 'Falta atencion - Regular', 'Otro - Deficiente']
+    this.api.get(`/Perdidos`,true)
+    .subscribe((perdidos:any)=>{
+      console.log(perdidos)
+      
+      perdidos.forEach(c => {
+        /*
+        respuesta 1
+        */
+        if(c.respuesta1=='a'){
+          if(typeof this.barChartData[0].data[0]=='number'){
+            this.barChartData[0].data[0]+=1
+          }
+          else{
+            this.barChartData[0].data[0]=1
+          }
+        }
+        else if(c.respuesta1=='b'){
+          if(typeof this.barChartData[0].data[1]=='number'){
+            this.barChartData[0].data[1]+=1
+          }
+          else{
+            this.barChartData[0].data[1]=1
+          }
+        }
+        else if(c.respuesta1=='c'){
+          if(typeof this.barChartData[0].data[2]=='number'){
+            this.barChartData[0].data[2]+=1
+          }
+          else{
+            this.barChartData[0].data[2]=1
+          }
+        }
+        else{
+          if(typeof this.barChartData[0].data[3]=='number'){
+            this.barChartData[0].data[3]+=1
+          }
+          else{
+            this.barChartData[0].data[3]=1
+          }
+          this.otros.push(c.respuesta1)
+        }
+
+
+        /*
+        respuesta 2
+        */
+       if(c.respuesta2=='a'){
+        if(typeof this.barChartData[1].data[0]=='number'){
+          this.barChartData[1].data[0]+=1
+        }
+        else{
+          this.barChartData[1].data[0]=1
+        }
+      }
+      else if(c.respuesta2=='b'){
+        if(typeof this.barChartData[1].data[1]=='number'){
+          this.barChartData[1].data[1]+=1
+        }
+        else{
+          this.barChartData[1].data[1]=1
+        }
+      }
+      else if(c.respuesta2=='c'){
+        if(typeof this.barChartData[1].data[2]=='number'){
+          this.barChartData[1].data[2]+=1
+        }
+        else{
+          this.barChartData[1].data[2]=1
+        }
+      }
+      else{
+        if(typeof this.barChartData[1].data[3]=='number'){
+          this.barChartData[1].data[3]+=1
+        }
+        else{
+          this.barChartData[1].data[3]=1
+        }
+      }
+
+      /*
+        respuesta 3
+      */
+     this.comentarios.push(c.respuesta3)
+     this.showComents=true
+
+      });
     })
   }
 
