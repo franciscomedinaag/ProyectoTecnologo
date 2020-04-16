@@ -84,6 +84,7 @@ export class GraficasComponent implements OnInit {
         break
       }
       case 6:{
+        this.graficas6()
         break
       }
     }
@@ -256,7 +257,10 @@ export class GraficasComponent implements OnInit {
         */
         if(c.respuesta1=='a'){
           if(typeof this.barChartData[0].data[0]=='number'){
-            this.barChartData[0].data[0]+=1
+            // this.barChartData[0].data[0]+=1
+            let x:any=this.barChartData[0].data[0]
+            x+=1
+            this.barChartData[0].data[0]=x
           }
           else{
             this.barChartData[0].data[0]=1
@@ -264,7 +268,10 @@ export class GraficasComponent implements OnInit {
         }
         else if(c.respuesta1=='b'){
           if(typeof this.barChartData[0].data[1]=='number'){
-            this.barChartData[0].data[1]+=1
+            // this.barChartData[0].data[1]+=1
+            let x:any=this.barChartData[0].data[1]
+            x+=1
+            this.barChartData[0].data[1]=x
           }
           else{
             this.barChartData[0].data[1]=1
@@ -272,7 +279,9 @@ export class GraficasComponent implements OnInit {
         }
         else if(c.respuesta1=='c'){
           if(typeof this.barChartData[0].data[2]=='number'){
-            this.barChartData[0].data[2]+=1
+            let x:any=this.barChartData[0].data[2]
+            x+=1
+            this.barChartData[0].data[2]=x
           }
           else{
             this.barChartData[0].data[2]=1
@@ -280,7 +289,10 @@ export class GraficasComponent implements OnInit {
         }
         else{
           if(typeof this.barChartData[0].data[3]=='number'){
-            this.barChartData[0].data[3]+=1
+            // this.barChartData[0].data[3]+=1
+            let x:any=this.barChartData[0].data[3]
+            x+=1
+            this.barChartData[0].data[3]=x
           }
           else{
             this.barChartData[0].data[3]=1
@@ -294,7 +306,10 @@ export class GraficasComponent implements OnInit {
         */
        if(c.respuesta2=='a'){
         if(typeof this.barChartData[1].data[0]=='number'){
-          this.barChartData[1].data[0]+=1
+          // this.barChartData[1].data[0]+=1
+          let x:any=this.barChartData[1].data[0]
+          x+=1
+          this.barChartData[1].data[0]=x
         }
         else{
           this.barChartData[1].data[0]=1
@@ -302,7 +317,10 @@ export class GraficasComponent implements OnInit {
       }
       else if(c.respuesta2=='b'){
         if(typeof this.barChartData[1].data[1]=='number'){
-          this.barChartData[1].data[1]+=1
+          // this.barChartData[1].data[1]+=1
+          let x:any=this.barChartData[1].data[1]
+          x+=1
+          this.barChartData[1].data[1]=x
         }
         else{
           this.barChartData[1].data[1]=1
@@ -310,7 +328,10 @@ export class GraficasComponent implements OnInit {
       }
       else if(c.respuesta2=='c'){
         if(typeof this.barChartData[1].data[2]=='number'){
-          this.barChartData[1].data[2]+=1
+          // this.barChartData[1].data[2]+=1
+          let x:any=this.barChartData[1].data[2]
+          x+=1
+          this.barChartData[1].data[2]=x
         }
         else{
           this.barChartData[1].data[2]=1
@@ -319,7 +340,10 @@ export class GraficasComponent implements OnInit {
       else{
         //otros
         if(typeof this.barChartData[1].data[3]=='number'){
-          this.barChartData[1].data[3]+=1
+          // this.barChartData[1].data[3]+=1
+          let x:any=this.barChartData[1].data[3]
+          x+=1
+          this.barChartData[1].data[3]=x
         }
         else{
           this.barChartData[1].data[3]=1
@@ -350,7 +374,10 @@ export class GraficasComponent implements OnInit {
         */
         if(c.respuesta1=='a'){
           if(typeof this.barChartData[0].data[0]=='number'){
-            this.barChartData[0].data[0]+=1
+            // this.barChartData[0].data[0]+=1
+            let x:any=this.barChartData[0].data[0]
+            x+=1
+            this.barChartData[0].data[0]=x
           }
           else{
             this.barChartData[0].data[0]=1
@@ -358,7 +385,10 @@ export class GraficasComponent implements OnInit {
         }
         else if(c.respuesta1=='b'){
           if(typeof this.barChartData[0].data[1]=='number'){
-            this.barChartData[0].data[1]+=1
+            // this.barChartData[0].data[1]+=1
+            let x:any=this.barChartData[0].data[1]
+            x+=1
+            this.barChartData[0].data[1]=x
           }
           else{
             this.barChartData[0].data[1]=1
@@ -366,7 +396,10 @@ export class GraficasComponent implements OnInit {
         }
         else if(c.respuesta1=='c'){
           if(typeof this.barChartData[0].data[2]=='number'){
-            this.barChartData[0].data[2]+=1
+            // this.barChartData[0].data[2]+=1
+            let x:any=this.barChartData[0].data[2]
+            x+=1
+            this.barChartData[0].data[2]=x
           }
           else{
             this.barChartData[0].data[2]=1
@@ -374,7 +407,10 @@ export class GraficasComponent implements OnInit {
         }
         else{
           if(typeof this.barChartData[0].data[3]=='number'){
-            this.barChartData[0].data[3]+=1
+            // this.barChartData[0].data[3]+=1
+            let x:any=this.barChartData[0].data[3]
+            x+=1
+            this.barChartData[0].data[3]=x
           }
           else{
             this.barChartData[0].data[3]=1
@@ -382,13 +418,15 @@ export class GraficasComponent implements OnInit {
           this.otros.push(c.respuesta1)
         }
 
-
         /*
         respuesta 2
         */
        if(c.respuesta2=='a'){
         if(typeof this.barChartData[1].data[0]=='number'){
-          this.barChartData[1].data[0]+=1
+          // this.barChartData[1].data[0]+=1
+          let x:any=this.barChartData[1].data[0]
+            x+=1
+            this.barChartData[1].data[0]=x
         }
         else{
           this.barChartData[1].data[0]=1
@@ -396,7 +434,10 @@ export class GraficasComponent implements OnInit {
       }
       else if(c.respuesta2=='b'){
         if(typeof this.barChartData[1].data[1]=='number'){
-          this.barChartData[1].data[1]+=1
+          // this.barChartData[1].data[1]+=1
+          let x:any=this.barChartData[1].data[1]
+            x+=1
+            this.barChartData[1].data[1]=x
         }
         else{
           this.barChartData[1].data[1]=1
@@ -404,7 +445,10 @@ export class GraficasComponent implements OnInit {
       }
       else if(c.respuesta2=='c'){
         if(typeof this.barChartData[1].data[2]=='number'){
-          this.barChartData[1].data[2]+=1
+          // this.barChartData[1].data[2]+=1
+          let x:any=this.barChartData[1].data[2]
+            x+=1
+            this.barChartData[1].data[2]=x
         }
         else{
           this.barChartData[1].data[2]=1
@@ -412,7 +456,10 @@ export class GraficasComponent implements OnInit {
       }
       else{
         if(typeof this.barChartData[1].data[3]=='number'){
-          this.barChartData[1].data[3]+=1
+          // this.barChartData[1].data[3]+=1
+          let x:any=this.barChartData[1].data[3]
+            x+=1
+            this.barChartData[1].data[3]=x
         }
         else{
           this.barChartData[1].data[3]=1
@@ -426,6 +473,51 @@ export class GraficasComponent implements OnInit {
      this.showComents=true
 
       });
+    })
+  }
+
+  graficas6(){
+    //CONTAR COTIZACIONES
+    this.barChartData[0].label='Intentos de cotizacion por trato'
+
+    let countEachTrato=[1]
+    this.api.get(`/Subtareas/getSubtareasCoti`,true)
+    .subscribe((subs:any)=>{
+      for(let i = 1; i<subs.length;i++){
+        if(subs[i].tratoId!=subs[i-1].tratoId){
+          if(isNaN(countEachTrato[countEachTrato.length])){
+            countEachTrato[countEachTrato.length]=1
+          }
+          else{
+            countEachTrato[countEachTrato.length]+=1
+          }
+        }
+        else{
+          if(isNaN(countEachTrato[countEachTrato.length-1])){
+            countEachTrato[countEachTrato.length-1]=1
+          }
+          else{
+            countEachTrato[countEachTrato.length-1]+=1
+          }
+        }
+      }
+
+      this.barChartData[0].data[0]=0
+      console.log(countEachTrato.sort((a, b) => a - b))
+      countEachTrato.sort((a, b) => a - b).forEach(intento => {
+        if(!this.barChartLabels.includes(intento +' intento(s)')){
+          this.barChartLabels.push(intento+' intento(s)')
+          //NUEVO ELEMENTO
+          this.barChartData[0].data[this.barChartData[0].data.length]=0
+        }
+      //SUMARLE AL ULTIMO ELEMENTO
+        let x:any=this.barChartData[0].data[this.barChartData[0].data.length-1]
+          x+=1
+          this.barChartData[0].data[this.barChartData[0].data.length-1]=x
+      });
+
+      this.barChartData[0].data.shift()
+
     })
   }
 

@@ -82,6 +82,24 @@
             "verb": "post"
           }
         ]
+      },
+      "getSubtareasCoti": {
+        "accepts": [],
+        "returns": [
+          {
+            "arg": "subtareas",
+            "type": "object",
+            "root": true,
+            "description": "subtareas encontrados"
+          }
+        ],
+        "description": " Traer todos los subtareas ",
+        "http": [
+          {
+            "path": "/getSubtareasCoti",
+            "verb": "get"
+          }
+        ]
       }
     }
   }

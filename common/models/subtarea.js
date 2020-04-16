@@ -16,11 +16,9 @@ module.exports = function(Subtarea) {
         }, function(err,Subtareas){
             if(err) return callback(err)
 
-            let filtered=[]
-            
+            let filtered=[]          
             Subtareas.forEach((s,index) => {      
                 if(s.toJSON().trato!=undefined){  
-                console.log("ola",index,": ",s.toJSON().trato.vendedorId) 
                 let v=s.toJSON().trato.vendedorId
                 if(v==vendedorId){
                     filtered.push(s)
@@ -29,6 +27,16 @@ module.exports = function(Subtarea) {
             });  
              
             callback(null,filtered);
+        })
+    };
+
+
+    Subtarea.getSubtareasCoti= function(callback) {
+        console.log("AQUI")
+        Subtarea.find({include:'subtarea',where:{categoriaId:5},order:'tratoId DESC'}, function(err,subtareas){
+            if(err) console.log(err) 
+             
+            callback(null,subtareas);
         })
     };
 
