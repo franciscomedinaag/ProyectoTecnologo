@@ -1,6 +1,6 @@
 <app-navbar-crm></app-navbar-crm>
 <div class="container" style="background-color: white;">
-    <div class="row pt-5">
+    <!-- <div class="row pt-5">
         <div class="col-sm-6 text-center">
             <h4 *ngIf="pass" (click)="pass=!pass" >Cambiar contraseña <i class="fa fa-pencil" aria-hidden="true"></i></h4>
             <p *ngIf="!pass" >Ingresa la nueva contraseña: <br><input [(ngModel)]="pass1" class="mt-2"  type="password"></p>
@@ -12,7 +12,7 @@
             <h3 class="text-center" *ngIf="user" (click)="user=!user">{{usuario.username}} <i class="fa fa-pencil" aria-hidden="true"></i> </h3>
             <input class="text-center" *ngIf="!user" type="text" [(ngModel)]="usuario.username" (blur)="user=!user;assign(usuario)">
         </div>
-    </div>
+    </div> -->
     <div class="row pb-3">
         <div class="col text-center">
             <button type="button" (click)="this.getChartData(1)" class="btn ml-3 btn-primary">Cantidad tratos</button>

@@ -14,7 +14,7 @@ export class ClientesComponent implements OnInit {
 
   private fecha:any;
   private client:any={
-    telefono:" ",
+    telefono:0,
     correo:" ",
     puesto:" ",
     empresa:" ",
@@ -68,8 +68,10 @@ export class ClientesComponent implements OnInit {
       }
     }
     else{
-      this.toast.showError("Telefono debe ser un numero")
-      return;
+      if(this.client.telefono!=0){
+        this.toast.showError("Telefono debe ser un numero entre 8-12 caracteres")
+        return;
+      }
     }
     if(this.client.nombre==null || this.client.negociacion==null){
       this.toast.showError("Nombre y tipo son campos obligatorios");
@@ -91,7 +93,14 @@ export class ClientesComponent implements OnInit {
           this.api.post('/Clients',this.client)
           .subscribe((done)=>{
             this.toast.showSuccess("Cliente registrado")
-            this.client={}
+            this.client={telefono:0,
+            correo:" ",
+            puesto:" ",
+            empresa:" ",
+            giro:" ",
+            estado:" ", 
+            email:" ",
+            frecuente:false}
             this.getClients();
           },
           (err) => {
@@ -113,8 +122,8 @@ export class ClientesComponent implements OnInit {
   getClients(){
     this.api.get('/Clients/getFullClients')
       .subscribe((clients:Array<any>)=>{
-        clients.push(clients[clients.length-1])
-        clients.push(clients[clients.length-2])
+        // clients.push(clients[clients.length-1])
+        // clients.push(clients[clients.length-2])
         this.clients=clients;
         this.filtered=this.clients;
         this.clientsWithEmail=this.filtered;
