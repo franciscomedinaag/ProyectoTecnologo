@@ -6,7 +6,8 @@
     "database": "crmproyecto",
     "password": "Charmander004",
     "user": "franciscomedinaa",
-    "connector": "mysql"
+    "connector": "mysql",
+    "connectTimeout": 100000
   },
   "localFiles": {
     "name": "localFiles",
