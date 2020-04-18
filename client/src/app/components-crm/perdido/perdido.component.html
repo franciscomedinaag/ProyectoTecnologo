@@ -1,0 +1,81 @@
+<app-navbar-website></app-navbar-website>
+
+<div class="container" style="background-color: white;">
+    <div class="row pb-5 pt-3 justify-content-center">
+        <div class="col-sm-6 text-center">
+            <h2 class="text-secondary" style="font-weight: bold;">Encuesta venta y atención a clientes</h2>
+            <h5 class="pt-3" style="color:#33ACE2;font-weight: bold;">Trato {{trato.nombre}} </h5>
+            <h5 class="pb-3"style="color:#33ACE2;font-weight: bold;">Vendedor {{trato.vendedor.username}} </h5>
+            <form class="form-product">
+
+                <div class="form-group">
+                  <label for="nombre"> <strong>¿Cual considera usted, fue el motivo por el cual no se concretó la venta?</strong> </label>
+                  <div class="form-check">
+                    <input [(ngModel)]="encuesta.respuesta1"  class="form-check-input" type="radio" name="pregunta1" id="respuesta1" value="a" >
+                    <label class="form-check-label" for="respuesta1">
+                      El precio era demasiado alto
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input [(ngModel)]="encuesta.respuesta1" class="form-check-input" type="radio" name="pregunta1" id="respuesta2" value="b">
+                    <label class="form-check-label" for="respuesta2">
+                      Mejor precio en la competencia
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input [(ngModel)]="encuesta.respuesta1" class="form-check-input" type="radio" name="pregunta1" id="respuesta3" value="c">
+                    <label class="form-check-label" for="respuesta3">
+                      Falta de comunicación por parte del vendedor
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input [(ngModel)]="encuesta.respuesta1" class="form-check-input" type="radio" name="pregunta1" id="respuesta4" value="d">
+                    <label class="form-check-label" for="respuesta3">
+                      Otro:
+                    </label>
+                    <br>
+                    <input  [(ngModel)]="otro1" name="otro1" type="text">
+                  </div>
+                </div>       
+                
+                <div class="form-group">
+                    <label for="nombre"> <strong>¿Como considera que fue la atencion brindada por el vendedor?</strong> </label>
+                    <div class="form-check">
+                      <input [(ngModel)]="encuesta.respuesta2"  class="form-check-input" type="radio" name="pregunta2" id="respuesta5" value="a" >
+                      <label class="form-check-label" for="respuesta5">
+                        Excelente
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input [(ngModel)]="encuesta.respuesta2" class="form-check-input" type="radio" name="pregunta2" id="respuesta6" value="b">
+                      <label class="form-check-label" for="respuesta6">
+                        Buena
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input [(ngModel)]="encuesta.respuesta2" class="form-check-input" type="radio" name="pregunta2" id="respuesta7" value="c">
+                      <label class="form-check-label" for="respuesta7">
+                       Regular
+                      </label>
+                    </div>
+                    <div class="form-check">
+                        <input [(ngModel)]="encuesta.respuesta2" class="form-check-input" type="radio" name="pregunta2" id="respuesta8" value="d">
+                        <label class="form-check-label" for="respuesta8">
+                         Deficiente
+                        </label>
+                    </div>    
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre"> <strong>Comentarios o sugerencias</strong> </label>
+                    <textarea rows="2" [(ngModel)]="encuesta.respuesta3" name="nombre" type="text" class="form-control" 
+                    placeholder="Ingresa nombre"></textarea>
+                    
+                </div>
+
+                <button class="btn btn-primary" (click)="sendAns()">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer-website></app-footer-website>

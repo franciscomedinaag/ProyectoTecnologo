@@ -1,0 +1,194 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pb-4 pt-4">
+        <div class="col text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Cotización numero {{cotNumber}} del trato {{trato.nombre}}
+            <span *ngIf="subtarea?.estado==0"> (pendiente)</span>
+            <span *ngIf="subtarea?.estado==1"> (terminada)</span>
+            <span *ngIf="subtarea?.estado==2"> (vencida)</span>
+          </h2>
+        </div>
+    </div>
+    <div class="row pb-4 pt-4">
+      <div class="col text-center">
+          <h2 style="font-weight: bold;">Cotización <span *ngIf="!cotizacion.definitivo"> NO </span> definitiva</h2>
+      </div>
+  </div>
+    <div class="row pb-4">
+        <div class="col-sm-4 text-center">
+            <button class="btn headButton mt-1 btn-primary" data-toggle="modal" data-target="#addProducto">Agregar producto</button>
+        </div>
+        <div class="col-sm-4 text-center">
+            <button class="btn headButton mt-1 btn-secondary">Solicitar al administrador</button>
+        </div>
+        <div class="col-sm-4 text-center">
+            <button class="btn headButton mt-1 btn-primary" data-toggle="modal" data-target="#conceptos">Conceptos</button>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col text-center">
+            <div class=" table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                  <tr>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Descripción</th>
+                      <th scope="col">Producto Base</th>
+                      <th scope="col">Tablones</th>
+                      <th scope="col">Precio Unitario</th>
+                      <th scope="col">Precio total</th>
+                      <th scope="col">Quitar</th>
+                  </tr>
+                    </thead>
+                    <tbody>
+                  <tr *ngFor="let p of productosCreados">
+                        <td scope="row">{{p.cantidad}}</td>
+                        <td>{{p.descripcion}}</td>
+                        <td>{{p.productoFijo.clave}}</td>
+                        <td>{{p.cantTablones}}</td>
+                        <td> {{p.unitario | currency}}</td>
+                        <td class="text-primary"> {{p.neto | currency}}</td>
+                        <td><i (click)="onDeleteCreated(p.id)" class="fa fa-trash" aria-hidden="true"></i></td>
+                  </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pb-5">
+      <div class="col-sm-6 text-center">
+        <p style=" font-size: large;" class="text-primary mr-5"> <strong class="text-center">Valor Final:</strong> 
+          <br>
+          Mano de Obra: <strong> {{cotizacion.manoObra | currency}} </strong>
+          <br>
+          Gastos Administrativos: <strong> {{cotizacion.administrativos | currency}} </strong>
+          <br>
+          Utilidad: <strong> {{cotizacion.utilidad | currency}} </strong>
+          <br>
+          Productos: <strong> {{total | currency}} </strong>
+          <br>
+          % de impuestos: <strong> {{cotizacion.impuestos}} </strong>
+          <br>
+          Total: <strong> {{total + cotizacion.manoObra + cotizacion.administrativos + cotizacion.utilidad + cotizacion.impuestos  | currency}} </strong>
+          <br>
+          <button class="mt-3 btn btn-success" (click)="finish()">
+            Terminar
+          </button>
+        </p>
+      </div>
+      <div class="col-sm-6">
+        <p style="float:right; font-size: large;" class="text-success mr-5">El monto de los productos es: <strong> {{total | currency}} </strong></p>
+      </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="addProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar a la cotización</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Descripción: </label>
+                <textarea  [(ngModel)]="producto.descripcion" name="descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingresa la clave"></textarea>
+              </div>        
+              <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="nombre">Cantidad a elaborar de este producto:</label>
+                        <input  [(ngModel)]="producto.cantidad" name="cantidad" type="number" class="form-control" id="cantidad" placeholder="Ingresa descripcion">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nombre">Monto de herrajes por producto: </label>
+                        <input  [(ngModel)]="producto.montoHerrajes" name="montoHerrajes" type="number" class="form-control" id="montoHerrajes" placeholder="Ingresa precio">
+                    </div>
+                </div>
+              </div>  
+              <div class="form-group">
+                  <div class="row align-items-center">
+                      <div class="col-sm-6">
+                          Tablon para modificaciones:
+                          <ng-select class="custom"
+                          [items]="tablones"
+                          [multiple]="false"
+                          [(ngModel)]="producto.tablonId"
+                          bindValue="id"
+                          bindLabel="nombre"
+                          name="estado"
+                          placeholder="Tablon para modificaciones">
+                          </ng-select> 
+                      </div>
+                      <div class="col-sm-6">
+                          <label for="nombre">Cantidad de tablones por producto (puedes ingresar decimales):</label>
+                          <input  [(ngModel)]="producto.cantTablones" name="cantTablones" type="number" class="form-control" id="cantTablones" placeholder="Ingresa descripcion">
+                      </div>
+                  </div>
+              </div>    
+              <div class="form-group">
+                Producto de base:
+                <ng-select class="custom"
+                [items]="productosFijos"
+                [multiple]="false"
+                bindValue="id"
+                bindLabel="clave"
+                [(ngModel)]="producto.productoFijoId"
+                name="productoFijoId"
+                placeholder="Producto de base">
+                </ng-select> 
+              </div>     
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="addProduct()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="conceptos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Montos de la cotización</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+            <form class="form-product">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <label for="nombre">Mano de obra: </label>
+                  <input [(ngModel)]="cotizacion.manoObra" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="nombre">Gastos administrativos: </label>
+                  <input [(ngModel)]="cotizacion.administrativos" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="nombre">Utilidad: </label>
+                  <input [(ngModel)]="cotizacion.utilidad" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="nombre">Porcentaje de impuestos: </label>
+                  <input [(ngModel)]="cotizacion.impuestos" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                </div>       
+              </div>
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="addConcept()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #33ACE2">
+    <a class="navbar-brand" href="#">
+      <img src="../../../../assets/default/white-logo.png" alt="COR" width="30" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!--          Vendedor         -->
+
+      <ul *ngIf="this.user.realm=='user'" class="nav navbar-nav navbar-right mr-auto"  routerLinkActive="active" style="color:white; font-weight: bold;">
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/subtareas']">Tareas </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link"  [routerLink]="['/tratos']">Tratos </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/informesven',this.user.id]">Informes bimestrales </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/miperfil',this.user.id]">Mi Perfil </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="inicio">Ir al sitio web </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
+        </li>
+      </ul>
+      
+            <!--        Administrador       -->
+
+      <ul *ngIf="this.user.realm=='admin'" class="nav navbar-nav navbar-right  "  routerLinkActive="active" style="color:white;font-weight: bold;">
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/usuarios']">Perfiles </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/graficas']">Gráficas </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/tratos']">Tratos </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/catalogos']">Catálogos </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/preciosfijos']">Productos fijos </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/panel']">Panel sitio </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/panelmobiliario']">Mobiliario sitio </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/informesadmn',this.user.id]">Informes bimestrales </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </nav>

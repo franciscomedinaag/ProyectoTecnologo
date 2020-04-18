@@ -1,0 +1,158 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row">
+      <div class="col">
+        <div *ngIf="disclaimer.show" class="alert alert-warning" role="alert">  
+            <strong ><a style="text-decoration: underline; color: inherit;"  [routerLink]="['/fichatrato',disclaimer.id]"> {{disclaimer.nombre}} </a></strong>  lleva tiempo sin actividad, tal vez deberías llamar o contactar al cliente. A su vez tambien puedes darlo por perdido.
+        </div>
+      </div>
+    </div>    
+    <div class="row pt-4 pb-4 align-items-center">
+        <div class="col-sm-4 text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Tratos</h2>
+        </div>
+        <div class="col-sm-4 text-center">
+            Buscar por nombre: 
+            <input (input)="onSearchChange($event.target.value)"  class="filter" type="text" placeholder="Ingresa un nombre">
+            <br>
+            <br>
+            <div *ngIf="current=='admin'">
+              Buscar por cliente:
+              <ng-select class="custom filter"
+                  [items]="clients"
+                  [multiple]="false"
+                  [(ngModel)]="client"
+                  bindValue="id"
+                  bindLabel="nombre"
+                  name="clientId"
+                  (change)="filterClient()"
+                  placeholder="Seleccione un cliente">
+              </ng-select> 
+            </div>
+        </div>
+        <div class="col-sm-2 text-center">
+            <button class="btn m-1 btn-secondary" data-toggle="modal" data-target="#addModal" type="button">Crear</button>
+        </div>
+        <div class="col-sm-2 text-center">
+            <button *ngIf="showAct" class="btn m-1 btn-secondary" (click)="showAct=false;getTratos()" type="button">Ver Inactivos</button>
+            <button *ngIf="!showAct" class="btn m-1 btn-primary" (click)="showAct=true;getTratos()" type="button">Ver Activos</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <div class=" table-responsive">
+                <table class="table table-striped lista">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Ver</th>
+                        <th scope="col">Vendedor</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let c of tratos; let i=index">
+                        <th><a [routerLink]="['/fichatrato',c.id]">{{c.nombre}}</a></th>
+                        <td>{{c.vendedor?.username}}</td>
+                        <td>{{c.cliente?.nombre}}</td>
+
+                        <td *ngIf="c.tipo==1">Residencial</td>
+                        <td *ngIf="c.tipo==2">Empresarial</td>
+                        <td *ngIf="c.tipo==3">Licitacion</td>
+
+                        <td *ngIf="c.estado==0" >
+                            <i class="fa fa-check-square-o mr-2" (click)="assign(c,true)" style="color:green" aria-hidden="true"></i>                        
+                            <i class="fa fa-ban" (click)="assign(c,false)" style="color:red" aria-hidden="true"></i>
+                        </td>
+                        <td *ngIf="c.estado==1" >
+                            <i class="fa fa-check-square-o mr-2"  style="color:green" aria-hidden="true"></i>                        
+                        </td>
+                        <td *ngIf="c.estado==2" >
+                            <i class="fa fa-ban"  style="color:red" aria-hidden="true"></i>
+                        </td>
+                        
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+  </div>
+  <app-footer-crm></app-footer-crm>
+
+  
+  
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo trato</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Nombre del trato</label>
+                <input  [(ngModel)]="trato.nombre" name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingresa el nombre">
+              </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción del trato</label>
+                <textarea  [(ngModel)]="trato.descripcion" name="descripcion" type="text" class="form-control" 
+                id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+              </div>
+              
+              <div class="form-group">
+                Tipo de trato:
+                <ng-select class="custom"
+                [items]="tipos"
+                [multiple]="false"
+                [(ngModel)]="trato.tipo"
+                bindValue="id"
+                bindLabel="tipo"
+                name="tipo"
+                placeholder="Inserte el tipo de trato">
+                </ng-select> 
+              </div>
+              
+              <div class="form-group">
+                Cliente:
+                <ng-select class="custom"
+                [items]="clients"
+                [multiple]="false"
+                [(ngModel)]="trato.clientId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="clientId"
+                placeholder="Seleccione un cliente">
+              </ng-select> 
+            </div>
+            
+              <div *ngIf="current=='admin'" class="form-group">
+                Vendedor:
+                <ng-select class="custom"
+                [items]="vendedores"
+                [multiple]="false"
+                [(ngModel)]="trato.vendedorId"
+                bindValue="id"
+                bindLabel="username"
+                name="vendedorId"
+                placeholder="Seleccione un vendedor">
+              </ng-select> 
+              </div>
+              
+            </form>
+            
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="saveTrato()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

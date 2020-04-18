@@ -1,0 +1,169 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-4 pb-4">
+        <div class="col-sm-4 text-center">
+            <h1>Subtareas</h1>
+        </div>
+        <div class="col-sm-2 text-center">
+            <button data-toggle="modal" data-target="#subModal" class="btn btn-primary"> Crear </button>
+        </div>
+        <div class="col-sm-6 text-center">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-warning text-white" (click)="estado=0;getSub()">Pendientes</button>
+            <button type="button" class="btn btn-success" (click)="estado=1;getSub()">Realizadas</button>
+            <button type="button" class="btn btn-danger" (click)="estado=2;getSub()">Vencidas</button>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <div class=" table-responsive">
+          <table class="table lista table-striped">
+              <thead class="thead-dark">
+              <tbody>
+                <tr *ngFor="let s of subtareas; let i=index">
+                      <th *ngIf="estado==s.estado" [className]="s.fechaFin==hoyLocale ? 'text-warning' : ''">
+                      {{s.fechaFin==hoyLocale ? "HOY":s.fechaFin | date:'shortDate'}}</th>            
+                      <td *ngIf="estado==s.estado"><a class="text-primary" data-toggle="modal" data-target="#descModal" (click)="seeFull(s)">{{s.titulo}} (ver)</a></td>
+                      <td *ngIf="estado==s.estado"><a [routerLink]="['/fichaclient',s.trato.cliente.id]">{{s.trato.cliente.nombre}}</a></td>
+                      <td *ngIf="estado==s.estado"><a [routerLink]="['/fichatrato',s.tratoId]">{{s.trato.nombre}}</a></td>
+                      <td *ngIf="estado==s.estado">{{s.catName}}</td>
+                      <td *ngIf="estado==s.estado && estado==0"><i data-toggle="modal" data-target="#menuModal" class="fa fa-check-circle text-warning fa-lg" 
+                      aria-hidden="true" (click)="setEstado(s);seeFull(s)"></i></td>
+                      <td *ngIf="estado==s.estado && estado==1"><i class="fa fa-check-circle text-success fa-lg" 
+                      aria-hidden="true" ></i></td>
+                      <td *ngIf="estado==s.estado && estado==2"><i class="fa fa-check-circle text-danger fa-lg" 
+                      aria-hidden="true" ></i></td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div *ngIf="showModal" class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Crear subtarea</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+
+                <div class="form-group">
+                    <label for="descripcion">Titulo: </label>
+                    <input  [(ngModel)]="subtarea.titulo" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" >
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea  [(ngModel)]="subtarea.descripcion" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="mr-3" for="nombre">Fecha límite:</label>
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                </div>
+                
+              <div class="form-group">
+                Trato:
+                <ng-select class="custom"
+                [items]="tratos"
+                [multiple]="false"
+                [(ngModel)]="subtarea.tratoId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="tratoId"
+                placeholder="Inserte el trato de la subtarea">
+                </ng-select> 
+              </div>
+
+              <div class="form-group">
+                Tipo de subtarea:
+                <ng-select class="custom"
+                [items]="categorias"
+                [multiple]="false"
+                [(ngModel)]="subtarea.categoriaId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="categoriaId"
+                placeholder="Inserte el tipo de tarea">
+                </ng-select> 
+              </div>
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createSub()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Información de la tarea</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-product">
+              <div class="form-group edit" *ngIf="showDesc" (click)="showDesc=!showDesc">
+                <span style="font-weight:bold;">Descripción: </span> {{full.descripcion}}
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </div>
+              <div class="col text-center form-group" *ngIf="!showDesc">
+                <textarea class="text-center" type="text" rows="2" cols="32" name="descripcion" [(ngModel)]="full.descripcion"></textarea>
+                <br>
+                <button class="mt-3 btn btn-primary text-center ml-3" (click)="setDescription(full);showDesc=!showDesc">Actualizar</button>
+              </div>
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">¿Que deseas hacer?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-product">
+              <div class="form-group ">
+                <button type="button" class="btn btn-primary" (click)="showModal=true" data-toggle="modal" data-target="#subModal" data-dismiss="modal">Agendar nueva subtarea</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#descModal">Retroalimentacion de la subtarea</button>
+              </div>
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

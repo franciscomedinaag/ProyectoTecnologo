@@ -1,0 +1,91 @@
+{
+    "name": "Carrusel",
+    "plural": "Carrusels",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "titulo": {
+        "type": "string",
+        "required": "true"
+      },
+      "subtitulo": {
+        "type": "string",
+        "required": "true"
+      },
+      "imagen": {
+        "type": "string",
+        "required": "true"
+      },
+      "type": {
+        "type": "boolean",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {
+      "prototype.setCarrusel": {
+        "accepts": [
+          {
+            "arg": "newImage",
+            "type": "object",
+            "required": true,
+            "description": "image to save",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "product",
+            "type": "object",
+            "root": true,
+            "description": "Updated product"
+          }
+        ],
+        "description": " Add Image to a product ",
+        "http": [
+          {
+            "path": "/setCarrusel",
+            "verb": "post"
+          }
+        ]
+      },
+      "deleteFile": {
+        "accepts": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "oldFile",
+            "type": "object",
+            "required": true,
+            "description": "file URL to delete",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "description": " Delete File ",
+        "http": [
+          {
+            "path": "/deleteFile",
+            "verb": "post"
+          }
+        ]
+      }
+    }
+  }
+  

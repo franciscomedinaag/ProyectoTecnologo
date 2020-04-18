@@ -1,0 +1,10 @@
+.foto-perfil{
+    height: 200px;
+    width: 200px;
+    border-style: outset;
+    border-color:gray;
+}
+
+.foto-perfil:hover{
+    opacity: 0.5;
+}

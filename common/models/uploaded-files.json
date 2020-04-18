@@ -1,0 +1,40 @@
+{
+  "name": "UploadedFiles",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "hidden": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "id": true
+    },
+    "URL": {
+      "type": "string",
+      "required": true
+    },
+    "uploaded": {
+      "type": "date",
+      "defaultFn": "now"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [{
+    "accessType": "*",
+    "principalType": "ROLE",
+    "principalId": "$unauthenticated",
+    "permission": "ALLOW"
+  },
+  {
+    "accessType": "*",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW"
+  }],
+  "methods": {}
+}

@@ -1,0 +1,169 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pb-5 pt-5">
+        <div class="col text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Panel del sitio web 
+                <button (click)="setSitio()" class="btn btn-primary">Guardar cambios</button></h2>
+        </div>
+    </div>
+    <div class="row pb-3 align-items-center justify-content-center">
+      <div class="col-sm-4 text-center">
+          <h4  class="text-secondary">Datos de contacto</h4>
+      </div>
+      <div class="col-sm-4 text-center">
+          <h4  class="text-secondary">Inicio</h4>
+      </div>
+      <div class="col-sm-4 text-center">
+        <h4  class="text-secondary">Nosotros</h4>
+    </div>
+  </div>
+    <div class="row pb-4 align-items-center justify-content-center">
+        <div class="col-sm-4 text-center">
+            <form class="form-product">
+                <div class="form-group">
+                  <label for="nombre">Numero de teléfono: </label>
+                  <input  [(ngModel)]="sitioEdit.numero" name="numero" type="text" class="form-control" id="subject" placeholder="ej. 336587514">
+                </div> 
+                <div class="form-group">
+                    <label for="nombre">Direccion corporativo: </label>
+                    <input  [(ngModel)]="sitioEdit.direccion" name="direccion" type="text" class="form-control" id="subject" placeholder="ej. Isla Raza #5687">
+                </div> 
+                <div class="form-group">
+                    <label for="nombre">CP: </label>
+                    <input  [(ngModel)]="sitioEdit.cp" name="cp" type="text" class="form-control" id="subject" placeholder="ej. 44689">
+                </div> 
+            </form>
+        </div>
+        <div class="col-sm-4 text-center">
+            <form class="form-product">
+                <div class="form-group">
+                  <label for="nombre">Texto de bienvenida: </label>
+                  <textarea rows=3  [(ngModel)]="sitioEdit.textoInicio" name="textoInicio" type="text" 
+                  class="form-control" id="subject" placeholder="Escribe algo para la sección de inicio"></textarea>
+                </div>  
+                <div class="form-group">
+                    <label for="nombre">Imagen: </label>
+                    <template-file-chooser [fileType] ="'site'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                </div> 
+            </form>
+        </div>
+        <div class="col-sm-4 text-center">
+          <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Misión: </label>
+                <textarea rows=2  [(ngModel)]="sitioEdit.mision" name="mision" type="text" 
+                class="form-control" id="subject" placeholder="Nuestra misión"></textarea>
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Visión: </label>
+                <textarea rows=2  [(ngModel)]="sitioEdit.vision" name="vision" type="text" 
+                class="form-control" id="subject" placeholder="Nuestra visión"></textarea>
+              </div> 
+              <div class="form-group">
+                <label for="nombre">Compromisos: </label>
+                <textarea rows=2  [(ngModel)]="sitioEdit.compromiso" name="compromiso" type="text" 
+                class="form-control" id="subject" placeholder="Nuestros compromisos"></textarea>
+            </div> 
+          </form>
+      </div>
+    </div>
+    <div class="row pt-4 pb-4 justify-content-center">
+        <div class="col text-center">
+            <h4 class="text-secondary pb-3">Carrusel de Inicio 
+                <button data-toggle="modal" data-target="#carruselModal" (click)="upload='carrusel';carrusel.type=0" class="btn btn-secondary">Agregar</button>
+            </h4>
+            <div class="table-responsive text-center">
+              <table  class="table table-sm table-striped lista text-center">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Posicion</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Subtitulo</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Eliminar</th>
+                  </tr>
+                </thead>
+                    <tbody>
+                      <tr *ngFor="let c of inicios; let i=index">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>{{c.titulo}}</td>
+                        <td>{{c.subtitulo}}</td>
+                        <td>                
+                            <img class="carrusel" [src]="api.baseURL+c.imagen"  onerror="this.src='assets/default/producto-default.jpg'" alt="...">
+                        </td>
+                        <td><i (click)="deleteCar(c.imagen, c.id)" class="fa fa-trash" aria-hidden="true"></i></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>  
+        </div>
+    </div>
+    <div class="row pt-4 pb-4 justify-content-center">
+      <div class="col text-center">
+          <h4 class="text-secondary pb-3">Carrusel Sobre Nosotros 
+              <button data-toggle="modal" data-target="#carruselModal" (click)="upload='carrusel';carrusel.type=1" class="btn btn-secondary">Agregar</button>
+          </h4>
+          <div class="table-responsive text-center">
+            <table  class="table table-sm table-striped lista text-center">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Posicion</th>
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Subtitulo</th>
+                  <th scope="col">Imagen</th>
+                  <th scope="col">Eliminar</th>
+                </tr>
+              </thead>
+                  <tbody>
+                    <tr *ngFor="let c of nosotros; let i=index">
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{c.titulo}}</td>
+                      <td>{{c.subtitulo}}</td>
+                      <td>                
+                          <img class="carrusel" [src]="api.baseURL+c.imagen"  onerror="this.src='assets/default/producto-default.jpg'" alt="...">
+                      </td>
+                      <td><i (click)="deleteCar(c.imagen, c.id)" class="fa fa-trash" aria-hidden="true"></i></td>
+                    </tr>
+                  </tbody>
+              </table>
+          </div>  
+      </div>
+  </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+<div class="modal fade" id="carruselModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Añadir al carrusel</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">       
+            <form class="form-product">
+                <div class="form-group">
+                    <label for="descripcion">Titulo: </label>
+                    <input  [(ngModel)]="carrusel.titulo" name="titulo" type="text" class="form-control" 
+                    id="titulo" placeholder="Ingresa el titulo" >
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Subtitulo: </label>
+                    <input  [(ngModel)]="carrusel.subtitulo" name="subtitulo" type="text" class="form-control" 
+                    id="subtitulo" placeholder="Ingresa el subtitulo">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Imagen: </label>
+                    <template-file-chooser [fileType] ="'sitio'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                </div>      
+            </form>    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createCar()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>

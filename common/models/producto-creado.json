@@ -1,0 +1,84 @@
+{
+    "name": "ProductoCreado",
+    "plural": "ProductosCreados",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "descripcion": {
+        "type": "string",
+        "required": "true"
+      },
+      "cantidad": {
+        "type": "number",
+        "required": "true"
+      },
+      "cantTablones": {
+        "type": "number",
+        "required": "true"
+      },
+      "montoHerrajes": {
+        "type": "number",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "tablon": {
+        "type": "belongsTo",
+        "model": "Tablon",
+        "foreignKey": "tablonId" 
+      },
+      "productoFijo": {
+        "type": "belongsTo",
+        "model": "ProductoFijo",
+        "foreignKey": "productoFijoId" 
+      },
+      "cotizacion": {
+        "type": "belongsTo",
+        "model": "Cotizacion",
+        "foreignKey": "cotizacionId" 
+      }
+    },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$unauthenticated",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {
+      "getCreados": {
+        "accepts": [{ 
+          "arg": "data",
+          "type": "object",
+          "root": true,
+          "description": "data con la cotizacionId"
+          }],
+        "returns": [
+          { 
+          "arg": "productosCreados",
+          "type": "object",
+          "root": true,
+          "description": "Productos creados a retornar"
+          }
+        ],
+        "description": "Traer un Trato con sus include",
+        "http": [
+          {
+            "path": "/getCreados",
+            "verb": "post"
+          }
+        ]
+      }
+    }
+  }
+  

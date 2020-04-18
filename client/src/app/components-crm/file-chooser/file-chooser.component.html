@@ -1,0 +1,18 @@
+<div id="fileChooser" class="d-flex flex-column justify-content-center align-items-center">
+  <p *ngIf="fileData != null  && !( fileData.fileExtention == '.png' || fileData.fileExtention == '.jpg' || fileData.fileExtention == '.jpeg')" style="color:white;font-weight: bolder;">¡Archivo seleccionado!</p>
+  <img *ngIf="fileData != null  && ( fileData.fileExtention == '.png' || fileData.fileExtention == '.jpg' || fileData.fileExtention == '.jpeg')"
+    src="{{'data:image/' + fileData.fileExtention.split('.')[1] + ';base64,' + fileData.base64File}}">
+    <!-- <video width="400" controls *ngIf="fileData != null  && fileData.fileExtention == '.mp4'">
+      <source src="{{'data:video/' + fileData.fileExtention.split('.')[1] + ';base64,' + fileData.base64File}}" type="video/mp4"
+        id="video_here">
+      Tu navegador no soporta video HTML5.
+    </video> -->
+  <label for="base64File">
+    <i class="zmdi zmdi-upload"></i> 
+    Subir
+  </label>
+  
+  <input type="file" id="base64File" name="base64File" accept="{{extensionFilter}}" (change)="onFileChange($event)">
+  <input type="file" name="file[]" class="file_multi_video" accept="video/*">
+  <i  class="zmdi zmdi-spinner zmdi-rotate-right zmdi-hc-spin"></i>
+</div>

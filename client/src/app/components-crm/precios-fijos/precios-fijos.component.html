@@ -1,0 +1,220 @@
+<app-navbar-crm></app-navbar-crm>
+<div style="background-color: white;" class="container">
+  <div class="row pt-4 pb-4 align-items-center">
+    <div class="col-sm-8 text-center">
+        <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Tablones</h2>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addTablon">Agregar</button>
+    </div>
+  </div>
+  <div class="row pb-5">
+    <div class="col text-center">
+      <div style="width: 75%;
+      margin-left: 13%;
+      margin-right: 25%;" class="table-responsive text-center">
+        <table  class="table table-sm table-striped lista text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Tablon</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Vertical (cm)</th>
+              <th scope="col">Horizontal (cm)</th>
+              <th scope="col">Eliminar</th>
+
+            </tr>
+          </thead>
+              <tbody>
+                <tr *ngFor="let t of tablones; let i=index">
+                  <th scope="row">{{t.nombre}}</th>
+                  <td>$ {{t.precio}}</td>
+                  <td>{{t.vertical}}</td>
+                  <td>{{t.horizontal}}</td>
+                  <td><i (click)="deleteTab(t)" class="fa fa-trash" aria-hidden="true"></i></td>
+                </tr>
+              </tbody>
+          </table>
+      </div>  
+    </div>
+  </div>
+
+
+    <div class="row pt-4 pb-4 align-items-center">
+        <div class="col-sm-8 text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Productos fijos</h2>
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addProducto">Agregar</button>
+        </div>
+    </div>
+    <div class="row pb-5">
+      <div *ngFor="let p of productos" class="col-sm-3 text-center">
+        <div class="card mb-3" >
+          <img class="producto" [src]="api.baseURL+p.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{p.clave}}</h5>
+            <p class="card-text">$ {{p.precio}} c/u</p>
+            <a data-toggle="modal" data-target="#seeVisible" (click)="visible=p" class="btn cardB btn-primary mr-2 text-white">Ver</a>
+            <a (click)="onDelete(p)" class="btn cardB btn-danger  text-white">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+
+<div class="modal fade" id="addProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo producto fijo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Clave</label>
+                <input  [(ngModel)]="producto.clave" name="clave" type="text" class="form-control" id="clave" placeholder="Ingresa la clave">
+              </div>        
+              <div class="form-group">
+                <label for="nombre">Descripcion</label>
+                <textarea  [(ngModel)]="producto.descripcion" name="descripcion" type="text" class="form-control" id="descripcion" rows="2" placeholder="Ingresa descripcion"></textarea>
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Imagen</label>
+                <!-- <input  [(ngModel)]="producto.imagen" name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingresa nombre"> -->
+                <template-file-chooser [fileType] ="'productosFijos'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+              </div>
+              <div class="form-group">
+                <label for="nombre">Precio Unitario</label>
+                <input  [(ngModel)]="producto.precio" name="precio" type="number" class="form-control" id="precio" placeholder="Ingresa precio">
+              </div>     
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <label for="nombre">Medida de frente (FR) en centimetros</label>
+                          <input  [(ngModel)]="producto.fr" name="fr" type="text" class="form-control" id="fr" placeholder="ej. 120">
+                      </div>
+                      <div class="col-sm-4">
+                          <label for="nombre">Medida de fondo (FO) en centimetros</label>
+                          <input  [(ngModel)]="producto.fo" name="fo" type="text" class="form-control" id="fo" placeholder="ej. 120">
+                      </div>
+                      <div class="col-sm-4">
+                          <label for="nombre">Media de altura (AL) en centimetros</label>
+                          <input  [(ngModel)]="producto.al" name="al" type="text" class="form-control" id="al" placeholder="ej. 120">
+                      </div>
+                  </div>
+              </div>        
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createProduct()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="seeVisible" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{visible.clave}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">     
+              <div class="form-group">
+                <strong>Descripcion: </strong>
+                <span *ngIf="desc" (click)="desc=!desc" >{{visible.descripcion}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <input class="text-center" *ngIf="!desc" type="text" [(ngModel)]="visible.descripcion" 
+                        (blur)="desc=!desc;validate()">
+              </div>  
+              <div class="form-group">
+                <strong>Imagen: </strong>
+                <img class="producto" [src]="api.baseURL+visible.imagen"  onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+              </div>
+              <div class="form-group">
+                <strong>Precio Unitario: </strong>
+                  <span *ngIf="prec" (click)="prec=!prec" >{{visible.precio}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                <input class="text-center" *ngIf="!prec" type="text" [(ngModel)]="visible.precio" 
+                        (blur)="prec=!prec;validate()">
+                </div>     
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <strong >Medida de frente (FR) en centimetros: </strong>
+                          <span *ngIf="fr" (click)="fr=!fr" >{{visible.fr}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <input class="text-center" *ngIf="!fr" type="text" [(ngModel)]="visible.fr" 
+                        (blur)="fr=!fr;validate()">
+                        </div>
+                      <div class="col-sm-4">
+                          <strong >Medida de fondo (FO) en centimetros: </strong>
+                          <span *ngIf="fo" (click)="fo=!fo" >{{visible.fo}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <input class="text-center" *ngIf="!fo" type="text" [(ngModel)]="visible.fo" 
+                        (blur)="fo=!fo;validate()">
+                        </div>
+                      <div class="col-sm-4">
+                          <strong >Media de altura (AL) en centimetros: </strong>
+                          <span *ngIf="al" (click)="al=!al" >{{visible.al}} <i class="fa fa-pencil" aria-hidden="true"></i></span>
+                        <input class="text-center" *ngIf="!al" type="text" [(ngModel)]="visible.al" 
+                        (blur)="al=!al;validate()">
+                        </div>
+                  </div>
+              </div>                  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="addTablon" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un tablón</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input  [(ngModel)]="tablon.nombre" name="clave" type="text" class="form-control" id="clave" placeholder="Ingresa la clave">
+              </div>          
+              <div class="form-group">
+                <label for="nombre">Precio Unitario</label>
+                <input  [(ngModel)]="tablon.precio" name="precio" type="number" class="form-control" id="precio" placeholder="Ingresa precio">
+              </div>     
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <label for="nombre">Medida horizontal (cm):</label>
+                          <input  [(ngModel)]="tablon.horizontal" name="fr" type="number" class="form-control" id="fr" placeholder="ej. 120">
+                      </div>
+                      <div class="col-sm-4">
+                          <label for="nombre">Medida vertical (cm):</label>
+                          <input  [(ngModel)]="tablon.vertical" name="fo" type="number" class="form-control" id="fo" placeholder="ej. 120">
+                      </div>
+                  </div>
+              </div>        
+            </form>      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createTab()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>

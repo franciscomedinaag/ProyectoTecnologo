@@ -1,0 +1,4 @@
+Este módulo contiene un Componente para la aplicación Web.
+
+Como usar: 
+    - Copiar y pegar en la carpeta 'components/shared/' de la aplicación web y agregar como un módulo al module.ts del componente donde se vaya a usar.

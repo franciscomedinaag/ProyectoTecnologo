@@ -1,0 +1,53 @@
+{
+    "name": "Cotizacion",
+    "plural": "Cotizaciones",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "manoObra": {
+        "type": "number",
+        "required": "true"
+      },
+      "administrativos": {
+        "type": "number",
+        "required": "true"
+      },
+      "utilidad": {
+        "type": "number",
+        "required": "true"
+      },
+      "impuestos": {
+        "type": "number",
+        "required": "true"
+      },
+      "total": {
+        "type": "number",
+        "required": "true"
+      },
+      "definitivo": {
+        "type": "boolean",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$unauthenticated",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {
+    }
+  }
+  

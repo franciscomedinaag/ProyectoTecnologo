@@ -1,0 +1,97 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-3 pb-5  align-items-center">
+        <div class="col-sm-7 text-center ">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Cátalogos </h2>
+        </div>
+        <div class="col-sm-5 text-center">
+          <button class="btn btn-secondary "  data-toggle="modal" data-target="#uploadCat">Añadir</button> 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center pl-5 pr-5">
+            <div class=" table-responsive">
+                <table class="table table-striped lista">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Archivo</th>
+                        <th scope="col">Obtener</th>
+                        <th scope="col">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let c of catalogos; let i=index">
+                        <th scope="row" class="name" (click)="setEdit(c)" data-toggle="modal" data-target="#editCat">{{c.nombre}}{{c.ext}} <i class="fa fa-pencil" aria-hidden="true"></i></th>
+                        <td><a  (click)="showPdf(c.file)" style="color:rgb(60, 146, 196)" >Descargar</a> </td>
+                        <td><i (click)="deleteCat(c.file, c.id)" class="fa fa-trash" aria-hidden="true"></i></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+
+<div class="modal fade" id="uploadCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Subir catálogo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+          <form class="form-product">
+            <div class="form-group">
+              <label for="nombre">Nombre del catalogo: </label>
+              <input  [(ngModel)]="catalogue" name="catalogue" type="text" class="form-control" id="subject" placeholder="Ingresar el nombre">
+            </div>  
+            <div class="form-group">
+              <template-file-chooser [fileType] ="'catalogue'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+          </div>
+              
+          </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="upload()" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="editCat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Editar cátalogo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+          <form class="form-product">
+            <div class="form-group">
+              <label for="nombre">Nombre del catalogo: </label>
+              <input  [(ngModel)]="catalogue" name="catalogue" type="text" class="form-control" id="subject" placeholder="Ingresar el nombre">
+            </div>  
+          </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="assign(catalogue)" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>

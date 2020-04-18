@@ -14,7 +14,8 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "acls": []
   },
   "AccessToken": {
     "dataSource": "db",
@@ -38,5 +39,125 @@
   "product": {
     "dataSource": "db",
     "public": true
+  },
+  "Usuario": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Upload": {
+    "dataSource": "localFiles",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": true,
+          "download": true,
+          "newBase64File": true,
+          "getFilesToZip": true,
+          "upload":true
+        }
+      }
+    }
+  },
+  "UploadedFiles": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Meta":{
+    "dataSource":"db",
+    "public":true
+  },
+  "Client":{
+    "dataSource":"db",
+    "public":true
+  },
+  "Nota": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Catalogo": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Trato": {
+    "dataSource": "db",
+    "public":true
+  },
+  "CategoriaSub": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Subtarea": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Archivo": {
+    "dataSource": "db",
+    "public":true
+  },
+  "ProductoFijo": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Tablon": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Cotizacion": {
+    "dataSource": "db",
+    "public":true
+  },
+  "ProductoCreado": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Informe": {
+    "dataSource": "db",
+    "public":true
+  },
+  "InformeAdmin": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Carrusel": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Mobiliario": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Sitio": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Mensaje": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Cerrado": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Perdido": {
+    "dataSource": "db",
+    "public":true
+  },
+  "Email": {
+    "dataSource": "Email",
+    "public":true
+  },
+  "Mail":{
+    "dataSource":"Email",
+    "public":true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "sendEmail":true,
+          "sendPoll":true
+        }
+      }
+    }
   }
 }

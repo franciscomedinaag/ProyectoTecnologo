@@ -1,0 +1,31 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+.ng-select.custom {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom ::ng-deep .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0;
+}
+
+span:hover{
+    opacity:75%
+}
+
+h4:hover{
+    opacity: 75%;
+}
+
+.sender{
+    width:130px;
+}
+
+.fa-spinner, .mx-5 {
+    margin-left: 75% !important;
+    margin-top: 10%;
+}

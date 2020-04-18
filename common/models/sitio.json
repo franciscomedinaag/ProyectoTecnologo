@@ -1,0 +1,76 @@
+{
+    "name": "Sitio",
+    "plural": "Sitios",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "numero": {
+        "type": "string",
+        "required": "true"
+      },
+      "direccion": {
+        "type": "string",
+        "required": "true"
+      },
+      "cp": {
+        "type": "string",
+        "required": "true"
+      },
+      "imagenInicio": {
+        "type": "string",
+        "required": "true"
+      },
+      "textoInicio": {
+        "type": "string",
+        "required": "true"
+      },
+      "mision": {
+        "type": "string",
+        "required": "true"
+      },
+      "vision": {
+        "type": "string",
+        "required": "true"
+      },
+      "compromiso": {
+        "type": "string",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {
+      "prototype.setInicio": {
+        "accepts": [
+          {
+            "arg": "newImage",
+            "type": "object",
+            "required": true,
+            "description": "image to save",
+            "http": {
+              "source": "body"
+            }
+          }
+        ],
+        "returns": [
+          {
+            "arg": "product",
+            "type": "object",
+            "root": true,
+            "description": "Updated product"
+          }
+        ],
+        "description": " Add Image to a product ",
+        "http": [
+          {
+            "path": "/setInicio",
+            "verb": "post"
+          }
+        ]
+      }
+    }
+  }
+  

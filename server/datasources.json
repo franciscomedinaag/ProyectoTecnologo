@@ -1,13 +1,35 @@
 {
-  
   "db": {
-    "host": "localhost",
-    "port": 3306,
-    "url": "",
-    "database": "crm",
-    "password": "",
     "name": "db",
-    "user": "root",
+    "host": "db4free.net",
+    "port": 3306,
+    "database": "crmproyecto",
+    "password": "Charmander004",
+    "user": "franciscomedinaa",
     "connector": "mysql"
+  },
+  "localFiles": {
+    "name": "localFiles",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage",
+    "nameConflict": "makeUnique"
+  },
+  "Email": {
+    "name": "Email",
+    "connector": "mail",
+    "transports": [{
+      "type": "SMTP",
+      "host": "smtp.gmail.com",
+      "secure": true,
+      "port": 465,
+      "auth": {
+        "user": "xdookielol@gmail.com",
+        "pass": "charmander004"
+      },
+      "tls": {
+        "rejectUnauthorized": false
+      }
+    }]
   }
 }

@@ -18,6 +18,10 @@ coverage
 node_modules
 npm-debug.log
 
+<<<<<<< HEAD
 .now/project.json
 
 .now/README.txt
+=======
+.now
+>>>>>>> prod

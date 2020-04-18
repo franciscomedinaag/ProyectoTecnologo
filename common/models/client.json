@@ -1,0 +1,160 @@
+{
+    "name": "Client",
+    "plural": "Clients",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "nombre": {
+        "type": "string",
+        "required": "false"
+      },
+      "email": {
+        "type": "string",
+        "required": "false"
+      },
+      "telefono": {
+        "type": "string",
+        "required": "false"
+      },
+      "puesto": {
+        "type": "string",
+        "required": "false"
+      },
+      "estado": {
+        "type": "string",
+        "required": "false"
+      },
+      "empresa": {
+        "type": "string",
+        "required": "false"
+      },
+      "giro": {
+        "type": "string",
+        "required": "false"
+      },
+      "registro": {
+        "type": "date",
+        "required": "false"
+      },
+      "cantTratos": {
+        "type": "number",
+        "required": "false"
+      },
+      "real": {
+        "type": "boolean",
+        "required": "false"
+      },
+      "frecuente": {
+        "type": "boolean",
+        "required": "false"
+      },
+      "negociacion":{
+        "type":"string",
+        "required":"false"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "notas": {
+      "type": "hasMany",
+      "model": "Nota",
+      "foreignKey": "clientId" 
+      },
+      "tratos": {
+        "type": "hasMany",
+        "model": "Trato",
+        "foreignKey": "clientId" 
+      },
+      "mensajes": {
+        "type": "hasMany",
+        "model": "Mensaje",
+        "foreignKey": "clientId" 
+      }
+    },
+    "acls": [],
+    "methods": {
+      "prototype.getClient": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "client a retornar"
+          }
+        ],
+        "description": "Traer un cliente con sus include",
+        "http": [
+          {
+            "path": "/getClient",
+            "verb": "get"
+          }
+        ]
+      },
+      "getFullClients": {
+        "accepts": [],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "clients a retornar"
+          }
+        ],
+        "description": "Traer clientes con sus include",
+        "http": [
+          {
+            "path": "/getFullClients",
+            "verb": "get"
+          }
+        ]
+      },
+      "checkIfExist": {
+        "accepts": [  { 
+          "arg": "data",
+          "type": "object",
+          "root": true,
+          "description": "buscar cliente"
+          }],
+        "returns": [
+          { 
+          "arg": "client",
+          "type": "object",
+          "root": true,
+          "description": "clients a retornar"
+          }
+        ],
+        "description": "Traer clientes con sus include",
+        "http": [
+          {
+            "path": "/checkIfExist",
+            "verb": "post"
+          }
+        ]
+      },
+      "sendWhats": {
+        "accepts": [{ 
+          "arg": "data",
+          "type": "object",
+          "root": true,
+          "description": "datos para el whats"
+          }],
+        "returns": [{ 
+          "arg": "nose",
+          "type": "object",
+          "root": true,
+          "description": "nose a retornar"
+          }],
+        "description": "mandar un whatsapp",
+        "http": [
+          {
+            "path": "/sendWhats",
+            "verb": "post"
+          }
+        ]
+      }
+    }
+  }
+  

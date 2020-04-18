@@ -1,0 +1,57 @@
+{
+    "name": "InformeAdmin",
+    "plural": "InformesAdmin",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "abiertos": {
+        "type": "number",
+        "required": "true"
+      },
+      "cerrados": {
+        "type": "number",
+        "required": "true"
+      },
+      "vencidos": {
+        "type": "number",
+        "required": "true"
+      },
+      "finales": {
+        "type": "array",
+        "required": "true"
+      },
+      "total": {
+        "type": "number",
+        "required": "true"
+      },
+      "anio": {
+        "type": "number",
+        "required": "true"
+      },
+      "bimestre": {
+        "type": "string",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": { },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$unauthenticated",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {
+    }
+  }
+  

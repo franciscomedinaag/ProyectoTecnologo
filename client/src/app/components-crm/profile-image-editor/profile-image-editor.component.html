@@ -1,0 +1,5 @@
+<input  type="file" class="d-none" id="base64ProfileImage" name="base64ProfileImage" ngModel #base64ProfileImage="ngModel" accept="image/*"
+(change)="onFileChange($event)">
+<button class="btn btn-primary background-color-theme" type="button" (click)="openFileBrowser($event)">
+  Subir imagen
+</button>

@@ -1,0 +1,40 @@
+{
+    "name": "Cerrado",
+    "plural": "Cerrados",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "respuesta1": {
+        "type": "string",
+        "required": "true"
+      },
+      "respuesta2": {
+        "type": "string",
+        "required": "true"
+      },
+      "respuesta3": {
+        "type": "string",
+        "required": "true"
+      },
+      "fechaEnvio": {
+        "type": "string",
+        "required": "true"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "trato": {
+        "type": "belongsTo",
+        "model": "Trato",
+        "foreignKey": "tratoId" 
+      }
+    },
+    "acls": [
+      
+    ],
+    "methods": {
+    }
+  }
+  

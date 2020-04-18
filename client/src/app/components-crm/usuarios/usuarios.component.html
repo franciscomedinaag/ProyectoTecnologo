@@ -1,0 +1,126 @@
+<app-navbar-crm></app-navbar-crm>
+
+<div class="container" style="background-color: white;">
+    <div class="row pt-4 pb-4">
+
+        <div class="col-sm-3">        
+            <h2 *ngIf="showAct" style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center">Vendedores Activos</h2>
+            <h2 *ngIf="!showAct" style="font-weight: bold; color:rgb(150, 150, 150);" class="text-center">Vendedores Inactivos</h2>
+        </div>
+        <div class="col-sm-3 text-center">
+          <button *ngIf="showAct" (click)="vista(false)" class="btn active btn-secondary">Ver inactivos</button>
+          <button *ngIf="!showAct" (click)="vista(true)" class="btn active btn-primary">Ver activos</button>
+        </div>
+        <div class="col-sm-3 text-center pt-1 pb-1">
+          <button class="btn btn-primary" *ngIf="showAct"  data-toggle="modal" data-target="#addModal">
+          Agregar 
+          </button>
+        </div>
+        <div class="col-sm-3 text-center" *ngIf="there">
+          <h4 *ngIf="showMeta" class="text-center" style="color:rgb(112, 151, 38)" (click)="showMeta=!showMeta" >
+            Meta bimestral: {{meta.cantidad.toLocaleString("en")}}
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <br>
+             <span *ngIf="meta.fecha" style="color:grey; font-size: small;">
+              Ultima vez editado: {{meta.fecha | date:'short'}}
+            </span>
+          </h4>
+          <span class="text-center" *ngIf="!showMeta">
+            <input  class="text-center" type="text" [(ngModel)]="meta.cantidad" (blur)="showMeta=!showMeta;assignMeta(meta)">
+            <br>
+            <button class="text-center mt-1 btn btn-primary" (click)="showMeta=!showMeta;assignMeta(meta)">Editar</button>
+          </span>
+        </div>
+        <div class="col-sm-3" *ngIf="!there">
+          Ingresa una meta bimestral:
+          <input type="text" [(ngModel)]="cant" (blur)="showMeta=!showMeta;addMeta(cant)">
+        </div>
+
+    </div>
+    <div class="row">
+      <div class="col">
+
+        <div class="table-responsive">
+          <table class="table table-striped lista">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Monto</th>
+                <th scope="col" class="text-center">Informe</th>
+                <th scope="col">Datos</th>
+                <th *ngIf="showAct" class="text-center" scope="col">Desactivar</th>
+                <th *ngIf="!showAct" class="text-center" scope="col">Activar</th>
+              </tr>
+            </thead>
+                <tbody>
+                  <tr class="table-warning">
+                    <th scope="row">ADMN</th>
+                    <td>{{admin.username}}</td>
+                    <td>N/A</td>
+                    <td class="text-center"><a [routerLink]="['/informesven',admin.id]">Ver</a> </td>
+                    <td><a [routerLink]="['/miperfil',admin.id]">Perfil</a></td>
+                    <td class="text-center">N/A</td>
+                  </tr>
+                  <tr *ngFor="let a of vendedores; let i=index" [className]="a.vendido<meta.cantidad ? 'table-danger' : ' '">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{a.username}}</td>
+                    <td>{{a.vendido | currency}}</td>
+                    <td class="text-center"><a [routerLink]="['/informesven',a.id]">Ver</a> </td>
+                    <td><a [routerLink]="['/miperfil',a.id]">Perfil</a></td>
+                    <td *ngIf="showAct" class="text-center" (click)="changeState(a,false)"><i class="fa fa-window-close-o" aria-hidden="true"></i></td>
+                    <td *ngIf="!showAct" class="text-center" (click)="changeState(a,true)"><i class="fa fa-check-circle-o" aria-hidden="true"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+      <app-footer-crm></app-footer-crm>
+      
+      
+      <!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo usuario al sistema</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+          <form class="form-product">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input  [(ngModel)]="user.username" name="username" type="text" class="form-control" id="nombre" placeholder="Ingresa nombre">
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input  [(ngModel)]="user.telefono" name="telefono" type="text" class="form-control" id="telefono" placeholder="Ingresa numero de teléfono">
+            </div>
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input  [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email"  placeholder="user@test.com">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Contraseña</label>
+              <input  [(ngModel)]="pass1" name="pass1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Ingresala de nuevo</label>
+              <input  [(ngModel)]="pass2" name="pass2" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+          </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="saveUser()" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>

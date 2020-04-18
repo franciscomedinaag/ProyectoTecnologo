@@ -1,0 +1,254 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-4 pb-4 ">
+        <div class="col-sm-6">
+           <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> {{trato.nombre}} </h2>             
+        </div>
+        <div class="col-sm-2">
+          <button class="text-center btn btn-secondary" data-toggle="modal" data-target="#archiver"> Archivero </button>
+        </div>
+        <div *ngIf="trato.estado==0" class="col-sm-4 text-center">
+            <i class="fa fa-check-square-o mr-5 ml-4 fa-2x" (click)="assign(trato,true)" style="color:green;float:right" aria-hidden="true"></i>                        
+            <span data-toggle="modal" data-target="#reporteModal">
+              <i class="fa fa-ban fa-2x"   style="color:red;float:right" aria-hidden="true"></i>
+            </span>
+            <span class="mr-4" style="float:right; font-weight: bold; color:rgb(104, 100, 100);">Estado: </span>
+        </div>
+        <div data-toggle="modal" data-target="#reabrirModal" *ngIf="trato.estado==1" class="col-sm-4 reabrir text-center">
+            <i class="fa fa-check-square-o mr-5 ml-4 fa-2x"  style="color:green;float:right" aria-hidden="true"></i>                        
+            <span class="mr-4" style="float:right; font-weight: bold; color:rgb(104, 100, 100);">Estado (reabrir): </span>
+        </div>
+        <div data-toggle="modal" data-target="#reabrirModal" *ngIf="trato.estado==2" class="col-sm-4 reabrir text-center">
+            <i class="fa fa-ban fa-2x"  style="color:red;float:right" aria-hidden="true"></i>
+            <span class="mr-4" style="float:right; font-weight: bold; color:rgb(104, 100, 100);">Estado (reabrir): </span>
+        </div>
+    </div>
+    <div class="row align-items-center pb-5">
+        <div class="col-sm text-center">
+          <p> <span style="font-weight: bold;">Cliente: </span>
+            <a [routerLink]="['/fichaclient',trato.cliente.id]"> {{trato.cliente?.nombre}} </a></p>           
+           <p> <span style="font-weight: bold;">Vendedor: </span> {{trato.vendedor?.username}} </p>   
+           <p *ngIf="trato.estado==2"> <span style="font-weight: bold;color:crimson">Reporte trato vencido: </span> {{trato.reporte}} </p>             
+        </div>
+        <div class="col-sm text-center">
+            <p *ngIf="desc" class="reabrir" (click)="desc=!desc"> <span style="font-weight: bold;">Descripción: </span> {{trato.descripcion}}<i class="fa fa-pencil" aria-hidden="true"></i></p>    
+            <textarea *ngIf="!desc" rows="2" type="text" [(ngModel)]="trato.descripcion" (blur)="desc=!desc;assignDesc(trato)"></textarea>
+            <br>
+            <p *ngIf="trato.nota!=' '"> <span style="font-weight: bold;">Nota reapertura: </span> {{trato.nota}}</p>    
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-sm-8 text-center">
+          <h4 *ngIf="trato.estado!=0" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación</h4>  
+          <h4 *ngIf="trato.estado==0" data-toggle="modal" data-target="#subModal" style="font-weight: bold; color:#33ACE2">Subtareas por fecha de asignación<small>(Agregar)</small></h4>
+        </div>
+        <div class="col-sm-4">
+          <p class=" pl-3 text-success" *ngIf="trato.estado==0"  style="font-weight: bold; background-color: rgb(188, 252, 188);">
+            Sugerencia: <span style="font-weight: normal;">{{sugerencia}}</span>
+          </p>
+        </div>
+    </div>
+    <hr>
+    <div class="row align-items-center pb-4">
+      <div class="col text-center">
+        <ul>
+          <li *ngFor="let s of trato.subtareas">
+            <strong [className]="s.categoriaId==5 ? 'tit' : ''" (click)="gotCoti(s)"> {{s.titulo}} </strong>   |   {{s.fechaFin.split('T')[0] }}  | 
+            <strong class="text-warning" *ngIf="s.estado==0">  Pendiente</strong>
+            <strong class="text-success" *ngIf="s.estado==1">  Realizada</strong> 
+            <strong class="text-danger" *ngIf="s.estado==2">  Vencida</strong>
+            | {{categorias.length>0 ? categorias[s.categoriaId-1].nombre : s.titulo}} 
+            <br>
+            {{s.descripcion}} 
+            <hr>
+          </li>
+        </ul>
+      </div>
+  </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+
+
+<div class="modal fade" id="reabrirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Nota</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">             
+              <div class="form-group">
+                <label for="descripcion">Motivos reapertura del trato: </label>
+                <textarea  [(ngModel)]="trato.nota" name="descripcion" type="text" class="form-control" 
+                id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+              </div>           
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="assignNota(trato)" data-dismiss="modal" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="archiver" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5  *ngIf="defButton" class="modal-title" id="exampleModalLongTitle">Archivos NO definitivos</h5>
+          <h5  *ngIf="!defButton" class="modal-title" id="exampleModalLongTitle">Archivos definitivos</h5>
+          <button class="btn btn-secondary" style="margin-left: 10%;" (click)="toUpload=true;">Subir archivo</button>
+          
+          <button *ngIf="defButton" class="btn btn-block btn-primary ml-2" 
+          (click)="show(true);defButton=!defButton" >Ver definitivos</button>
+          <button *ngIf="!defButton" class="btn btn-block btn-secondary ml-2" 
+           (click)="show(false);defButton=!defButton" >No definitivos</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">             
+              <div class="form-group">
+                <div *ngIf="defButton" class="row">
+                  <div *ngFor="let a of noDefFiles" [className]="noDefFiles.length>=6 ? 'col-md-4' : 'col-md-6'" class=" text-center">
+                    <div class="mt-3 card card-body" style="font-weight: bold; color:grey">
+                      <span class="reabrir text-center"  [className]="noDefFiles.length>=6 ? 'smallText' : ''"
+                      style="font-weight: bold; color:#33ACE2"> * {{a.name}} 
+                      </span> 
+                        <p [className]="noDefFiles.length>=6 ? 'smallText' : ''" class="reabrir" (click)="showPdf(a.file)">Descargar</p>
+                        <p [className]="noDefFiles.length>=6 ? 'smallText' : ''" *ngIf="!a.definitive" class="reabrir" (click)="setDef(a)" >Marcar definitivo</p>
+                        <p [className]="noDefFiles.length>=6 ? 'smallText' : ''" *ngIf="a.definitive" class="reabrir" (click)="setDef(a)" >Marcar NO definitivo</p>
+                    </div>
+                  </div>                 
+                </div>
+                <div *ngIf="!defButton" class="row">
+                  <div *ngFor="let a of defFiles" [className]="defFiles.length>=6 ? 'col-md-4' : 'col-md-6'" class="text-center">
+                    <div class="mt-3 card card-body" style="font-weight: bold; color:grey">
+                      <span class="reabrir text-center"  [className]="defFiles.length>=6 ? 'smallText' : ''"
+                      style="font-weight: bold; color:#33ACE2"> * {{a.name}} 
+                      </span> 
+                        <p [className]="defFiles.length>=6 ? 'smallText' : ''" class="reabrir" (click)="showPdf(a.file)">Descargar</p>
+                        <p [className]="defFiles.length>=6 ? 'smallText' : ''" *ngIf="!a.definitive" class="reabrir" (click)="setDef(a)" >Marcar definitivo</p>
+                        <p [className]="defFiles.length>=6 ? 'smallText' : ''" *ngIf="a.definitive" class="reabrir" (click)="setDef(a)" >Marcar NO definitivo</p>
+                    </div>
+                  </div>                 
+                </div>
+              </div>
+
+              <div *ngIf="toUpload" class="form-group">
+                <div class="row">
+                  <div class="col">
+                    Nombre del archivo:
+                    <input type="text" placeholder="Documento... " [(ngModel)]="name" name="name" id="name">
+                  </div>
+                </div>
+              </div>    
+
+              <div *ngIf="toUpload" class="form-group">
+                <template-file-chooser [fileType] ="'archivero'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+              </div> 
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="toUpload" type="button" (click)="upload()" data-dismiss="modal" class="btn btn-primary">Subir </button>
+          <button type="button" class="btn btn-secondary" (click)="toUpload=false;" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="reporteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Reporte de perdida</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">             
+              <div class="form-group">
+                <label for="descripcion">¿Por qué no se concluyó la venta? </label>
+                <textarea  [(ngModel)]="trato.reporte" name="reporte" type="text" class="form-control" 
+                id="reporte" placeholder="Reporte de trato cerrado..." rows="2"></textarea>
+              </div>           
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="assign(trato,false)" data-dismiss="modal" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Crear subtarea</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+
+                <div class="form-group">
+                    <label for="descripcion">Titulo: </label>
+                    <input  [(ngModel)]="subtarea.titulo" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" >
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea  [(ngModel)]="subtarea.descripcion" name="descripcion" type="text" class="form-control" 
+                    id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="mr-3" for="nombre">Fecha límite:</label>
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                </div>
+
+              <div class="form-group">
+                Tipo de subtarea:
+                <ng-select class="custom"
+                [items]="categorias"
+                [multiple]="false"
+                [(ngModel)]="subtarea.categoriaId"
+                bindValue="id"
+                bindLabel="nombre"
+                name="categoriaId"
+                placeholder="Inserte el tipo de tarea">
+                </ng-select> 
+              </div>
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createSub()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>

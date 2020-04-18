@@ -1,0 +1,191 @@
+<app-navbar-crm></app-navbar-crm>
+<div class="container" style="background-color: white;">
+    <div class="row pt-4 pb-4">
+        <div class="col-sm-3 text-center">
+            <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Clientes</h2>
+        </div>
+        <div class="col-sm-4 text-center">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Agregar</button>
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#sendModal">Mandar Email</button>
+        </div>
+        <div class="col-sm-5 text-center">
+            Buscar por nombre: 
+            <input (input)="onSearchChange($event.target.value)" [(ngModel)]="word" type="text" placeholder="Ingresa un nombre">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        <div class=" table-responsive">
+            <table class="table lista table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Ficha</th>
+                    <th>Tipo de Cliente</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of filtered; let i=index" [className]="c.frecuente ? 'table-warning' : ''">
+                    <th scope="row">{{c.nombre}}</th>
+                    <td>{{c.email}}</td>
+                    <td>{{c.telefono}}</td>
+                    <td><a [routerLink]="['/fichaclient',c.id]">Ver</a></td>
+                    <td>{{c.negociacion?c.negociacion:"N/A"}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+<app-footer-crm></app-footer-crm>
+
+           <!--ADD CLIENT-->
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo cliente al sistema</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input  [(ngModel)]="client.nombre" name="nombre" type="text" class="form-control" id="nombre" placeholder="Ingresa nombre">
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Telefóno</label>
+                <input  [(ngModel)]="client.telefono" name="telefono" type="text" class="form-control" id="telefono" placeholder="ej. 331254654">
+              </div>
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label for="email">Correo electrónico</label>
+                        <input  [(ngModel)]="client.email" name="email" type="email" class="form-control" id="email" placeholder="Ingresa el email">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="puesto">Puesto</label>
+                        <input  [(ngModel)]="client.puesto" name="puesto" type="text" class="form-control" id="puesto" placeholder="Puesto en empresa">
+                      </div>
+                  </div>  
+              </div> 
+              <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                      <label for="empresa">Empresa</label>
+                      <input  [(ngModel)]="client.empresa" name="empresa" type="text" class="form-control" id="empresa" placeholder="Empresa del cliente">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="giro">Giro de la empresa</label>
+                      <input  [(ngModel)]="client.giro" name="giro" type="text" class="form-control" id="giro" placeholder="Giro de la empresa">
+                    </div>
+                </div>  
+            </div> 
+            <div class="form-group">
+                Estado:
+                <ng-select class="custom"
+                [items]="estados"
+                [multiple]="false"
+                [(ngModel)]="client.estado"
+                name="estado"
+                placeholder="Estado de residencia">
+                </ng-select> 
+            </div>
+            <div class="form-group">
+              Tipo de cliente:
+              <ng-select class="custom"
+              [items]="negociaciones"
+              [multiple]="false"
+              [(ngModel)]="client.negociacion"
+              name="negociacion"
+              placeholder="Tipo de  negociacion">
+              </ng-select> 
+          </div>
+                
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="saveClient()" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+           <!--SEND EMAIL-->
+
+  <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Redactar correo 
+            <span *ngIf="sending" style="color:gray; margin-left: 80% !important" >Enviando<i  class="fa-li fa fa-spinner fa-spin ml-5"></i></span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+       
+            <form class="form-product">
+              <div class="form-group">
+                <label for="nombre">Asunto: </label>
+                <input  [(ngModel)]="data.subject" name="subject" type="text" class="form-control" id="subject" placeholder="Ingresar el asunto">
+              </div>  
+              <div class="form-group">
+                <label for="nombre">Texto: </label>
+                <textarea  [(ngModel)]="data.text" name="text" type="textarea" rows="3" class="form-control" id="text" placeholder="Añada su texto aquí..."></textarea>
+              </div>
+          <p>Adjuntar:</p>
+          <button class="btn btn-primary" (click)="cat=true">Catálogos</button>
+          <button class="btn btn-primary" (click)="cat=false">Archivo</button>
+
+          <div *ngIf="cat" class="form-group">
+            Mandar Catalogo:
+            <ng-select class="custom"
+            [items]="catalogos"
+            [multiple]="false"
+            [(ngModel)]="attachment"
+            bindValue="file"
+            bindLabel="nombre"
+            name="cat"
+            placeholder="Seleccionar clientes">
+            </ng-select> 
+          </div>
+
+          <div *ngIf="cat==false" class="form-group">
+            <template-file-chooser [fileType] ="'sendDocs'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+          </div>
+                
+          <div class="form-group">
+            Clientes Seleccionados:
+            <ng-select class="custom"
+            [items]="clientsWithEmail"
+            [multiple]="true"
+            [(ngModel)]="data.to"
+            bindValue="email"
+            bindLabel="nombre"
+            name="to"
+            placeholder="Seleccionar clientes">
+            </ng-select> 
+          </div>
+
+            </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="sendMail(data)" class="btn btn-primary">Enviar </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
