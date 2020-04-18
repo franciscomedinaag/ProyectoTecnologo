@@ -8,8 +8,6 @@ module.exports = function(Schedule) {
   
         var hoy=new Date().toLocaleDateString();
         
-        console.log("hoy en server", hoy)
-
         hoy=hoy.split('/');
         if(hoy[0].length<2){
             hoy[0]='0'+hoy[0]
