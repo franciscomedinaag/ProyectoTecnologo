@@ -7,7 +7,10 @@ module.exports = function(Schedule) {
         var body="Tareas agendadas para hoy:"
   
         var hoy=new Date().toLocaleDateString();
-        hoy=hoy.split('-');
+        
+        console.log("hoy en server", hoy)
+
+        hoy=hoy.split('/');
         if(hoy[0].length<2){
             hoy[0]='0'+hoy[0]
         }
