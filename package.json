@@ -5,21 +5,8 @@
   "engines": {
     "node": ">=6"
   },
-  "now":{
-    "name":"crmproyecto",
-    "alias":["crmproyecto"],
-    "env": {
-      "MYSQL_HOST": "@mysql_host",
-      "MYSQL_USER": "@mysql_user",
-      "MYSQL_PASSWORD": "@mysql_password",
-      "MYSQL_DATABASE": "@mysql_database"
-    }
-  },
   "scripts": {
     "lint": "eslint .",
-    "now:deploy":"now",
-    "now:alias":"now alias crmproyecto.now.sh",
-    "now":"npm run now:deploy && npm run now:alias",
     "start": "node .",
     "posttest": "npm run lint && npm audit"
   },
