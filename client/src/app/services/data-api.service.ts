@@ -13,7 +13,7 @@ export class DataApiService {
   book: Observable<any>;
 
   public headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'});
-  public baseURL: string = "http://localhost:3001/api"
+  public baseURL: string = "https://afternoon-cove-64624.herokuapp.com/api"
   public token: string = "";
 
   public getToken() {
