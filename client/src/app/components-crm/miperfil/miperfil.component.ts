@@ -85,7 +85,8 @@ export class MiperfilComponent implements OnInit {
   }
 
   selectImageOrder( img:any){
-    if(this.usuario.imagen==" string" || this.usuario.imagen=="" || this.usuario.imagen==null){
+    console.log("Imagen: ",img)
+    if(this.usuario.imagen==" " || this.usuario.imagen=="" || this.usuario.imagen==null){
 		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
     this.toast.showSuccess("Se subio la imagen correctamente")
     this.usuario=res;

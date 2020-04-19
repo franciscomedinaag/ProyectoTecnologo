@@ -57,7 +57,7 @@ export class MobiliarioCrmComponent implements OnInit {
           this.mueble={
             nombre:'',
             descripcion:'',
-            imagen:'',
+            imagen:' ',
             categoria:'',
             fullImagen:{}
           }
