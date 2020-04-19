@@ -11,19 +11,19 @@ import { ToastService } from '../../services/toast.service';
 })
 export class CotizacionComponent implements OnInit {
 
-  private subtareaId:any;
-  private tratoId:any;
-  private cotNumber:any;
-  private subtarea:any;
-  private tablones:any;
-  private productosFijos:any;
-  private productosCreados:any;
-  private total:number=0;
-  private trato:any={
+  public subtareaId:any;
+  public tratoId:any;
+  public cotNumber:any;
+  public subtarea:any;
+  public tablones:any;
+  public productosFijos:any;
+  public productosCreados:any;
+  public total:number=0;
+  public trato:any={
     nombre:""
   };
-  private cotizacion:any={};
-  private producto:any={
+  public cotizacion:any={};
+  public producto:any={
     descripcion:null,
     cantidad:null,
     tablonId:null,
@@ -33,7 +33,7 @@ export class CotizacionComponent implements OnInit {
     cotizacionId:null
   }
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
+  constructor(public activated:ActivatedRoute, public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.subtareaId=this.activated.snapshot.paramMap.get("subId");

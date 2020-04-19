@@ -8,11 +8,11 @@ import { DataApiService } from '../../services/data-api.service';
 })
 export class NosotrosComponent implements OnInit {
 
-  private sitio:any={}
-  private carrusels:any=[{}]
-  private first={}
+  public sitio:any={}
+  public carrusels:any=[{}]
+  public first={imagen:null, titulo:null, subtitulo:null}
 
-  constructor(private api:DataApiService) { }
+  constructor(public api:DataApiService) { }
 
   ngOnInit() {
     this.getNosotros()

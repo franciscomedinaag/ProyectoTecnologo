@@ -12,8 +12,8 @@ import { ToastService } from '../../services/toast.service';
 })
 export class ClientesComponent implements OnInit {
 
-  private fecha:any;
-  private client:any={
+  public fecha:any;
+  public client:any={
     telefono:0,
     correo:" ",
     puesto:" ",
@@ -23,30 +23,31 @@ export class ClientesComponent implements OnInit {
     email:" ",
     frecuente:false
   };
-  private data:any={
+  public data:any={
     subject:" ",
     text:" ",
     to:" ",
     attachment:" "
   };
 
-  private clients:any=[];
-  private filtered:any=[];
-  private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
-  private negociaciones:any=["Residencial","Empresarial","Licitacion"];
-  private clientsWithEmail:any=[];
-  private catalogos:any=[];
-  private attachment:any=" "
-  private ext:any=" "
-  private cat:boolean=null;
-  private clientCheck:any;
+  public clients:any=[];
+  public filtered:any=[];
+  public estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
+  public negociaciones:any=["Residencial","Empresarial","Licitacion"];
+  public clientsWithEmail:any=[];
+  public catalogos:any=[];
+  public attachment:any=" "
+  public ext:any=" "
+  public cat:boolean=null;
+  public clientCheck:any;
+  public word:any
 
-  private sending=false;
+  public sending=false;
 
-  constructor(private api:DataApiService, 
-    private auth:AuthService,
-    private router:Router,
-    private toast:ToastService) { }
+  constructor(public api:DataApiService, 
+    public auth:AuthService,
+    public router:Router,
+    public toast:ToastService) { }
 
   ngOnInit() {
    this.getClients();
@@ -206,7 +207,7 @@ export class ClientesComponent implements OnInit {
   }
 
 
-  private static formatTo(contacts){
+  public static formatTo(contacts){
     let lista:string="";
 
     contacts.forEach(contact => {

@@ -11,7 +11,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class TratosComponent implements OnInit {
 
-  private trato:any={
+  public trato:any={
     nombre:null,
     descripcion:null,
     tipo:null,
@@ -23,7 +23,7 @@ export class TratosComponent implements OnInit {
     reporte:" "
   }
 
-  private tipos:any=[
+  public tipos:any=[
     {
       id:1,
       tipo:"Residencial"
@@ -38,31 +38,31 @@ export class TratosComponent implements OnInit {
     }  
   ]
 
-  private clients:any;
-  private vendedores:any;
-  private tratos:any;
-  private current:any;
-  private fechaInicio:any;
-  private fechaFin:any;
+  public clients:any;
+  public vendedores:any;
+  public tratos:any;
+  public current:any;
+  public fechaInicio:any;
+  public fechaFin:any;
 
-  private showAct:boolean=true;
-  private full:any;
-  private fullA:any;
-  private fullI:any;
+  public showAct:boolean=true;
+  public full:any;
+  public fullA:any;
+  public fullI:any;
 
-  private client:number;
+  public client:number;
 
-  private clientObj:any={};
-  private frecuent:boolean=false;
+  public clientObj:any={};
+  public frecuent:boolean=false;
 
-  private disclaimer:any={
+  public disclaimer:any={
     nombre:"",
     show:false,
     id:""
   };
 
-  constructor(private api:DataApiService, 
-    private auth:AuthService, private toast:ToastService) { }
+  constructor(public api:DataApiService, 
+    public auth:AuthService, public toast:ToastService) { }
 
   ngOnInit() {
     this.getClients()

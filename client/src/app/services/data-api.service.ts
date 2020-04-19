@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class DataApiService {
-  constructor(private http: HttpClient, private authService: AuthService) {this.getToken();}
+  constructor(public http: HttpClient, public authService: AuthService) {this.getToken();}
   books: Observable<any>;
   book: Observable<any>;
 
@@ -20,7 +20,7 @@ export class DataApiService {
     this.token = localStorage.getItem("accessToken")
   }
 
-  private genLink(endPoint: string, useToken: boolean,filter:any=false): string {
+  public genLink(endPoint: string, useToken: boolean,filter:any=false): string {
     let link=this.baseURL+endPoint;
     let params=0;
     if(filter) { 

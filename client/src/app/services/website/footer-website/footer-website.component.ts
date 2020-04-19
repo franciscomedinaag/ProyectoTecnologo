@@ -9,8 +9,8 @@ import { ToastService } from '../../toast.service';
 })
 export class FooterWebsiteComponent implements OnInit {
 
-  private datos:any={}
-  private mail:any={
+  public datos:any={}
+  public mail:any={
     telefono:null,
     correo:null,
     nombre:null,
@@ -19,7 +19,7 @@ export class FooterWebsiteComponent implements OnInit {
     fecha:null
   }
 
-  constructor(private api:DataApiService, private toast:ToastService) { }
+  constructor(public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.getInfo()

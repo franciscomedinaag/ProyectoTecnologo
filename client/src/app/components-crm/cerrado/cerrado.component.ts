@@ -10,19 +10,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CerradoComponent implements OnInit {
 
-  private tratoId:any
-  private encuesta:any={
+  public tratoId:any
+  public encuesta:any={
     tratoId:0,
     respuesta1:0
   }
-  private trato:any={
+  public trato:any={
     nombre:"",
     vendedor:{}
   }
 
-  private otro1:any=null
+  public otro1:any=null
 
-  constructor(private api:DataApiService, private toast:ToastService, private activated:ActivatedRoute, private router:Router) { }
+  constructor(public api:DataApiService, public toast:ToastService, public activated:ActivatedRoute, public router:Router) { }
 
   ngOnInit() {
     this.tratoId=this.activated.snapshot.paramMap.get("id");

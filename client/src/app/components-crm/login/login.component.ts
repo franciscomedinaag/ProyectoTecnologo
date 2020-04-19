@@ -11,9 +11,9 @@ import { ToastService } from '../../services/toast.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private auth:AuthService, 
-              private router:Router,
-              private toastr:ToastService
+  constructor(public auth:AuthService, 
+              public router:Router,
+              public toastr:ToastService
               ) { }
 
   public user:any ={
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     password:""
   };
 
-  private current:any;
+  public current:any;
 
   ngOnInit() {
   }
