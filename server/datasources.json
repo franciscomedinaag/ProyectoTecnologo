@@ -7,8 +7,7 @@
     "password": "Charmander004",
     "user": "franciscomedinaa",
     "connector": "mysql",
-    "connectTimeout": 1000000,
-    "acquireTimeout":100000
+    "connectTimeout": 1000000
   },
   "localFiles": {
     "name": "localFiles",
