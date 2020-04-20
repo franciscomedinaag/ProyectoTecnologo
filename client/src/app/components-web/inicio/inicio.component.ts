@@ -11,7 +11,8 @@ export class InicioComponent implements OnInit {
 
   public sitio:any={}
   public carrusels:any=[{}]
-  public first={imagen:null, titulo:null, subtitulo:null}
+  public first={imagen:"/url", titulo:null, subtitulo:null}
+  public load=false
 
   constructor(public api:DataApiService) { }
 
@@ -24,6 +25,7 @@ export class InicioComponent implements OnInit {
     this.api.get(`/Sitios`,false)
     .subscribe((sitio)=>{
       this.sitio=sitio[0]
+      this.load=true
     })
   }
 

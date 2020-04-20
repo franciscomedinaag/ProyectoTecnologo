@@ -44,7 +44,8 @@
     <p class="px-5">{{sitio.textoInicio}}</p>
   </div>
   <div class="col-sm-6">
-    <img class="producto" [src]="api.baseURL+sitio.imagenInicio" width="100" height="300" onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+    <img *ngIf="load" class="producto" [src]="api.baseURL+sitio.imagenInicio" width="100" height="300" onerror="this.src='assets/default/producto-default.jpg'" class="card-img-top" alt="...">
+    <p *ngIf="!load">Cargando...</p>
   </div>
 </div>
 </div>
