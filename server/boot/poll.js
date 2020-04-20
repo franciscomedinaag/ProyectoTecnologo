@@ -7,7 +7,7 @@ module.exports = function(Poll) {
   
     var j = schedule.scheduleJob('*/1 * * * *', function(){ 
         hoy=new Date().toLocaleDateString();
-        hoy=hoy.split('-');
+        hoy=hoy.split('/');
         if(hoy[0].length<2){
             hoy[0]='0'+hoy[0]
         }
