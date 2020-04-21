@@ -18,36 +18,36 @@ module.exports = function(Poll) {
 
         console.log("HOY", hoyString)
 
-        Poll.models.Cerrado.find({}, function(err,encuestas){
-            if(err) return callback(err)
+        // Poll.models.Cerrado.find({}, function(err,encuestas){
+        //     if(err) return callback(err)
 
-            let encuestasArr=encuestas
-            encuestasArr.forEach(e => {
-                if(e.fechaEnvio==hoyString){
-                    Poll.models.Trato.findById(e.tratoId,{include:['cliente']},function(err,trato){
-                        if(err) return callback(err)
+        //     let encuestasArr=encuestas
+        //     encuestasArr.forEach(e => {
+        //         if(e.fechaEnvio==hoyString){
+        //             Poll.models.Trato.findById(e.tratoId,{include:['cliente']},function(err,trato){
+        //                 if(err) return callback(err)
 
-                        let data={
-                            to: trato.toJSON().cliente.email,
-                            subject: "Encuesta Satisfacción del Cliente",
-                            html:`Buen día, por parte de COR muebles te invitamos a llenar esta <a href="https://localhost:4200/cerrado/${trato.id}">encuesta</a> para mejorar nuestro servicio ¡Gracias!`
-                        }
-                        console.log("DATA", data)
+        //                 let data={
+        //                     to: trato.toJSON().cliente.email,
+        //                     subject: "Encuesta Satisfacción del Cliente",
+        //                     html:`Buen día, por parte de COR muebles te invitamos a llenar esta <a href="https://client.franciscomedinaag.now.sh/cerrado/${trato.id}">encuesta</a> para mejorar nuestro servicio ¡Gracias!`
+        //                 }
+        //                 console.log("DATA", data)
 
-                        Poll.models.Email.send(data , function(err, mail) {
-                            if(err){
-                              console.log("hay error :(")
-                              return callback(null,err);
-                            }
-                            else{
-                              console.log('email sent!');
-                              return callback(null,mail)
-                            }     
-                          });
-                    })
-                }
-            });
-        })    
+        //                 Poll.models.Email.send(data , function(err, mail) {
+        //                     if(err){
+        //                       console.log("hay error :(")
+        //                       return callback(null,err);
+        //                     }
+        //                     else{
+        //                       console.log('email sent!');
+        //                       return callback(null,mail)
+        //                     }     
+        //                   });
+        //             })
+        //         }
+        //     });
+        // })    
    });
 
 };

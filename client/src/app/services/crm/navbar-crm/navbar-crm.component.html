@@ -46,6 +46,29 @@
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/graficas']">Gráficas </a>
         </li>
+        <li class="nav-item dropdown">
+          <a id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+            <div class="badge badge-pill badge-danger">2</div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199);
+          color: white;">
+          
+            <a class="dropdown-item">
+              <div class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;   
+              overflow: auto;">
+                <small>
+                  <span><strong>Titulo1: </strong> <br>
+                    sdufhsdjfhksjdfhlkjasfhñasdhfkjlashdfb</span>
+                </small>
+              </div>
+            </a>
+        
+          </div>
+        </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/tratos']">Tratos </a>
         </li>
@@ -66,9 +89,6 @@
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
         </li>
         <li class="nav-item">
           <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
