@@ -33,6 +33,8 @@ export class InicioComponent implements OnInit {
     this.api.get(`/Carrusels`,false,{where:{type:0}})
     .subscribe((carrusels:any)=>{
       this.first=carrusels[0]
+      console.log("tipo de first", typeof this.first)
+      console.log("tipo de first", typeof carrusels[0])
       this.carrusels=carrusels
       this.carrusels.shift()
       // console.log(this.carrusels)

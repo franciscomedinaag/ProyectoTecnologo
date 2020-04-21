@@ -10,7 +10,8 @@ export class NosotrosComponent implements OnInit {
 
   public sitio:any={}
   public carrusels:any=[{}]
-  public first={imagen:null, titulo:null, subtitulo:null}
+  public first={imagen:"/url", titulo:null, subtitulo:null}
+  public load=false;
 
   constructor(public api:DataApiService) { }
 
@@ -18,11 +19,12 @@ export class NosotrosComponent implements OnInit {
     this.getNosotros()
     this.getCarrusel()
   }
-
+  
   getNosotros(){
     this.api.get(`/Sitios`,false)
     .subscribe((sitio)=>{
       this.sitio=sitio[0]
+      this.load=true
     })
   }
 
@@ -32,7 +34,6 @@ export class NosotrosComponent implements OnInit {
       this.first=carrusels[0]
       this.carrusels=carrusels
       this.carrusels.shift()
-      console.log(this.carrusels)
     })
   }
 
