@@ -12,23 +12,23 @@ import { Label } from 'ng2-charts';
 })
 export class GraficasComponent implements OnInit {
 
-  private usuario:any;
-  private id:number;
-  private sendPass:any={newPassword:"",id:0};
-  private pass:boolean=true;
-  private user:boolean=true;
-  private pass1:string;
-  private pass2:string;
+  public usuario:any;
+  public id:number;
+  public sendPass:any={newPassword:"",id:0};
+  public pass:boolean=true;
+  public user:boolean=true;
+  public pass1:string;
+  public pass2:string;
 
-  private chartLabels=[]
-  private chartData=[{data:[],label:''}]
+  public chartLabels=[]
+  public chartData=[{data:[],label:''}]
 
-  private mesesTwelveBefore=[]
-  private meses=['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-  private indexMes:any;
-  private showCats=false
-  private showComents=false
-  private categorias=[]
+  public mesesTwelveBefore=[]
+  public meses=['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+  public indexMes:any;
+  public showCats=false
+  public showComents=false
+  public categorias=[]
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -44,7 +44,7 @@ export class GraficasComponent implements OnInit {
   public otros: any;
   public comentarios: any=[];
 
-  constructor(private auth:AuthService, private api:DataApiService, private toast:ToastService) { }
+  constructor(public auth:AuthService, public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.usuario=this.auth.getCurrentUser();

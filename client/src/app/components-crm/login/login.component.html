@@ -8,7 +8,7 @@
       </div>
   
       <!-- Login Form -->
-      <form #formLogin="ngForm" (ngSubmit)="onLogin(formLogin)">
+      <form #formLogin="ngForm" (ngSubmit)="onLogin()">
         
               <input type="email" id="email" class="fadeIn second" name="email" [(ngModel)]="user.email" placeholder="Correo electrónico"> 
               <input type="password" id="password" [(ngModel)]="user.password" class="fadeIn third mb-3" name="login" placeholder="Contraseña">

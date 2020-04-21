@@ -8,21 +8,23 @@ import { DataApiService } from '../../services/data-api.service';
 })
 export class NosotrosComponent implements OnInit {
 
-  private sitio:any={}
-  private carrusels:any=[{}]
-  private first={}
+  public sitio:any={}
+  public carrusels:any=[{}]
+  public first={imagen:"/url", titulo:null, subtitulo:null}
+  public load=false;
 
-  constructor(private api:DataApiService) { }
+  constructor(public api:DataApiService) { }
 
   ngOnInit() {
     this.getNosotros()
     this.getCarrusel()
   }
-
+  
   getNosotros(){
     this.api.get(`/Sitios`,false)
     .subscribe((sitio)=>{
       this.sitio=sitio[0]
+      this.load=true
     })
   }
 
@@ -32,7 +34,6 @@ export class NosotrosComponent implements OnInit {
       this.first=carrusels[0]
       this.carrusels=carrusels
       this.carrusels.shift()
-      console.log(this.carrusels)
     })
   }
 

@@ -11,17 +11,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InformeAdminComponent implements OnInit {
 
-  private informes:any=[]
-  private categorias:any=[10]
-  private report:any={abiertos:0,
+  public informes:any=[]
+  public categorias:any=[10]
+  public report:any={abiertos:0,
     cerrados:0,
     vencidos:0,
     total:0,
     finales:[],
     cuales:[],
     cual:2}
-  private adminId:any
-  private historico:any={
+  public adminId:any
+  public historico:any={
     abiertos:0,
     cerrados:0,
     vencidos:0,
@@ -31,7 +31,7 @@ export class InformeAdminComponent implements OnInit {
     cual:2
   }
 
-  constructor( private api:DataApiService, private auth:AuthService, private activated:ActivatedRoute) { }
+  constructor( public api:DataApiService, public auth:AuthService, public activated:ActivatedRoute) { }
 
   ngOnInit() {
     this.adminId=this.activated.snapshot.paramMap.get("id");

@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
 })
 export class SubtareasComponent implements OnInit {
 
-  private tratos:any=[]
-  private categorias:any=[]
-  private subtarea:any={
+  public tratos:any=[]
+  public categorias:any=[]
+  public subtarea:any={
     fechaInicio:"",
     fechaFin:"",
     titulo:"",
@@ -24,20 +24,24 @@ export class SubtareasComponent implements OnInit {
     tratoId:"",
     categoriaId:""
   }
-  private subtareas:any=[];
-  private id:any;
-  private full:any;
-  private hoyGuion:any;
-  private hoyLocale:any;
-  private showModal:boolean=true;
-  private showDesc:boolean=true;
-  private estado=0;
-  private userTel:any;
-  private allSubtareas:any;
-  private efe:any;
+  public subtareas:any=[];
+  public id:any;
+  public full:any;
+  public hoyGuion:any;
+  public hoyLocale:any;
+  public showModal:boolean=true;
+  public showDesc:boolean=true;
+  public estado=0;
+  public userTel:any;
+  public allSubtareas:any;
+  public efe:any;
+  datePickerConfig:any;
+  fail: number;
+  done: number;
+  pend: number;
 
 
-  constructor(private api:DataApiService, private auth:AuthService, private toast:ToastService, private router:Router) { }
+  constructor(public api:DataApiService, public auth:AuthService, public toast:ToastService, public router:Router) { }
 
   ngOnInit() {
     this.id=this.auth.getCurrentUser().id;
@@ -49,7 +53,7 @@ export class SubtareasComponent implements OnInit {
     this.full=this.subtarea
   }
 
-  private static setHoy():string{ //Obtener hoy en formato con guion (del ddatepicker)
+  public static setHoy():string{ //Obtener hoy en formato con guion (del ddatepicker)
     let hoy;
     hoy=new Date().toLocaleDateString();
     hoy=hoy.split('/');
@@ -64,7 +68,7 @@ export class SubtareasComponent implements OnInit {
     return hoyString;
   }
 
-  private  setHoyLocale():string{//fecha local en formato ISO
+  public  setHoyLocale():string{//fecha local en formato ISO
     let inicio=this.hoyGuion.split("-")
     let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
     return i
@@ -85,11 +89,12 @@ export class SubtareasComponent implements OnInit {
   }
 
   getSub(){
-    let fail=0;
-    let done=0;
-    let pend=0;
+    this.fail=0;
+    this.done=0;
+    this.pend=0;
     let data={vendedorId:this.id}
     this.subtareas=[]
+    this.allSubtareas=[]
     this.api.post('/Subtareas/getSubtareas', {data:data})
     .subscribe((subtareas)=>{
       console.log("las subtareas: ", subtareas)
@@ -100,19 +105,19 @@ export class SubtareasComponent implements OnInit {
           this.setVencida(s)
         }
         
-        if(s.estado==1 && done<=20){
+        if(s.estado==1 && this.done<=20){
           //añadir solo 20 subtareas
           this.subtareas.push(s)
-          done++;
+          this.done++;
         }
-        else if(s.estado==2 && fail<=20){
+        else if(s.estado==2 && this.fail<=20){
           //añadir solo 20 subtareas
           this.subtareas.push(s)
-          fail++;
+          this.fail++;
         }
         else if(s.estado==0){
           this.subtareas.push(s)
-          pend++;
+          this.pend++;
         }
       });
     })

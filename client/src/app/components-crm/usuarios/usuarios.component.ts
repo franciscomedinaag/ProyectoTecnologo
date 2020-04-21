@@ -27,12 +27,12 @@ export class UsuariosComponent implements OnInit {
   there:boolean=false;
   cant:number=0;
 
-  private hoy:any=new Date().toLocaleDateString();
-  private hoyString:any
-  private mes1:any
-  private mes2:any
+  public hoy:any=new Date().toLocaleDateString();
+  public hoyString:any
+  public mes1:any
+  public mes2:any
 
-  constructor(private api:DataApiService, private auth:AuthService, private router:Router, private toast:ToastService) { }
+  constructor(public api:DataApiService, public auth:AuthService, public router:Router, public toast:ToastService) { }
 
   ngOnInit() {
     this.getFechas();

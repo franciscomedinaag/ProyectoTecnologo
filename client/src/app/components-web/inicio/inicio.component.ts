@@ -9,11 +9,12 @@ import { DataApiService } from '../../services/data-api.service';
 })
 export class InicioComponent implements OnInit {
 
-  private sitio:any={}
-  private carrusels:any=[{}]
-  private first={}
+  public sitio:any={}
+  public carrusels:any=[{}]
+  public first={imagen:"/url", titulo:null, subtitulo:null}
+  public load=false
 
-  constructor(private api:DataApiService) { }
+  constructor(public api:DataApiService) { }
 
   ngOnInit() {
     this.getInicio()
@@ -24,6 +25,7 @@ export class InicioComponent implements OnInit {
     this.api.get(`/Sitios`,false)
     .subscribe((sitio)=>{
       this.sitio=sitio[0]
+      this.load=true
     })
   }
 
@@ -31,6 +33,8 @@ export class InicioComponent implements OnInit {
     this.api.get(`/Carrusels`,false,{where:{type:0}})
     .subscribe((carrusels:any)=>{
       this.first=carrusels[0]
+      console.log("tipo de first", typeof this.first)
+      console.log("tipo de first", typeof carrusels[0])
       this.carrusels=carrusels
       this.carrusels.shift()
       // console.log(this.carrusels)

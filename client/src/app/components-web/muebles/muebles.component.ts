@@ -11,15 +11,15 @@ import { isNullOrUndefined } from 'util';
 })
 export class MueblesComponent implements OnInit {
 
-  private categoriaId:any
-  private categoria="CATEGORIA"
-  private descripcion="Descripcion..."
-  private evento={}
-  private mobiliario:any=[]
-  private mob:any={}
+  public categoriaId:any
+  public categoria="CATEGORIA"
+  public descripcion="Descripcion..."
+  public evento={}
+  public mobiliario:any=[]
+  public mob:any={}
 
 
-  constructor(private api:DataApiService, private activated:ActivatedRoute, private router:Router) { 
+  constructor(public api:DataApiService, public activated:ActivatedRoute, public router:Router) { 
     this.router.events.subscribe((id:any)=>{
       if(!isNullOrUndefined(id.url)){
         this.categoriaId=id.url.split("/")[2]

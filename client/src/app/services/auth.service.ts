@@ -8,13 +8,13 @@ import { isNullOrUndefined } from "util";
   providedIn: "root"
 })
 export class AuthService {
-  constructor(private htttp: HttpClient) {}
+  constructor(public htttp: HttpClient) {}
   headers: HttpHeaders = new HttpHeaders({
     "Content-Type": "application/json"
   });
 
   registerUser(name: string, email: string, password: string) {
-    const url_api = "http://localhost:3001/api/Usuarios";
+    const url_api = "https://afternoon-cove-64624.herokuapp.com/api/Usuarios";
     return this.htttp
       .post(
         url_api,
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   loginuser(email: string, password: string): Observable<any> {
-    const url_api = "http://localhost:3001/api/Usuarios/login?include=user";
+    const url_api = "https://afternoon-cove-64624.herokuapp.com/api/Usuarios/login?include=user";
     return this.htttp
       .post(
         url_api,
@@ -64,7 +64,7 @@ export class AuthService {
 
   logoutUser() {
     let accessToken = localStorage.getItem("accessToken");
-    const url_api = `http://localhost:3001/api/Usuarios/logout?access_token=${accessToken}`;
+    const url_api = `https://afternoon-cove-64624.herokuapp.com/api/Usuarios/logout?access_token=${accessToken}`;
     localStorage.removeItem("accessToken");
     localStorage.removeItem("currentUser");
     return this.htttp.post(url_api, { headers: this.headers });

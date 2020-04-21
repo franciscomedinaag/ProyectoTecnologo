@@ -10,7 +10,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class PanelComponent implements OnInit {
 
-  private sitioEdit:any={
+  public sitioEdit:any={
     numero:0,
     direccion:" ",
     cp:0,
@@ -21,22 +21,22 @@ export class PanelComponent implements OnInit {
     vision:" ",
     compromiso:" "
   }
-  private sitio:any={}
-  private setImg=false
-  private carrusel:any={
+  public sitio:any={}
+  public setImg=false
+  public carrusel:any={
     titulo:"",
     subtitulo:"",
     imagen:" ",
     fullImagen:null, 
     type:0
   }
-  private upload="inicio"
-  private carrusels:any
-  private inicios:any=[]
-  private nosotros:any=[]
+  public upload="inicio"
+  public carrusels:any
+  public inicios:any=[]
+  public nosotros:any=[]
 
 
-  constructor( private api:DataApiService, private toast:ToastService){}
+  constructor( public api:DataApiService, public toast:ToastService){}
 
   ngOnInit() {
     this.getSitio()

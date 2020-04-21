@@ -19,10 +19,10 @@ export class ProfileImageEditorComponent implements OnInit {
 
   constructor(
     public toastr: ToastrService, 
-    private api: DataApiService,
+    public api: DataApiService,
     vcr: ViewContainerRef,
-    private zone:NgZone,
-    private auth:AuthService
+    public zone:NgZone,
+    public auth:AuthService
     ) { 
       this.user = this.auth.getCurrentUser();
     }

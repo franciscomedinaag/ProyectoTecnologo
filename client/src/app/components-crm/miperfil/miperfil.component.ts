@@ -13,24 +13,24 @@ import { AuthService } from '../../services/auth.service';
 })
 export class MiperfilComponent implements OnInit {
 
-  private id:any;
-  private usuario:any={imagen:""};
+  public id:any;
+  public usuario:any={imagen:""};
 
-  private pass:boolean=true;
-  private user:boolean=true;
-  private tel:boolean=true;
-  private mail:boolean=true;
-  private img:boolean=true;
+  public pass:boolean=true;
+  public user:boolean=true;
+  public tel:boolean=true;
+  public mail:boolean=true;
+  public img:boolean=true;
 
-  private pass1:string;
-  private pass2:string;
+  public pass1:string;
+  public pass2:string;
 
-  private selectedFile:File= null;
+  public selectedFile:File= null;
 
-  private sendPass:any={newPassword:"",id:0};
+  public sendPass:any={newPassword:"",id:0};
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService, 
-    private toast:ToastService, private router:Router, private auth:AuthService) { }
+  constructor(public activated:ActivatedRoute, public api:DataApiService, 
+    public toast:ToastService, public router:Router, public auth:AuthService) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");
@@ -85,7 +85,8 @@ export class MiperfilComponent implements OnInit {
   }
 
   selectImageOrder( img:any){
-    if(this.usuario.imagen==" string" || this.usuario.imagen=="" || this.usuario.imagen==null){
+    console.log("Imagen: ",img)
+    if(this.usuario.imagen==" " || this.usuario.imagen=="" || this.usuario.imagen==null){
 		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
     this.toast.showSuccess("Se subio la imagen correctamente")
     this.usuario=res;

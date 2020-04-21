@@ -35,6 +35,20 @@
                       <td *ngIf="estado==s.estado && estado==2"><i class="fa fa-check-circle text-danger fa-lg" 
                       aria-hidden="true" ></i></td>
                 </tr>
+                <div class="row">
+                  <div *ngIf="estado==0 && pend==0" class="col" style="height: 65vh;">
+                     <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> 
+                       No hay subtareas pendientes </h4>             
+                  </div>
+                  <div *ngIf="estado==1 && done==0" class="col" style="height: 65vh;">
+                    <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> 
+                      No hay subtareas realizadas </h4>             
+                 </div>
+                 <div *ngIf="estado==2 && fail==0" class="col" style="height: 65vh;">
+                  <h4 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100); margin-top: 10%;"> 
+                    No hay subtareas vencidas </h4>             
+               </div>
+                </div>
               </tbody>
           </table>
       </div>
@@ -156,8 +170,8 @@
         <div class="modal-body">
             <form class="form-product">
               <div class="form-group ">
-                <button type="button" class="btn btn-primary" (click)="showModal=true" data-toggle="modal" data-target="#subModal" data-dismiss="modal">Agendar nueva subtarea</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#descModal">Retroalimentacion de la subtarea</button>
+                <button style="width:100%" type="button" class="btn btn-primary" (click)="showModal=true" data-toggle="modal" data-target="#subModal" data-dismiss="modal">Agendar nueva subtarea</button>
+                <button style="width:100%" type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#descModal">Retroalimentacion de la subtarea</button>
               </div>
             </form>      
         </div>

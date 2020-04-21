@@ -11,10 +11,10 @@ export class FileChooserComponent implements OnInit {
   @Input() extensionFilter : string
   @Output('onChange') onChange = new EventEmitter<any>()
 
-  private imageURL : string
+  public imageURL : string
   public fileData : any
 
-  private loading : boolean = false
+  public loading : boolean = false
 
   constructor() { 
   }

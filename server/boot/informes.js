@@ -9,7 +9,7 @@ module.exports = function(Report) {
     // var j = schedule.scheduleJob('* * 29 * *', function(){ cada dia 29 del mes}
     var j = schedule.scheduleJob('*/1 * * * *', function(){ 
         hoy=new Date().toLocaleDateString();
-        hoy=hoy.split('-');
+        hoy=hoy.split('/');
         if(hoy[0].length<2){
             hoy[0]='0'+hoy[0]
         }

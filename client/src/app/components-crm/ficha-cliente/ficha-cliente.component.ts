@@ -12,38 +12,39 @@ import { IfStmt } from '@angular/compiler';
 })
 export class FichaClienteComponent implements OnInit {
 
-  private id:any;
-  private client:any={mensajes:[]};
+  public id:any;
+  public client:any={mensajes:[]};
 
-  private neg:boolean=true;
-  private emp:boolean=true;
-  private gir:boolean=true;
-  private pue:boolean=true;
-  private ema:boolean=true;
-  private est:boolean=true;
+  public neg:boolean=true;
+  public emp:boolean=true;
+  public gir:boolean=true;
+  public pue:boolean=true;
+  public ema:boolean=true;
+  public est:boolean=true;
 
-  private negociaciones:any=["Residencial","Empresarial","Licitacion"];
-  private estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
+  public negociaciones:any=["Residencial","Empresarial","Licitacion"];
+  public estados:any=["Jalisco","CDMX","Cd. Juárez","Nuevo León","Morelia","Veracruz"];
 
-  private note:any={};
-  private anti:any=false;
-  private antiquity:any="";
-  private terminados:any=[];
-  private attachment:any=" "
-  private ext:any=" "
-  private catalogos:any=[];
-  private historial:any=[]
-  private nota:string=""
+  public note:any={};
+  public anti:any=false;
+  public antiquity:any="";
+  public terminados:any=[];
+  public attachment:any=" "
+  public ext:any=" "
+  public catalogos:any=[];
+  public historial:any=[]
+  public nota:string=""
 
-  private data:any={
+  public data:any={
     subject:" ",
     text:" ",
     to:" ",
     attachment:" "
   };
-  private sending=false;
+  public sending=false;
+  public cat=false;
 
-  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService) { }
+  constructor(public activated:ActivatedRoute, public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.id=this.activated.snapshot.paramMap.get("id");

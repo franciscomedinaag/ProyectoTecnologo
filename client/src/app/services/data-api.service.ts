@@ -8,19 +8,19 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class DataApiService {
-  constructor(private http: HttpClient, private authService: AuthService) {this.getToken();}
+  constructor(public http: HttpClient, public authService: AuthService) {this.getToken();}
   books: Observable<any>;
   book: Observable<any>;
 
   public headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'});
-  public baseURL: string = "http://localhost:3001/api"
+  public baseURL: string = "https://afternoon-cove-64624.herokuapp.com/api"
   public token: string = "";
 
   public getToken() {
     this.token = localStorage.getItem("accessToken")
   }
 
-  private genLink(endPoint: string, useToken: boolean,filter:any=false): string {
+  public genLink(endPoint: string, useToken: boolean,filter:any=false): string {
     let link=this.baseURL+endPoint;
     let params=0;
     if(filter) { 

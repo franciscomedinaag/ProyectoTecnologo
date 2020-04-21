@@ -9,7 +9,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class PreciosFijosComponent implements OnInit {
 
-  private producto:any={
+  public producto:any={
     clave:null,
     descripcion:null,
     imagen:null,
@@ -19,7 +19,7 @@ export class PreciosFijosComponent implements OnInit {
     al:null,
     deleted:false
   }
-  private visible:any={
+  public visible:any={
     clave:null,
     descripcion:null,
     imagen:null,
@@ -30,7 +30,7 @@ export class PreciosFijosComponent implements OnInit {
     deleted:false
   }
 
-  private tablon:any={
+  public tablon:any={
     nombre:null,
     vertical:null,
     horizontal:null,
@@ -38,16 +38,16 @@ export class PreciosFijosComponent implements OnInit {
     deleted:false
   }
 
-  private productos:any=[];
-  private tablones:any=[];
+  public productos:any=[];
+  public tablones:any=[];
 
-  private desc:boolean=true;
-  private prec:boolean=true;
-  private fr:boolean=true;
-  private fo:boolean=true;
-  private al:boolean=true;
+  public desc:boolean=true;
+  public prec:boolean=true;
+  public fr:boolean=true;
+  public fo:boolean=true;
+  public al:boolean=true;
 
-  constructor(private api:DataApiService, private toast:ToastService) { }
+  constructor(public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.getProductos()

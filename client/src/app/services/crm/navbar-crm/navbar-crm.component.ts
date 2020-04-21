@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar-crm.component.css']
 })
 export class NavbarCrmComponent implements OnInit {
-  private user:any;
+  public user:any;
 
-  constructor(private auth:AuthService, private router:Router) { }
+  constructor(public auth:AuthService, public router:Router) { }
 
   ngOnInit() {
     this.getUser();

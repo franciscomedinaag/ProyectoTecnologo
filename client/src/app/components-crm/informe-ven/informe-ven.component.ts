@@ -11,10 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InformeVenComponent implements OnInit {
 
-  private informes:any=[]
-  private report:any={}
-  private vendedorId:any
-  private historico:any={
+  public informes:any=[]
+  public report:any={}
+  public vendedorId:any
+  public historico:any={
     abiertos:0,
     cerrados:0,
     vencidos:0,
@@ -25,7 +25,7 @@ export class InformeVenComponent implements OnInit {
     tareas2:0,
   }
 
-  constructor( private api:DataApiService, private auth:AuthService, private activated:ActivatedRoute) { }
+  constructor( public api:DataApiService, public auth:AuthService, public activated:ActivatedRoute) { }
 
   ngOnInit() {
     this.vendedorId=this.activated.snapshot.paramMap.get("id");

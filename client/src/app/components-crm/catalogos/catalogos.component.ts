@@ -9,15 +9,15 @@ import { ToastService } from '../../services/toast.service';
 })
 export class CatalogosComponent implements OnInit {
 
-  private catalogue:string=" "
-  private file:string=" "
-  private ext:string=" "
-  private send:boolean=true
-  private newFile:any={}
-  private catalogos:any;
-  private editing:any;
+  public catalogue:string=" "
+  public file:string=" "
+  public ext:string=" "
+  public send:boolean=true
+  public newFile:any={}
+  public catalogos:any;
+  public editing:any;
 
-  constructor(private api:DataApiService,private toast:ToastService) { }
+  constructor(public api:DataApiService,public toast:ToastService) { }
 
   ngOnInit() {
     this.getCat();

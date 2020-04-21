@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class FichaTratoComponent implements OnInit {
 
-  private id:string;
-  private trato:any={
+  public id:string;
+  public trato:any={
     nombre:null,
     descripcion:null,
     tipo:null,
@@ -25,18 +25,19 @@ export class FichaTratoComponent implements OnInit {
     reporte:" ",
     cliente:{}
   };
-  private desc:boolean=true;
-  private toUpload:boolean=false;
-  private name:string;
-  private file:any;
-  private defFiles:any=[];
-  private noDefFiles:any=[];
-  private defButton:boolean=false;
+  public desc:boolean=true;
+  public toUpload:boolean=false;
+  public name:string;
+  public file:any;
+  public defFiles:any=[];
+  public noDefFiles:any=[];
+  public defButton:boolean=false;
 
-  private clientObj:any={};
-  private frecuent:boolean=false;
+  public clientObj:any={};
+  public frecuent:boolean=false;
+  datePickerConfig:any;
 
-  private subtarea:any={
+  public subtarea:any={
     fechaInicio:"",
     fechaFin:"",
     titulo:"",
@@ -45,12 +46,12 @@ export class FichaTratoComponent implements OnInit {
     tratoId:"",
     categoriaId:""
   }
-  private hoyGuion:any;
-  private hoyLocale:any;
-  private categorias:any=[];
-  private efe:any;
+  public hoyGuion:any;
+  public hoyLocale:any;
+  public categorias:any=[];
+  public efe:any;
 
-  private sugerencia:any="Tal vez lo siguiente en hacer sea "
+  public sugerencia:any="Tal vez lo siguiente en hacer sea "
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, 
     private toast:ToastService, private router:Router) { }
@@ -127,7 +128,7 @@ export class FichaTratoComponent implements OnInit {
           break
           }
         default: {
-          sug="default"
+          sug="llamada"
           break
         }
        }
@@ -139,8 +140,13 @@ export class FichaTratoComponent implements OnInit {
   setSugerencia():string{
     let sugerenciaId:any
     
-    let ultima=this.trato.subtareas[this.trato.subtareas.length-1].categoriaId
-    sugerenciaId=this.revisarAgendadas(ultima)
+    if((this.trato.subtareas.length-1)!=-1){
+      let ultima=this.trato.subtareas[this.trato.subtareas.length-1].categoriaId
+      sugerenciaId=this.revisarAgendadas(ultima)
+    }
+    else{
+      return "10"
+    }
     
     return sugerenciaId 
   }

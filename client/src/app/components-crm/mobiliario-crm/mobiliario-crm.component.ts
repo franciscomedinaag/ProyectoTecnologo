@@ -10,21 +10,21 @@ import { ToastService } from '../../services/toast.service';
 })
 export class MobiliarioCrmComponent implements OnInit {
 
-  private mobiliario:any=[]
-  private mob:any={}
-  private mueble={
+  public mobiliario:any=[]
+  public mob:any={}
+  public mueble={
     nombre:'',
     descripcion:'',
     imagen:' ',
     categoria:'',
     fullImagen:{}
   }
-  private categorias=['Escritorios','Sillas','Peninsulas','Cocinas','Archiveros','Ejecutivos','Estantes','Butacas','Otros']
-  private desc=true
-  private nom=true
-  private cat=true
+  public categorias=['Escritorios','Sillas','Peninsulas','Cocinas','Archiveros','Ejecutivos','Estantes','Butacas','Otros']
+  public desc=true
+  public nom=true
+  public cat=true
 
-  constructor(private api:DataApiService, private toast:ToastService) { }
+  constructor(public api:DataApiService, public toast:ToastService) { }
 
   ngOnInit() {
     this.getMob()
@@ -57,7 +57,7 @@ export class MobiliarioCrmComponent implements OnInit {
           this.mueble={
             nombre:'',
             descripcion:'',
-            imagen:'',
+            imagen:' ',
             categoria:'',
             fullImagen:{}
           }
