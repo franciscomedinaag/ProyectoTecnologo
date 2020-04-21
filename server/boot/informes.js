@@ -64,171 +64,171 @@ module.exports = function(Report) {
         }
 
             if(bimestre!="NA"){
-                generateUserReport(bimestre)
-                generateAdminReport(bimestre)
+                // generateUserReport(bimestre)
+                // generateAdminReport(bimestre)
             }
         
    });
 
-   function generateAdminReport(bimestre){
-    Report.models.Usuario.find({where:{active:true,realm:'admin'}}, function(err,usuarios){
-        if(err) return callback(err)
+//    function generateAdminReport(bimestre){
+//     Report.models.Usuario.find({where:{active:true,realm:'admin'}}, function(err,usuarios){
+//         if(err) return callback(err)
 
-        let informe={
-            abiertos:0,
-            cerrados:0,
-            vencidos:0,
-            finales:[],
-            total:0,
-            bimestre:bimestre,
-            anio:hoy[0]
-        }
+//         let informe={
+//             abiertos:0,
+//             cerrados:0,
+//             vencidos:0,
+//             finales:[],
+//             total:0,
+//             bimestre:bimestre,
+//             anio:hoy[0]
+//         }
         
-        Report.models.Trato.find({include:{relation:'subtareas',
-        scope:{
-            include:{
-                relation:'subtarea'
-            }
-        }
-        }}, function(err,allTratos){
-            if(err) return callback(err)
+//         Report.models.Trato.find({include:{relation:'subtareas',
+//         scope:{
+//             include:{
+//                 relation:'subtarea'
+//             }
+//         }
+//         }}, function(err,allTratos){
+//             if(err) return callback(err)
 
-            var tratos=[]
-            tratos=allTratos
-            tratos.forEach(trato=>{
-                let stringInicio=trato.fechaInicio.toISOString()
-                let stringFin=trato.fechaFin.toISOString()
-                let mesInicio=stringInicio.split('T')[0].split('-')[1]
-                let mesFin=stringFin.split('T')[0].split('-')[1]
+//             var tratos=[]
+//             tratos=allTratos
+//             tratos.forEach(trato=>{
+//                 let stringInicio=trato.fechaInicio.toISOString()
+//                 let stringFin=trato.fechaFin.toISOString()
+//                 let mesInicio=stringInicio.split('T')[0].split('-')[1]
+//                 let mesFin=stringFin.split('T')[0].split('-')[1]
 
-                let añoInicio = stringInicio.split('T')[0].split('-')[0]
-                let añoFin = stringFin.split('T')[0].split('-')[0]
+//                 let añoInicio = stringInicio.split('T')[0].split('-')[0]
+//                 let añoFin = stringFin.split('T')[0].split('-')[0]
 
-                if((mesInicio==mes1 || mesInicio==mes2) && (añoInicio==informe.anio) ){informe.abiertos++}
+//                 if((mesInicio==mes1 || mesInicio==mes2) && (añoInicio==informe.anio) ){informe.abiertos++}
 
-                if((mesFin==mes1 || mesFin==mes2) && (añoFin==informe.anio) ){
-                    if(trato.estado==1){  
-                        informe.cerrados++
+//                 if((mesFin==mes1 || mesFin==mes2) && (añoFin==informe.anio) ){
+//                     if(trato.estado==1){  
+//                         informe.cerrados++
 
-                        trato.toJSON().subtareas.forEach(sub=>{
-                            if(sub.categoriaId==5 && sub.estado==1){
-                                if(sub.subtarea.definitivo){
-                                    informe.total=informe.total+sub.subtarea.total
-                                }
-                            }
-                        })
-                    }
-                    else if(trato.estado==2){
-                        informe.vencidos++
-                        informe.finales.push(trato.toJSON().subtareas[trato.toJSON().subtareas.length-1].categoriaId)                  
-                    }
-                }
-            })
-            console.log("INFORME DEL ADMIN: ", informe)
-            // Report.models.InformeAdmin.create(informe, function(err,informe){
-            //         if(err) return err
+//                         trato.toJSON().subtareas.forEach(sub=>{
+//                             if(sub.categoriaId==5 && sub.estado==1){
+//                                 if(sub.subtarea.definitivo){
+//                                     informe.total=informe.total+sub.subtarea.total
+//                                 }
+//                             }
+//                         })
+//                     }
+//                     else if(trato.estado==2){
+//                         informe.vencidos++
+//                         informe.finales.push(trato.toJSON().subtareas[trato.toJSON().subtareas.length-1].categoriaId)                  
+//                     }
+//                 }
+//             })
+//             console.log("INFORME DEL ADMIN: ", informe)
+//             // Report.models.InformeAdmin.create(informe, function(err,informe){
+//             //         if(err) return err
 
-            //         console.log("created for admin:  ", informe.total)
-            //     })
-        })
-    })
-   }
+//             //         console.log("created for admin:  ", informe.total)
+//             //     })
+//         })
+//     })
+//    }
 
-   function generateUserReport(bimestre){
-    Report.models.Usuario.find({where:{active:true,realm:'user'}}, function(err,usuarios){
-        if(err) return callback(err)
+//    function generateUserReport(bimestre){
+//     Report.models.Usuario.find({where:{active:true,realm:'user'}}, function(err,usuarios){
+//         if(err) return callback(err)
 
-        let usuariosArr=usuarios
-        usuariosArr.forEach(user => {
-            let informe={
-                abiertos:0,
-                cerrados:0,
-                vencidos:0,
-                total:0,
-                intentos:0,
-                clientes:0,
-                tareas1:0,
-                tareas2:0,
-                vendedorId:user.id,
-                bimestre:bimestre,
-                anio:hoy[0]
-            }
-            let clientes=[]
+//         let usuariosArr=usuarios
+//         usuariosArr.forEach(user => {
+//             let informe={
+//                 abiertos:0,
+//                 cerrados:0,
+//                 vencidos:0,
+//                 total:0,
+//                 intentos:0,
+//                 clientes:0,
+//                 tareas1:0,
+//                 tareas2:0,
+//                 vendedorId:user.id,
+//                 bimestre:bimestre,
+//                 anio:hoy[0]
+//             }
+//             let clientes=[]
 
-            Report.models.Trato.find(
-                {include:{relation:'subtareas',
-                scope:{
-                    include:{
-                        relation:'subtarea'
-                    }
-                }},where:{vendedorId:user.id}}, function(err,allTratos){
+//             Report.models.Trato.find(
+//                 {include:{relation:'subtareas',
+//                 scope:{
+//                     include:{
+//                         relation:'subtarea'
+//                     }
+//                 }},where:{vendedorId:user.id}}, function(err,allTratos){
                 
-                if(err) return callback(err)
+//                 if(err) return callback(err)
 
-                let allArr=allTratos
-                allArr.forEach(trato => {
-                    let stringInicio=trato.fechaInicio.toISOString()
-                    let stringFin=trato.fechaFin.toISOString()
-                    let mesInicio=stringInicio.split('T')[0].split('-')[1]
-                    let mesFin=stringFin.split('T')[0].split('-')[1]
+//                 let allArr=allTratos
+//                 allArr.forEach(trato => {
+//                     let stringInicio=trato.fechaInicio.toISOString()
+//                     let stringFin=trato.fechaFin.toISOString()
+//                     let mesInicio=stringInicio.split('T')[0].split('-')[1]
+//                     let mesFin=stringFin.split('T')[0].split('-')[1]
 
-                    let añoInicio = stringInicio.split('T')[0].split('-')[0]
-                    let añoFin = stringFin.split('T')[0].split('-')[0]
+//                     let añoInicio = stringInicio.split('T')[0].split('-')[0]
+//                     let añoFin = stringFin.split('T')[0].split('-')[0]
 
-                    if((mesInicio==mes1 || mesInicio==mes2) && (añoInicio==informe.anio) ){informe.abiertos++}
+//                     if((mesInicio==mes1 || mesInicio==mes2) && (añoInicio==informe.anio) ){informe.abiertos++}
 
-                    if((mesFin==mes1 || mesFin==mes2) && (añoFin==informe.anio) ){
-                        if(trato.estado==1){  
-                            informe.cerrados++
-                            trato.toJSON().subtareas.forEach(sub=>{
-                                if(sub.categoriaId==5){
-                                    informe.intentos++
-                                }
-                                if(sub.categoriaId==5 && sub.estado==1){
-                                    if(sub.subtarea.definitivo){
-                                        informe.total=informe.total+sub.subtarea.total
-                                    }
-                                }
-                                if(sub.estado==1){informe.tareas1++}
-                                if(sub.estado==2){informe.tareas2++}
-                            })
-                            clientes.push(trato.clientId)
-                        }
-                        else if(trato.estado==2){
-                            trato.toJSON().subtareas.forEach(sub=>{
-                                if(sub.estado==1){informe.tareas1++}
-                                if(sub.estado==2){informe.tareas2++}
-                            })
-                            informe.vencidos++}
-                    }
-                });
+//                     if((mesFin==mes1 || mesFin==mes2) && (añoFin==informe.anio) ){
+//                         if(trato.estado==1){  
+//                             informe.cerrados++
+//                             trato.toJSON().subtareas.forEach(sub=>{
+//                                 if(sub.categoriaId==5){
+//                                     informe.intentos++
+//                                 }
+//                                 if(sub.categoriaId==5 && sub.estado==1){
+//                                     if(sub.subtarea.definitivo){
+//                                         informe.total=informe.total+sub.subtarea.total
+//                                     }
+//                                 }
+//                                 if(sub.estado==1){informe.tareas1++}
+//                                 if(sub.estado==2){informe.tareas2++}
+//                             })
+//                             clientes.push(trato.clientId)
+//                         }
+//                         else if(trato.estado==2){
+//                             trato.toJSON().subtareas.forEach(sub=>{
+//                                 if(sub.estado==1){informe.tareas1++}
+//                                 if(sub.estado==2){informe.tareas2++}
+//                             })
+//                             informe.vencidos++}
+//                     }
+//                 });
 
-                informe.clientes=removeDuplicate(clientes).length                   
-                informe.intentos=informe.intentos/informe.cerrados
-                console.log("el informe de ", user.username, "dice: ", informe)
-                // Report.models.Informe.create(informe, function(err,informe){
-                //     if(err) return err
+//                 informe.clientes=removeDuplicate(clientes).length                   
+//                 informe.intentos=informe.intentos/informe.cerrados
+//                 console.log("el informe de ", user.username, "dice: ", informe)
+//                 // Report.models.Informe.create(informe, function(err,informe){
+//                 //     if(err) return err
 
-                //     console.log("created for: ", informe.vendedorId)
-                // })
+//                 //     console.log("created for: ", informe.vendedorId)
+//                 // })
 
-            })
-        });
-    })
-   }
+//             })
+//         });
+//     })
+//    }
 
-   function removeDuplicate(arr) {        
-    var c;        
-    var len = arr.length;        
-    var result = [];        
-    var obj = {};                
-    for (c = 0; c<len; c++)  {            
-       obj[arr[c]] = 0;        
-    }  
-    for (c in obj) {            
-       result.push(c);        
-    }            
-    return result;      
- }              
+//    function removeDuplicate(arr) {        
+//     var c;        
+//     var len = arr.length;        
+//     var result = [];        
+//     var obj = {};                
+//     for (c = 0; c<len; c++)  {            
+//        obj[arr[c]] = 0;        
+//     }  
+//     for (c in obj) {            
+//        result.push(c);        
+//     }            
+//     return result;      
+//  }              
 
 };
