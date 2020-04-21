@@ -19,7 +19,7 @@ module.exports = function(Poll) {
         console.log("HOY", hoyString)
 
         Poll.models.Cerrado.find({}, function(err,encuestas){
-            if(err) return callback(err)
+            if(err) return callback(null,err)
 
             let encuestasArr=encuestas
             if(encuestasArr.length>0){
