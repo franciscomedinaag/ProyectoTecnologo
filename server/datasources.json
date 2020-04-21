@@ -1,11 +1,11 @@
 {
   "db": {
     "name": "db",
-    "host": "db4free.net",
+    "host": "remotemysql.com",
     "port": 3306,
-    "database": "crmproyecto",
-    "password": "Charmander004",
-    "user": "franciscomedinaa",
+    "database": "gTPQCmbEgw",
+    "password": "5tMnj2n3P4",
+    "user": "gTPQCmbEgw",
     "connector": "mysql",
     "connectTimeout": 1000000
   },
