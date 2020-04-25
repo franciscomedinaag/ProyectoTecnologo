@@ -299,6 +299,26 @@ export class FichaTratoComponent implements OnInit {
             err=>{
               this.toast.showError("No se ha mandado la encuesta de trato perdido porque el email de el cliente no es valido")
             })
+
+            console.log("buscar a ver si notificar")
+                  this.api.get('/Tratos',true,{where:{clientId:trato.clientId}})
+                  .subscribe((tratos:any)=>{
+                    console.log("loas tratos del cliente",trato.clientId,tratos)
+                    tratos.forEach(t => {
+                      if(t.estado==1){
+                        let data={
+                          title:"Un cliente con antigüedad ha declinado el trato "+t.nombre,
+                          content:`/fichatrato/${t.id}`,
+                          timestamp:new Date().toISOString(),
+                          seen:false,
+                          usuarioId:4 //ID DEL ADMINISTRADOR CAMBIAR
+                        }
+                        this.api.post(`/Notifications`,data,true)
+                          .subscribe((created)=>{ })
+                      }
+                    });
+                  })
+
         }
           this.api.patch('/Tratos',trato).subscribe( (edited)=>{
             this.isFrecuent(trato.clientId)

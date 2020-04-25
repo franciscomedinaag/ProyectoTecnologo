@@ -29,8 +29,31 @@
         <li class="nav-item ">
           <a class="nav-link" routerLink="inicio">Ir al sitio web </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+        <li class="nav-item dropdown">
+          <a id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+            <div *ngIf="notifications.length" class="badge badge-pill badge-danger">{{notifications.length}}</div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199); 
+          max-height: 50vh; overflow: auto;">
+
+          <div *ngFor="let n of notifications">
+            <span style="color:white;" class="dropdown-item">
+              <div class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;  
+              white-space: pre-line;">
+                  <a class="text-white" (click)="setSeenNavigate(n)" ><strong>{{n.title}} </strong></a> <br>
+                  <small>
+                  {{n.timestamp | date:'mediumDate'}}
+                  </small>
+              </div>
+            </span>
+            <hr>
+          </div>  
+
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
