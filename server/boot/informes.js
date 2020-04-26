@@ -66,7 +66,7 @@ module.exports = function(Report) {
             if(bimestre!="NA"){
                 generateUserReport(bimestre)
                 generateAdminReport(bimestre)
-                generateAdminNoti(bimestre)
+                // generateAdminNoti(bimestre)
             }
         
    });
@@ -83,7 +83,22 @@ module.exports = function(Report) {
             seen:0,
             usuarioId:usuarios[0].id
         }
+        let noti2={
+            title:"",
+            content:"/usuarios",
+            timestamp:new Date().toISOString(),
+            seen:0,
+            usuarioId:usuarios[0].id
+        }
+        let noti3={
+            title:"",
+            content:"/usuarios",
+            timestamp:new Date().toISOString(),
+            seen:0,
+            usuarioId:usuarios[0].id
+        }
         let vens=[]
+        let treintas=[]
         /*
             el que mas vendio
             el que menos vendio
@@ -107,23 +122,62 @@ module.exports = function(Report) {
                   v.vendido=vendido
                   vens.sort((a, b) => (a.vendido < b.vendido) ? 1 : -1)
                   count++
+
                   if(count==vens.length){
                     noti.title+=`El usuario que vendio menos ${vens[vens.length-1].username} | El que vendió más fue ${vens[0].username} | Los que vendieron menos de la meta: `
                     
                     Report.models.Meta.find({},function(err,metas){
                         let meta=metas[0].cantidad
-                        console.log("meta", meta)
                         vens.forEach(v => {
                             if(v.vendido<meta){
                                 noti.title+=v.username+" ,"
                             }
                         });
-                        //console.log("send noti", noti)
-                        // Report.models.Notification.create(noti, function(err,informe){
-                        //      if(err) return err
+                        console.log("send noti", noti)
+                        count=0
+                        Report.models.Notification.create(noti, function(err,informe){
+                             if(err) return err
                 
-                        //      console.log("created notification")
-                        //})
+                             console.log("noti1 created")
+                             vens.forEach((v,index) => {
+                                let data2={
+                                    mes1:mes1,
+                                    mes2:mes2,
+                                    anio:hoy[0],
+                                    vendedorId:v.id
+                                  }
+                            
+                                 Report.models.Trato.countSubs(data2, function(err, subs){
+                                     if(err) return callback(null,err)
+
+                                     v.realizadas=subs.realizadas
+                                     vens.sort((a, b) => (a.realizadas < b.realizadas) ? 1 : -1)
+                                     count++
+                                     if(subs.treinta){
+                                         treintas.push(v.username)
+                                     }
+                                     if(count==vens.length){
+                                        noti2.title+=`El usuario que realizo menos tareas fue ${vens[vens.length-1].username} | | El que realizó más fue ${vens[0].username}`
+                                        Report.models.Notification.create(noti2, function(err, creada){
+                                            if (err) return err
+
+                                            console.log("noti2 created")
+                                            if(treintas.length){
+                                                noti3.title="Usuarios con indice de subtareas perdidas mayor al 30%: "
+                                                treintas.forEach(t => {
+                                                    noti3.title+=t+=" | "
+                                                });
+                                                Report.models.Notification.create(noti3, function(err, creada){
+                                                    if(err) return err
+
+                                                    console.log("noti3 created")
+                                                })
+                                            }
+                                        })
+                                    }
+                                 })
+                             });
+                        })
                     })
 
                   }
