@@ -1,11 +1,11 @@
 {
   "db": {
     "name": "db",
-    "host": "localhost",
+    "host": "sql3.freemysqlhosting.net",
     "port": 3306,
-    "database": "id13467774_crmproyecto",
-    "password": "s_ApPQ]5T/*y+mQh",
-    "user": "id13467774_franciscomedinaag",
+    "database": "sql3336157",
+    "password": "DeQbMSzqdf",
+    "user": "sql3336157",
     "connector": "mysql",
     "connectTimeout": 1000000
   },
