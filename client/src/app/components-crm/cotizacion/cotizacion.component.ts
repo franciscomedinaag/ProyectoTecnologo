@@ -196,7 +196,7 @@ export class CotizacionComponent implements OnInit {
       data.title=`Apoyo para establecer los conceptos de la cotización del trato ${this.trato.nombre}`
      }
 
-     this.api.get(`/Usuarios`,true,{where:{realm:'admin'}})
+     this.api.get(`/Usuarios`,false,{where:{realm:'admin'}})
      .subscribe((admin)=>{
        data.usuarioId=admin[0].id
        this.api.post(`/Notifications`,data,true)

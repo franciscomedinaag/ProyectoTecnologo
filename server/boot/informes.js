@@ -97,8 +97,16 @@ module.exports = function(Report) {
             seen:0,
             usuarioId:usuarios[0].id
         }
+        let noti4={
+            title:"",
+            content:"/tratos",
+            timestamp:new Date().toISOString(),
+            seen:0,
+            usuarioId:usuarios[0].id
+        }
         let vens=[]
         let treintas=[]
+        let cuarentas=[]
         /*
             el que mas vendio
             el que menos vendio
@@ -156,6 +164,9 @@ module.exports = function(Report) {
                                      if(subs.treinta){
                                          treintas.push(v.username)
                                      }
+                                     if(subs.cuarenta){
+                                         cuarentas.push(v.username)
+                                     }
                                      if(count==vens.length){
                                         noti2.title+=`El usuario que realizo menos tareas fue ${vens[vens.length-1].username} | | El que realizó más fue ${vens[0].username}`
                                         Report.models.Notification.create(noti2, function(err, creada){
@@ -165,12 +176,23 @@ module.exports = function(Report) {
                                             if(treintas.length){
                                                 noti3.title="Usuarios con indice de subtareas perdidas mayor al 30%: "
                                                 treintas.forEach(t => {
-                                                    noti3.title+=t+=" | "
+                                                    noti3.title+=t+" | "
                                                 });
                                                 Report.models.Notification.create(noti3, function(err, creada){
                                                     if(err) return err
 
                                                     console.log("noti3 created")
+                                                    if(cuarentas.length){
+                                                        noti4.title="Usuarios con indice de tratos perdidos mayor al 40%: "
+                                                        cuarentas.forEach(t=>{
+                                                            noti4.title+=t+" | " 
+                                                        })
+                                                        Report.models.Notification.create(noti4, function(err, creada){
+                                                            if(err) return err
+
+                                                            console.log("noti4: ",creada)
+                                                        })
+                                                    }
                                                 })
                                             }
                                         })
@@ -191,6 +213,7 @@ module.exports = function(Report) {
     Report.models.Usuario.find({where:{active:true,realm:'admin'}}, function(err,usuarios){
         if(err) return callback(err)
 
+        let adminId=usuarios[0].id
         let informe={
             abiertos:0,
             cerrados:0,
@@ -247,7 +270,18 @@ module.exports = function(Report) {
             // Report.models.InformeAdmin.create(informe, function(err,informe){
             //         if(err) return err
 
-            //         console.log("created for admin:  ", informe.total)
+            //         let noti={
+            //             title:"Se ha generado su informe bimestral",
+            //             content:`/informesadmin/${adminId}`,
+            //             timestamp:new Date().toISOString(),
+            //             seen:0,
+            //             usuarioId:adminId
+            //         }
+            //         Report.models.Notification.create(noti,function(err,notification){
+            //             if(err) return err
+
+            //             console.log("Noti de informeAdmin", notification)
+            //         })
             //     })
         })
     })
@@ -324,11 +358,22 @@ module.exports = function(Report) {
 
                 informe.clientes=removeDuplicate(clientes).length                   
                 informe.intentos=informe.intentos/informe.cerrados
-                // console.log("el informe de ", user.username, "dice: ", informe)
+                console.log("el informe de ", user.username, "dice: ", informe)
                 // Report.models.Informe.create(informe, function(err,informe){
                 //     if(err) return err
 
-                //     console.log("created for: ", informe.vendedorId)
+                //     let noti={
+                //         title:"Se ha generado su informe bimestral",
+                //         content:`/informesven/${user.id}`,
+                //         timestamp:new Date().toISOString(),
+                //         seen:0,
+                //         usuarioId:user.id
+                //     }
+                //     Report.models.Notification.create(noti,function(err,notification){
+                //         if(err) return err
+
+                //         console.log("Noti de informeVen", notification)
+                //     })
                 // })
 
             })

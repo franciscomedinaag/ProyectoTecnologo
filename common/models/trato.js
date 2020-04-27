@@ -100,10 +100,12 @@ module.exports = function(Trato) {
     };
 
     Trato.countSubs = function(data,callback) {
-        let subs={realizadas:0,treinta:false}
+        let subs={realizadas:0,treinta:false,cuarenta:false}
         let perd=0
         let totalSubs=[]
         let Etotal=0
+        let Etratos=0
+        let tratosPerdidos=0
             Trato.find(
                 {include:{relation:'subtareas',
                 scope:{
@@ -125,7 +127,10 @@ module.exports = function(Trato) {
                     let añoFin = stringFin.split('T')[0].split('-')[0]
 
                     if((mesFin==data.mes1 || mesFin==data.mes2) && (añoFin==data.anio) ){
-                        
+                        Etratos+=1
+                        if(trato.estado==2){
+                            tratosPerdidos+=1
+                        }
                         totalSubs.push(trato.toJSON().subtareas.length)
                         if(trato.estado==1){  
                             trato.toJSON().subtareas.forEach(sub=>{
@@ -145,6 +150,9 @@ module.exports = function(Trato) {
                 });
                 if((perd*100/Etotal) >=30){
                     subs.treinta=true
+                }
+                if((tratosPerdidos*100/Etratos) >=30){
+                    subs.cuarenta=true
                 }
                 return callback(null, subs)
               

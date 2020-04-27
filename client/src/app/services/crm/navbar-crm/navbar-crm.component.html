@@ -79,12 +79,23 @@
 
           <div *ngFor="let n of notifications">
             <span style="color:white;" class="dropdown-item">
-              <div class="row" 
+              <div *ngIf="!n.contactar" class="row" 
               style="word-wrap: break-word;
               max-width: 40vh;          
               display: block;  
               white-space: pre-line;">
                   <a class="text-white" (click)="setSeenNavigate(n)" ><strong>{{n.title}} </strong></a> <br>
+                  <small>
+                  {{n.timestamp | date:'mediumDate'}}
+                  </small>
+              </div>
+
+              <div *ngIf="n.contactar" class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;  
+              white-space: pre-line;">
+                  <a class="text-white" data-toggle="modal" data-target="#setUser" (click)="setSeen(n)" ><strong>{{n.title}}</strong></a> <br>
                   <small>
                   {{n.timestamp | date:'mediumDate'}}
                   </small>
@@ -122,3 +133,32 @@
       </ul>
     </div>
   </nav>
+
+
+  <div class="modal fade" id="setUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Asignar un vendedor a este cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">    
+            <ng-select class="custom"
+              [items]="usuarios"
+              [multiple]="false"
+              [(ngModel)]="vendedorNoti"
+              bindValue="id"
+              bindLabel="username"
+              name="estado"
+              placeholder="Selecciona un vendedor">
+            </ng-select>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="sendVendedorNoti()" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>

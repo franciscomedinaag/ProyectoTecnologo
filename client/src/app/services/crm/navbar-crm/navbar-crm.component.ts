@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation  } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { DataApiService } from '../../data-api.service';
@@ -7,12 +7,15 @@ import { ToastService } from '../../toast.service';
 @Component({
   selector: 'app-navbar-crm',
   templateUrl: './navbar-crm.component.html',
-  styleUrls: ['./navbar-crm.component.css']
+  styleUrls: ['./navbar-crm.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NavbarCrmComponent implements OnInit {
   private user:any;
   notifications: any=[];
-
+  public usuarios;
+  public vendedorNoti:any;
+  emailNoti: any;
     
     constructor(private auth:AuthService, private router:Router, private api:DataApiService, private toast: ToastService) {
       // this.notiServ.Init()
@@ -21,6 +24,7 @@ export class NavbarCrmComponent implements OnInit {
   ngOnInit() {
     this.getUser();
     this.getNoti();
+    this.getUsers();
   }
   
   onLogout():void{
@@ -32,12 +36,27 @@ export class NavbarCrmComponent implements OnInit {
     this.user=this.auth.getCurrentUser();
   }
 
+  getUsers(){
+    this.api.get(`/Usuarios`,true,{where:{realm:'user',active:true}})
+    .subscribe((users)=>{
+      this.usuarios=users
+    })
+  }
+
   getNoti(){
     if(this.auth.getCurrentUser()){
       this.api.get(`/Notifications`,true,{where:{usuarioId:this.user.id,seen:false}})
-      .subscribe((notis)=>{
+      .subscribe((notis:any)=>{
         // console.log("Notificaciones de mi compa el ", this.auth.getCurrentUser().id,": ",notis)
         this.notifications=notis
+        this.notifications.forEach(n => {
+          if(n.title.includes("desea contactar con un vendedor")){
+            n.contactar=true
+          }
+          else{
+            n.contactar=false
+          }
+        });
         setTimeout(()=>{this.getNoti()}, 10000);
       })
     }
@@ -71,5 +90,32 @@ export class NavbarCrmComponent implements OnInit {
       }
     })
   }
+
+  setSeen(noti:any){
+    noti.seen=true
+    this.api.patch(`/Notifications`,noti,true)
+    .subscribe((edited:any)=>{
+    })
+    this.emailNoti=noti.title
+  }
+
+  sendVendedorNoti(){
+    this.api.get(`/Clients`,true,{where:{email:this.emailNoti.split(" ")[4]}})
+    .subscribe((client)=>{
+      console.log(client)
+      let noti={
+        title:`Comunicate con el cliente ${client[0].nombre} !`,
+        content:`/fichaclient/${client[0].id}`,
+        timestamp:new Date().toISOString(),
+        seen:false,
+        usuarioId:this.vendedorNoti
+      }
+      this.api.post(`/Notifications`,noti,true)
+          .subscribe((created)=>{
+            this.toast.showSuccess("El vendedor ha sido notificado")
+          })
+    })
+  }
+
 
 }
