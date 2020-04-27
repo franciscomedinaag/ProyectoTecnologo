@@ -19,7 +19,8 @@ export class PanelComponent implements OnInit {
     fullInicio:{},
     mision:" ",
     vision:" ",
-    compromiso:" "
+    compromiso:" ",
+    visitas:0
   }
   private sitio:any={}
   private setImg=false

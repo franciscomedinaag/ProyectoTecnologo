@@ -37,6 +37,10 @@
       "compromiso": {
         "type": "string",
         "required": "true"
+      },
+      "visitas": {
+        "type": "number",
+        "required": "true"
       }
     },
     "validations": [],

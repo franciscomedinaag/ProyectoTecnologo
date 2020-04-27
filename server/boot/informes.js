@@ -6,7 +6,7 @@ module.exports = function(Report) {
     var hoyString;
     let mes1=" "
     let mes2=" "
-    // var j = schedule.scheduleJob('* * 29 * *', function(){ cada dia 29 del mes}
+    // var j = schedule.scheduleJob('* * 28 * *', function(){ cada dia 28 del mes}
     var j = schedule.scheduleJob('*/1 * * * *', function(){ 
         hoy=new Date().toLocaleDateString();
         hoy=hoy.split('-');
@@ -69,7 +69,42 @@ module.exports = function(Report) {
                 // generateAdminNoti(bimestre)
             }
         
+            // readVisits()
+        
    });
+
+   function readVisits(){
+       Report.models.Sitio.find({}, function(err,sitios){
+           if(err) return callback(null,err)
+
+           Report.models.Usuario.find({where:{active:true,realm:'admin'}}, function(err,usuarios){
+               let noti={
+                title:"Las visitas al sitio web durante este mes fueron: ",
+                content:"/inicio",
+                timestamp:new Date().toISOString(),
+                seen:0,
+                usuarioId:usuarios[0].id
+               }
+               if(!sitios[0].visitas){
+                   noti.title+=sitios[0].visitas
+                   Report.models.Notification.create(noti,function(err, noti){
+                    console.log("NOTI CREADA", noti)
+                   })
+               }
+               else{
+                   Report.models.Notification.find({where:{content:'/inicio'}},function(err,notifications){
+                        let notis=notifications
+                        console.log("notis", notis)
+                        console.log("numero de la ultima noti", notis[notis.length-1].title.split(" ")[9])
+                        noti.title+=sitios[0].visitas - notis[notis.length-1].title.split(" ")[9]
+                        Report.models.Notification.create(noti,function(err, noti){
+                            console.log("NOTI CREADA", noti)
+                        })
+                   })
+               }
+           })
+       })
+   }
 
    function generateAdminNoti(bimestre){
     Report.models.Usuario.find({where:{active:true,realm:'admin'}}, function(err,usuarios){
