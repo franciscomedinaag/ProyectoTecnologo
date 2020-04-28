@@ -350,7 +350,7 @@ export class TratosComponent implements OnInit {
                           content:`/fichatrato/${t.id}`,
                           timestamp:new Date().toISOString(),
                           seen:false,
-                          usuarioId:4 //ID DEL ADMINISTRADOR CAMBIAR
+                          usuarioId:1 //ID DEL ADMINISTRADOR CAMBIAR
                         }
                         this.api.post(`/Notifications`,data,true)
                           .subscribe((created)=>{ })

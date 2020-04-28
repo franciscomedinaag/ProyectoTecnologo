@@ -31,7 +31,7 @@ module.exports = function(Poll) {
         //                     let data={
         //                         to: trato.toJSON().cliente.email,
         //                         subject: "Encuesta Satisfacción del Cliente",
-        //                         html:`Buen día, por parte de COR muebles te invitamos a llenar esta <a href="https://localhost:4200/cerrado/${trato.id}">encuesta</a> para mejorar nuestro servicio ¡Gracias!`
+        //                         html:`Buen día, por parte de COR muebles te invitamos a llenar esta <a href="client.franciscomedinaag.now.sh/cerrado/${trato.id}">encuesta</a> para mejorar nuestro servicio ¡Gracias!`
         //                     }
         //                     console.log("DATA", data)
     

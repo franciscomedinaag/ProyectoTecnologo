@@ -1,6 +1,6 @@
 'use strict';
 var pubsub = require('../helpers/pubsub.js');
-var hostURL = "http://localhost:4200"
+var hostURL = "http://client.franciscomedinaag.now.sh/"
 
 module.exports = function (Notification) {
    Notification.setSeen = function (ctx, id, callback) {
