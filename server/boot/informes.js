@@ -64,12 +64,12 @@ module.exports = function(Report) {
         }
 
             if(bimestre!="NA"){
-                generateUserReport(bimestre)
-                generateAdminReport(bimestre)
-                generateAdminNoti(bimestre)
+                // generateUserReport(bimestre)
+                // generateAdminReport(bimestre)
+                // generateAdminNoti(bimestre)
             }
         
-            readVisits()
+            // readVisits()
         
    });
 
