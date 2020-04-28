@@ -123,8 +123,10 @@ export class ClientesComponent implements OnInit {
   getClients(){
     this.api.get('/Clients/getFullClients')
       .subscribe((clients:Array<any>)=>{
-        // clients.push(clients[clients.length-1])
-        // clients.push(clients[clients.length-2])
+        if(clients.length>=2){
+          clients.push(clients[clients.length-1])
+          clients.push(clients[clients.length-2])
+        }
         this.clients=clients;
         this.filtered=this.clients;
         this.clientsWithEmail=this.filtered;

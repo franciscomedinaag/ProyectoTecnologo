@@ -2,6 +2,7 @@ import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '../../services/data-api.service';
 import { ToastService } from '../../services/toast.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cotizacion',
@@ -33,7 +34,7 @@ export class CotizacionComponent implements OnInit {
     cotizacionId:null
   }
 
-  constructor(public activated:ActivatedRoute, public api:DataApiService, public toast:ToastService) { }
+  constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService, private auth:AuthService) { }
 
   ngOnInit() {
     this.subtareaId=this.activated.snapshot.paramMap.get("subId");
@@ -178,6 +179,32 @@ export class CotizacionComponent implements OnInit {
      else{
       this.toast.showError("No tienes productos añadidos")
      }
+   }
+
+   sendNoti(option:number){
+     let data={
+       title:"",
+       content:`/cotizacion/${this.tratoId}/${this.subtareaId}`,
+       timestamp:new Date().toISOString(),
+       seen:false,
+       usuarioId:0
+     }
+     if(option==1){
+      data.title=`Apoyo para validación de la cotización del trato ${this.trato.nombre}`
+     }
+     else{
+      data.title=`Apoyo para establecer los conceptos de la cotización del trato ${this.trato.nombre}`
+     }
+
+     this.api.get(`/Usuarios`,false,{where:{realm:'admin'}})
+     .subscribe((admin)=>{
+       data.usuarioId=admin[0].id
+       this.api.post(`/Notifications`,data,true)
+       .subscribe((created)=>{
+         this.toast.showSuccess("El administrador ha sido notificado")
+       })
+     })
+
    }
 
 }

@@ -29,8 +29,31 @@
         <li class="nav-item ">
           <a class="nav-link" routerLink="inicio">Ir al sitio web </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+        <li class="nav-item dropdown">
+          <a id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+            <div *ngIf="notifications.length" class="badge badge-pill badge-danger">{{notifications.length}}</div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199); 
+          max-height: 50vh; overflow: auto;">
+
+          <div *ngFor="let n of notifications">
+            <span style="color:white;" class="dropdown-item">
+              <div class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;  
+              white-space: pre-line;">
+                  <a class="text-white" (click)="setSeenNavigate(n)" ><strong>{{n.title}} </strong></a> <br>
+                  <small>
+                  {{n.timestamp | date:'mediumDate'}}
+                  </small>
+              </div>
+            </span>
+            <hr>
+          </div>  
+
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
@@ -45,6 +68,43 @@
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/graficas']">Gráficas </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+            <div *ngIf="notifications.length" class="badge badge-pill badge-danger">{{notifications.length}}</div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199); 
+          max-height: 50vh; overflow: auto;">
+
+          <div *ngFor="let n of notifications">
+            <span style="color:white;" class="dropdown-item">
+              <div *ngIf="!n.contactar" class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;  
+              white-space: pre-line;">
+                  <a class="text-white" (click)="setSeenNavigate(n)" ><strong>{{n.title}} </strong></a> <br>
+                  <small>
+                  {{n.timestamp | date:'mediumDate'}}
+                  </small>
+              </div>
+
+              <div *ngIf="n.contactar" class="row" 
+              style="word-wrap: break-word;
+              max-width: 40vh;          
+              display: block;  
+              white-space: pre-line;">
+                  <a class="text-white" data-toggle="modal" data-target="#setUser" (click)="setSeen(n)" ><strong>{{n.title}}</strong></a> <br>
+                  <small>
+                  {{n.timestamp | date:'mediumDate'}}
+                  </small>
+              </div>
+            </span>
+            <hr>
+          </div>  
+
+          </div>
         </li>
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/tratos']">Tratos </a>
@@ -67,12 +127,38 @@
         <li class="nav-item ">
           <a class="nav-link" [routerLink]="['/clientes']">Clientes </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="clientes"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
-        </li>
         <li class="nav-item">
           <a class="nav-link " (click)="onLogout()"><i class="fa fa-sign-in"></i> Cerrar sesión</a>
         </li>
       </ul>
     </div>
   </nav>
+
+
+  <div class="modal fade" id="setUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Asignar un vendedor a este cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">    
+            <ng-select class="custom"
+              [items]="usuarios"
+              [multiple]="false"
+              [(ngModel)]="vendedorNoti"
+              bindValue="id"
+              bindLabel="username"
+              name="estado"
+              placeholder="Selecciona un vendedor">
+            </ng-select>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="sendVendedorNoti()" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>

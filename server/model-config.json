@@ -143,6 +143,10 @@
     "dataSource": "db",
     "public":true
   },
+  "Notification": {
+    "dataSource": "db",
+    "public": true
+  },
   "Email": {
     "dataSource": "Email",
     "public":true

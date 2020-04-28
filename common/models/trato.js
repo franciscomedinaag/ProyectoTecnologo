@@ -99,6 +99,65 @@ module.exports = function(Trato) {
                 })
     };
 
+    Trato.countSubs = function(data,callback) {
+        let subs={realizadas:0,treinta:false,cuarenta:false}
+        let perd=0
+        let totalSubs=[]
+        let Etotal=0
+        let Etratos=0
+        let tratosPerdidos=0
+            Trato.find(
+                {include:{relation:'subtareas',
+                scope:{
+                    include:{
+                        relation:'subtarea'
+                    }
+                }},where:{vendedorId:data.vendedorId}}, function(err,allTratos){
+                
+                if(err) return callback(err)
+
+                let allArr=allTratos
+                allArr.forEach(trato => {
+                    let stringInicio=trato.fechaInicio.toISOString()
+                    let stringFin=trato.fechaFin.toISOString()
+                    let mesInicio=stringInicio.split('T')[0].split('-')[1]
+                    let mesFin=stringFin.split('T')[0].split('-')[1]
+
+                    let añoInicio = stringInicio.split('T')[0].split('-')[0]
+                    let añoFin = stringFin.split('T')[0].split('-')[0]
+
+                    if((mesFin==data.mes1 || mesFin==data.mes2) && (añoFin==data.anio) ){
+                        Etratos+=1
+                        if(trato.estado==2){
+                            tratosPerdidos+=1
+                        }
+                        totalSubs.push(trato.toJSON().subtareas.length)
+                        if(trato.estado==1){  
+                            trato.toJSON().subtareas.forEach(sub=>{
+                                if(sub.estado==1){
+                                    subs.realizadas++
+                                }   
+                                if(sub.estado==2){
+                                    perd+=1
+                                }
+                            })
+                        }
+                    }
+                });
+
+                totalSubs.forEach(t => {
+                    Etotal+=t
+                });
+                if((perd*100/Etotal) >=30){
+                    subs.treinta=true
+                }
+                if((tratosPerdidos*100/Etratos) >=30){
+                    subs.cuarenta=true
+                }
+                return callback(null, subs)
+              
+            })
+};
 
     Trato.prototype.getTrato = function(callback) {
         var id=this.id

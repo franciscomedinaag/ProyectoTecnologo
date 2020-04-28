@@ -176,6 +176,31 @@
           }
         ]
       },
+      "countSubs": {
+        "accepts": [
+          {
+            "arg": "data",
+            "type": "object",
+            "root": true,
+            "description": "id y fechas del vendedor"
+          }
+        ],
+        "returns": [
+          {
+            "arg": "subs",
+            "type": "object",
+            "root": true,
+            "description": "realizadas en el bimestre actual"
+          }
+        ],
+        "description": " Calcular las realizadas en el bimestre actual",
+        "http": [
+          {
+            "path": "/countSubs",
+            "verb": "post"
+          }
+        ]
+      },
       "prototype.getTrato": {
         "accepts": [],
         "returns": [

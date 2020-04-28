@@ -37,8 +37,9 @@ export class FooterWebsiteComponent implements OnInit {
       console.log("OK")
       this.mail.fecha=new Date().toISOString()
       this.api.post(`/Clients/checkIfExist`,{data:this.mail},false)
-      .subscribe(()=>{
+      .subscribe((created)=>{
         this.toast.showSuccess("Correo mandado con exito, responderemos la antes posible")
+        this.sendNoti(this.mail.nombre+" | "+this.mail.correo)
         this.mail={
           telefono:null,
           correo:null,
@@ -49,6 +50,26 @@ export class FooterWebsiteComponent implements OnInit {
         }
       })
     }
+  }
+
+  sendNoti(clienteTitle){
+    let data={
+      title:"El cliente "+clienteTitle+" desea contactar con un vendedor",
+      content:`/clientes`,
+      timestamp:new Date().toISOString(),
+      seen:false,
+      usuarioId:0
+    }
+   
+    this.api.get(`/Usuarios`,false,{where:{realm:'admin'}})
+    .subscribe((admin)=>{
+      data.usuarioId=admin[0].id
+      this.api.post(`/Notifications`,data)
+      .subscribe((created)=>{
+        console.log("El administrador ha sido notificado")
+      })
+    })
+
   }
 
   validation():boolean{
