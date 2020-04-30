@@ -25,13 +25,10 @@ export class InicioComponent implements OnInit {
     this.api.get(`/Sitios`,false)
     .subscribe((sitio)=>{
       this.sitio=sitio[0]
-<<<<<<< HEAD
       this.load=true
-=======
       this.sitio.visitas+=1
       this.api.patch(`/Sitios`,this.sitio)
       .subscribe((done)=>{})
->>>>>>> develop
     })
   }
 

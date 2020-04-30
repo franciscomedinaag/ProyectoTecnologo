@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class InformeAdminComponent implements OnInit {
 
   public informes:any=[]
-  public categorias:any=[10]
+  public categorias:any=[0,0,0,0,0,0,0,0]
   public report:any={abiertos:0,
     cerrados:0,
     vencidos:0,

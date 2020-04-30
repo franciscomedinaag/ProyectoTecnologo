@@ -305,7 +305,7 @@ export class TratosComponent implements OnInit {
           }
         });
         if(!ready){
-          this.toast.showWarning("El trato no cuenta con una cotización definitiva terminada")
+          this.toast.showWarning("El trato debe contar con una cotización definitiva terminada")
         }
      }
 

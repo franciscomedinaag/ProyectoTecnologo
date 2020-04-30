@@ -100,9 +100,14 @@ export class NavbarCrmComponent implements OnInit {
   }
 
   sendVendedorNoti(){
-    this.api.get(`/Clients`,true,{where:{email:this.emailNoti.split(" ")[4]}})
+    let em=""
+    this.emailNoti.split(" ").forEach(e => {
+      if(e.includes(".com")){
+        em=e
+      }
+    });
+    this.api.get(`/Clients`,true,{where:{email:em}})
     .subscribe((client)=>{
-      console.log(client)
       let noti={
         title:`Comunicate con el cliente ${client[0].nombre} !`,
         content:`/fichaclient/${client[0].id}`,
