@@ -71,19 +71,20 @@ module.exports = function(Trato) {
                     if(err) return callback(err)
     
                     let allArr=allTratos
+                    console.log("ALL ARR", allArr)
                     allArr.forEach(trato => {
                         let stringInicio=trato.fechaInicio.toISOString()
                         let stringFin=trato.fechaFin.toISOString()
                         let mesInicio=stringInicio.split('T')[0].split('-')[1]
                         let mesFin=stringFin.split('T')[0].split('-')[1]
     
-                        let añoInicio = stringInicio.split('T')[0].split('-')[0]
-                        let añoFin = stringFin.split('T')[0].split('-')[0]
+                        let anioInicio = stringInicio.split('T')[0].split('-')[0]
+                        let anioFin = stringFin.split('T')[0].split('-')[0]
     
-                        if((mesFin==data.mes1 || mesFin==data.mes2) && (añoFin==data.anio) ){
+                        if((mesFin==data.mes1 || mesFin==data.mes2) && (anioFin==data.anio) ){
                             if(trato.estado==1){  
                                 trato.toJSON().subtareas.forEach(sub=>{
-                                  
+                                console.log("SUB DE TRATO", trato.id,"DEL BIMESTRE",sub) 
                                     if(sub.categoriaId==5 && sub.estado==1){
                                         if(sub.subtarea.definitivo){
                                             vendido=vendido+sub.subtarea.total

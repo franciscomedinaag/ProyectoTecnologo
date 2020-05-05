@@ -74,6 +74,7 @@ export class UsuariosComponent implements OnInit {
         }
         this.api.post(`/Tratos/generateTotal`,{data:data})
         .subscribe((vendido)=>{
+          console.log("vendido", vendido)
           act.vendido=vendido
           this.activos.sort((a, b) => (a.vendido < b.vendido) ? 1 : -1)
         })
