@@ -73,8 +73,6 @@ module.exports = function(Trato) {
                     let allArr=allTratos
                     
                     allArr.forEach(trato => {
-                        console.log("SUBS NORMALES", trato.toJSON().subtareas)
-                        console.log("SUBS tojson()", trato.toJSON().subtareas.toJSON())
 
                         let stringInicio=trato.fechaInicio.toISOString()
                         let stringFin=trato.fechaFin.toISOString()
@@ -84,9 +82,12 @@ module.exports = function(Trato) {
                         let anioInicio = stringInicio.split('T')[0].split('-')[0]
                         let anioFin = stringFin.split('T')[0].split('-')[0]
     
+                        console.log("mesFin: ",mesFin)
+                        console.log("anioFin: ",anioFin)
+
                         if((mesFin==data.mes1 || mesFin==data.mes2) && (anioFin==data.anio) ){
                             if(trato.estado==1){  
-                                trato.toJSON().subtareas.toJSON().forEach(sub=>{
+                                trato.toJSON().subtareas.forEach(sub=>{
                                     if(sub.categoriaId==5 && sub.estado==1){
                                         if(sub.subtarea.definitivo){
                                             vendido=vendido+sub.subtarea.total
