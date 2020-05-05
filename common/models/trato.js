@@ -81,9 +81,6 @@ module.exports = function(Trato) {
     
                         let anioInicio = stringInicio.split('T')[0].split('-')[0]
                         let anioFin = stringFin.split('T')[0].split('-')[0]
-    
-                        console.log("mesFin: ",mesFin)
-                        console.log("anioFin: ",anioFin)
 
                         if((mesFin==data.mes1 || mesFin==data.mes2) && (anioFin==data.anio) ){
                             if(trato.estado==1){  
