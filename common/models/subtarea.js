@@ -32,8 +32,7 @@ module.exports = function(Subtarea) {
 
 
     Subtarea.getSubtareasCoti= function(callback) {
-        console.log("AQUI")
-        Subtarea.find({include:'subtarea',where:{categoriaId:5},order:'tratoId DESC'}, function(err,subtareas){
+        Subtarea.find({include:['subtarea','trato'],where:{categoriaId:5},order:'tratoId DESC'}, function(err,subtareas){
             if(err) console.log(err) 
              
             callback(null,subtareas);

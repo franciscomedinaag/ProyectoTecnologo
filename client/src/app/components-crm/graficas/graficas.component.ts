@@ -31,7 +31,7 @@ export class GraficasComponent implements OnInit {
   public categorias=[]
 
   public barChartOptions: ChartOptions = {
-    responsive: true,
+    responsive: true
   };
   public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   public barChartType: ChartType = 'bar';
