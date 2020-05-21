@@ -51,7 +51,7 @@ export class FichaTratoComponent implements OnInit {
   public categorias:any=[];
   public efe:any;
 
-  public sugerencia:any="Tal vez lo siguiente en hacer sea "
+  public sugerencia:any="En base base a lo ultimo que has hecho, tal vez ahora deberías "
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, 
     private toast:ToastService, private router:Router) { }
@@ -96,11 +96,15 @@ export class FichaTratoComponent implements OnInit {
 
        switch(this.setSugerencia().toString()){
          case '1':{
-           sug="llamada de atención al cliente"
+           sug="hacer una llamada de atención al cliente"
            break
          }
+         case '2':{
+          sug="realizar una visita o reunion"
+          break
+          }
          case '3':{
-          sug="una visita o reunion"
+          sug="realizar una visita o reunion"
           break
           }
         case '4':{
@@ -127,27 +131,37 @@ export class FichaTratoComponent implements OnInit {
           sug="realizar una llamada de atención para mantenimiento"
           break
           }
+        case '10':{
+          sug="hacer una llamada de atención al cliente"
+          break
+          }
         default: {
-          sug="llamada"
+          sug="realizar una llamada"
           break
         }
        }
+       this.sugerencia="En base base a lo ultimo que has hecho, tal vez ahora deberías "
 
        this.sugerencia+=sug
       })
   }
 
   setSugerencia():string{
-    let sugerenciaId:any
+    let sugerenciaId:string="1"
     
-    if((this.trato.subtareas.length-1)!=-1){
-      let ultima=this.trato.subtareas[this.trato.subtareas.length-1].categoriaId
-      sugerenciaId=this.revisarAgendadas(ultima)
-    }
-    else{
-      return "10"
-    }
-    
+    // if((this.trato.subtareas.length-1)!=-1){
+    //   let ultima=this.trato.subtareas[this.trato.subtareas.length-1].categoriaId
+    //   sugerenciaId=this.revisarAgendadas(ultima)
+    // }
+    // else{
+    //   return "10"
+    // }
+
+    this.trato.subtareas.forEach(sub => {
+      if(sub.estado==1){
+        sugerenciaId=sub.categoriaId+1
+      }
+    });
     return sugerenciaId 
   }
 
@@ -513,6 +527,17 @@ export class FichaTratoComponent implements OnInit {
           this.toast.showSuccess("Subtarea creada")
         })
       }
+    }
+  }
+
+  fechaInput(){
+    let inicio=this.hoyGuion.split("-")
+    let mesSub=this.subtarea.fechaFin.split("-")[1]
+
+    if(this.subtarea.fechaFin<this.hoyGuion && mesSub<=inicio[1]){
+      this.toast.showError("La fecha límite ya pasó")
+      this.subtarea.fechFin=""
+      return
     }
   }
 

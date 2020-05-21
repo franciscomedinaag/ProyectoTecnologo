@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         }
         else if (this.current.realm=="user" && this.current.active){
           this.toastr.showSuccess('Inicio de sesión exitoso');
-          this.router.navigate(["/clientes"])
+          this.router.navigate(["/subtareas"])
         }
         else{
           this.toastr.showError('Usuario invalido')

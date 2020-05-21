@@ -19,6 +19,7 @@ span:hover{
 
 h4:hover{
     opacity: 75%;
+    cursor: default;
 }
 
 .sender{

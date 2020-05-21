@@ -78,13 +78,13 @@ export class PanelComponent implements OnInit {
       if(this.setImg){
           this.api.post(`/Sitios/${this.sitioEdit.id}/setInicio`,this.sitioEdit.fullInicio)
           .subscribe((okay)=>{
-            this.toast.showSuccess("Campo editado")
+            this.toast.showSuccess("La información del sitio ya está actualizada")
             this.getSitio()
             this.setImg=false
           })    
       }
       else{
-        this.toast.showSuccess("Campo editado")
+        this.toast.showSuccess("La información del sitio ya está actualizada")
         this.getSitio()
         this.setImg=false
       }
@@ -98,6 +98,7 @@ export class PanelComponent implements OnInit {
     }
     if(this.upload=='carrusel'){
       this.carrusel.fullImagen=file
+      this.toast.showInfo("Imagen seleccionada para el carrusel")
     }
   }
 
@@ -125,6 +126,14 @@ export class PanelComponent implements OnInit {
           this.getCar()
         })
     })
+  }
+
+  cleanObject(){
+    this.carrusel={titulo:"",
+          subtitulo:"",
+          imagen:" ",
+          fullImagen:null, 
+          type:0}
   }
 
   getCar(){

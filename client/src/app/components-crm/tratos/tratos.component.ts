@@ -375,7 +375,8 @@ export class TratosComponent implements OnInit {
     }
     if(this.trato.nombre==null || this.trato.descripcion==null || this.trato.tipo==null || 
     this.trato.clientId==null || this.trato.vendedorId==null){
-      this.toast.showError("No se han llenado todos los campos")
+      this.toast.showError("Debes ingresar nombre, descripción, tipo, un cliente y vendedor")
+      this.cleanObject()
     }
     else{
       this.fechaInicio=new Date().toISOString();
@@ -410,6 +411,18 @@ export class TratosComponent implements OnInit {
   
       })
     }
+  }
+
+  cleanObject(){
+    this.trato={ nombre:null,
+      descripcion:null,
+      tipo:null,
+      clienteId:null,
+      vendedorId:null,
+      estado:0,
+      fechaFin:null,
+      nota:" " ,
+      reporte:" "};
   }
 
 }

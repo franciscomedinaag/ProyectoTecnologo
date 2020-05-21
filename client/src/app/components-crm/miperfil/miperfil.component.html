@@ -51,6 +51,39 @@
           </canvas>
         </div>
     </div>
+    <div *ngIf="showCats" class="row pb-3">
+        <div class="col text-center">
+            <div class="text-center card" style="margin-left: 35%; margin-right: 50%; width: 18rem;">
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let c of categorias" class="list-group-item">
+                      <span style="font-size: small;">{{c.id}} - <strong>{{c.nombre}}</strong></span>
+                    </li>
+                </ul>
+              </div>
+        </div>
+    </div>
+    <div *ngIf="showComents" class="row pb-5 ">
+        <div class="col-sm-6 text-center">
+            <div class="text-center card" style=" width: 18rem;">
+                <ul class="list-group list-group-flush">
+                <li><strong> Otros motivos de ventas </strong></li>
+                  <li *ngFor="let o of otros" class="list-group-item">
+                      <span style="font-size: small;">{{o}} </span>
+                 </li>
+                </ul>
+              </div>
+        </div>
+        <div class="col-sm-6 text-center">
+            <div class="text-center card" style=" width: 18rem;">
+                <ul class="list-group list-group-flush">
+                <li><strong> Comentarios y sugerencias </strong></li>
+                  <li *ngFor="let c of comentarios" class="list-group-item">
+                      <span style="font-size: small;">{{c}} </span>
+                 </li>
+                </ul>
+              </div>
+        </div>
+    </div>
 </div>
 <app-footer-crm></app-footer-crm>
 

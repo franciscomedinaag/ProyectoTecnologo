@@ -248,8 +248,8 @@ export class MiperfilComponent implements OnInit {
       console.log("aqui?")
     })
     console.log("this.barChartData[0].data en la funcion 3", this.barChartData[0].data)
-
-    return
+    // this.graficas3()
+    // return
   }
 
   sold(tratoId:number, i){
@@ -592,7 +592,7 @@ export class MiperfilComponent implements OnInit {
 
   selectImageOrder( img:any){
     console.log("Imagen: ",img)
-    if(this.usuario.imagen==" " || this.usuario.imagen=="" || this.usuario.imagen==null){
+
 		this.api.post(`/Usuarios/${this.id}/setImage`,img).subscribe((res: any) => {
     this.toast.showSuccess("Se subio la imagen correctamente")
     this.usuario=res;
@@ -601,17 +601,17 @@ export class MiperfilComponent implements OnInit {
       console.log(err)
 			this.toast.showError("No se pudo subir la imagen")
     });
-  }
-  else{
-    this.api.post(`/Usuarios/${this.id}/changeProfileImage`,img).subscribe((res:any)=>{
-      this.toast.showSuccess("Se editó la imagen correctamente")
-      this.usuario=res;
-      this.img=true;
-    },err => {
-      console.log(err)
-			this.toast.showError("No se pudo editar la imagen ")
-    })
-  }
-  }
+  
+  // else{
+  //   this.api.post(`/Usuarios/${this.id}/changeProfileImage`,img).subscribe((res:any)=>{
+  //     this.toast.showSuccess("Se editó la imagen correctamente")
+  //     this.usuario=res;
+  //     this.img=true;
+  //   },err => {
+  //     console.log(err)
+	// 		this.toast.showError("No se pudo editar la imagen ")
+  //   })
+  // }
+   }
   
 }

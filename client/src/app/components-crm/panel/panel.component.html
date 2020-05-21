@@ -1,7 +1,7 @@
 <app-navbar-crm></app-navbar-crm>
 <div class="container" style="background-color: white;">
     <div class="row pb-5 pt-5">
-        <div class="col text-center">
+        <div class="col-sm-12 text-center">
             <h2 style="font-weight: bold; color:rgb(150, 150, 150);">Panel del sitio web 
                 <button (click)="setSitio()" class="btn btn-primary">Guardar cambios</button></h2>
         </div>
@@ -155,14 +155,15 @@
                     id="subtitulo" placeholder="Ingresa el subtitulo">
                 </div>
                 <div class="form-group">
-                    <label for="descripcion">Imagen: </label>
-                    <template-file-chooser [fileType] ="'sitio'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                    <label for="descripcion">Imagen (para evitar deformaciones se recomienda elegir imagenes con medidas de 1080px * 480px o equivalentes 2.5 : 1): </label>
+                    <template-file-chooser [fileType] ="'carrusel'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                    <p *ngIf="carrusel.fullImagen" class="text-success" style="font-weight: bold;"> ¡Imagen seleccionada! </p>
                 </div>      
             </form>    
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" (click)="createCar()" class="btn btn-primary">Crear</button>
+          <button type="button" (click)="cleanObject()" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="createCar()" data-dismiss="modal" class="btn btn-primary">Crear</button>
         </div>
       </div>
     </div>

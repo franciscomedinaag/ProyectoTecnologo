@@ -74,18 +74,18 @@
                 <div class="form-group">
                     <label for="descripcion">Titulo: </label>
                     <input  [(ngModel)]="subtarea.titulo" name="descripcion" type="text" class="form-control" 
-                    id="descripcion" placeholder="Ingresa la descripcion" >
+                    id="descripcion" placeholder="Ingresa un titulo" >
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion">Descripción: </label>
                     <textarea  [(ngModel)]="subtarea.descripcion" name="descripcion" type="text" class="form-control" 
-                    id="descripcion" placeholder="Ingresa la descripcion" rows="2"></textarea>
+                    id="descripcion" placeholder="Ingresa la descripcion de la subtarea..." rows="2"></textarea>
                 </div>
 
                 <div class="form-group">
                   <label class="mr-3" for="nombre">Fecha límite:</label>
-                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" (onChange)="fechaInput()" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
                 </div>
                 
               <div class="form-group">
@@ -118,7 +118,7 @@
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="cleanObject()" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="button" (click)="createSub()" class="btn btn-primary">Crear</button>
         </div>
       </div>

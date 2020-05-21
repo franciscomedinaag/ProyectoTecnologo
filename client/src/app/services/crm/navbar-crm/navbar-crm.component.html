@@ -36,7 +36,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199); 
           max-height: 50vh; overflow: auto;">
-
+          <div>
+            <span style="color:white">Notificaciones ( {{notifications.length}} )</span>
+          </div>
           <div *ngFor="let n of notifications">
             <span style="color:white;" class="dropdown-item">
               <div class="row" 
@@ -76,7 +78,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: rgb(52, 152, 199); 
           max-height: 50vh; overflow: auto;">
-
+          <div>
+            <span style="color:white">Notificaciones ( {{notifications.length}} )</span>
+          </div>
           <div *ngFor="let n of notifications">
             <span style="color:white;" class="dropdown-item">
               <div *ngIf="!n.contactar" class="row" 

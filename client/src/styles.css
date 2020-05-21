@@ -1,4 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~ngx-toastr/toastr';
  
- 
+ h4:hover{
+    cursor: default;
+ }
+ h3:hover{
+    cursor: default;
+ }
+ h2:hover{
+    cursor: default;
+ }
+ h1:hover{
+    cursor: default;
+ }
+ span:hover{
+    cursor: default;
+ }
+ p:hover{
+    cursor: default;
+ }

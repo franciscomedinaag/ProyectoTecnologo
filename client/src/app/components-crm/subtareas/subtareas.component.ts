@@ -129,18 +129,26 @@ export class SubtareasComponent implements OnInit {
   }
 
   createSub(){
+  
+    if(this.subtarea.fechaFin==undefined || !this.subtarea.fechaFin){
+      this.toast.showError("Debes ingresar una fecha")
+      this.cleanObject()
+      return
+    }
     let inicio=this.hoyGuion.split("-")
     let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
     let mesSub=this.subtarea.fechaFin.split("-")[1]
     this.subtarea.fechaInicio=i;
     
-    if(this.subtarea.titulo=="" || this.subtarea.fechaFin=="" || this.subtarea.descripcion=="" ||
+    if(this.subtarea.titulo=="" || this.subtarea.fechaFin==undefined || this.subtarea.descripcion=="" ||
     this.subtarea.tratoId=="" ||this.subtarea.categoriaId==""){
-      this.toast.showError("Debes llenar todos los campos")
+      this.toast.showError("Debes ingresar titulo, fecha, descripcion, trato y categoria")
+      this.cleanObject()
       return
     }
     else if(this.subtarea.fechaFin<this.hoyGuion && mesSub<=inicio[1]){
       this.toast.showError("La fecha límite ya pasó")
+      this.cleanObject()
       return
     }
     else{
@@ -216,6 +224,9 @@ export class SubtareasComponent implements OnInit {
           categoriaId:""}
           this.getSub()
           this.toast.showSuccess("Subtarea creada")
+        },err=>{
+          this.toast.showError("Debes llenar todos los cmapos")
+          this.cleanObject()
         })
       }
     }
@@ -248,6 +259,27 @@ export class SubtareasComponent implements OnInit {
       this.toast.showSuccess("¡Info. de descripcion actualizada!")
       this.full=okay
     })
+  }
+
+  cleanObject(){
+    this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
+  }
+
+  fechaInput(){
+    let inicio=this.hoyGuion.split("-")
+    let mesSub=this.subtarea.fechaFin.split("-")[1]
+
+    if(this.subtarea.fechaFin<this.hoyGuion && mesSub<=inicio[1]){
+      this.toast.showError("La fecha límite ya pasó")
+      this.subtarea.fechFin=""
+      return
+    }
   }
 
 }

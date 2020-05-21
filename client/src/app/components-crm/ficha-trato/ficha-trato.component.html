@@ -31,8 +31,9 @@
            <p *ngIf="trato.estado==2"> <span style="font-weight: bold;color:crimson">Reporte trato vencido: </span> {{trato.reporte}} </p>             
         </div>
         <div class="col-sm text-center">
-            <p *ngIf="desc" class="reabrir" (click)="desc=!desc"> <span style="font-weight: bold;">Descripción: </span> {{trato.descripcion}}<i class="fa fa-pencil" aria-hidden="true"></i></p>    
+            <p *ngIf="desc && trato.estado==0" class="reabrir" (click)="desc=!desc"> <span style="font-weight: bold;">Descripción: </span> {{trato.descripcion}}<i class="fa fa-pencil" aria-hidden="true"></i></p>    
             <textarea *ngIf="!desc" rows="2" type="text" [(ngModel)]="trato.descripcion" (blur)="desc=!desc;assignDesc(trato)"></textarea>
+            <p *ngIf="desc && trato.estado!=0" class="reabrir" > <span style="font-weight: bold;">Descripción: </span> {{trato.descripcion}}</p>    
             <br>
             <p *ngIf="trato.nota!=' '"> <span style="font-weight: bold;">Nota reapertura: </span> {{trato.nota}}</p>    
         </div>
@@ -226,7 +227,7 @@
 
                 <div class="form-group">
                   <label class="mr-3" for="nombre">Fecha límite:</label>
-                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
+                  <dp-date-picker  [(ngModel)]="subtarea.fechaFin"  (onChange)="fechaInput()" name="fechaFin" theme="dp-material" placeholder="Selecciona una fecha..." [config]="datePickerConfig"></dp-date-picker>  
                 </div>
 
               <div class="form-group">
