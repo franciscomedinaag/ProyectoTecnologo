@@ -79,7 +79,7 @@ module.exports = function(Client) {
 
     Client.sendWhats=function(data, callback){
 
-        const TWILIO_ACCOUNT_SID= process.env.TWILIO_ACOUNT_SID
+        const TWILIO_ACCOUNT_SID= process.env.TWILIO_ACCOUNT_SID
         const AUTH_TOKEN=process.env.AUTH_TOKEN
 
         console.log("SID", TWILIO_ACCOUNT_SID)
