@@ -82,6 +82,9 @@ module.exports = function(Client) {
         const TWILIO_ACCOUNT_SID= process.env.TWILIO_ACOUNT_SID
         const AUTH_TOKEN=process.env.AUTH_TOKEN
 
+        console.log("SID", TWILIO_ACCOUNT_SID)
+        console.log("TOKEN", AUTH_TOKEN )
+
         const client=require('twilio')(TWILIO_ACCOUNT_SID,AUTH_TOKEN);
         client.messages.create({
             to:data.to,
