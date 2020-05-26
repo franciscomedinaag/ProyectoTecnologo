@@ -40,6 +40,7 @@ module.exports = function(Schedule) {
                      to:'whatsapp:+5213315711601',
                      body:body
                  }
+                 console.log("data: ",data)
 
                  Schedule.models.Client.sendWhats(data, function(err, res){
                      if(err){
@@ -47,8 +48,8 @@ module.exports = function(Schedule) {
                          return callback(err)
                      }
                      else{
-                         console.log('whats sent!');
-                         return cb(null,mail)
+                         console.log('whats sent!',res);
+                         return callback(null,res)
                      }
                  })
              })    
