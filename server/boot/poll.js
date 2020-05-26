@@ -14,7 +14,8 @@ module.exports = function(Poll) {
         if(hoy[1].length<2){
             hoy[1]='0'+hoy[1]
         }
-        hoyString=hoy[2]+'-'+hoy[1]+'-'+hoy[0]
+        //hoyString=hoy[2]+'-'+hoy[1]+'-'+hoy[0]
+        hoyString=hoy[1]+'-'+hoy[0]+'-'+hoy[2]
 
         console.log("HOY", hoyString)
 
