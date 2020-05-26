@@ -5,7 +5,7 @@
            <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> Informes Administrador </h2>             
         </div>
         <div class="col">
-          <button data-toggle="modal" data-target="#seePromedio" class="btn btn-primary">Promedio de datos</button>
+          <button data-toggle="modal" data-target="#seeReport" (click)="report=false" class="btn btn-primary">Promedio</button>
         </div>
     </div>
     <div class="row pb-4">
@@ -40,7 +40,7 @@
         </div>
         <div class="modal-body">     
               <div class="row">
-                  <div class="col-sm-6 text-center">
+                  <div *ngIf="report" class="col-sm-6 text-center">
                       <h5 class="text-center">Este bimestre: </h5>
                       <p [className]="report.abiertos>=historico.abiertos ? 'text-success' : 'text-danger'">
                         Se abrieron <strong>{{report.abiertos}}</strong> tratos</p>
@@ -50,18 +50,18 @@
                         Se perdieron <strong>{{report.vencidos}}</strong> tratos</p>
                       <p [className]="report.total>=historico.total ? 'text-success' : 'text-danger'">
                         Se vendió un total de: <strong>{{report.total | currency}}</strong> </p>
-                      <p> La mayoría de los tratos perdidos fueron en la etapa de 
+                      <p class="text-secondary"> La mayoría de los tratos perdidos fueron en la etapa de 
                         <strong>{{categorias ? categorias[report.cual - 1].nombre : 'NA'}}</strong> </p>
                   </div>
 
-                  <div class="col-sm-6 text-center">
+                  <div class="col text-center">
                     <h5 class="text-center">El promedio al bimestre: </h5>
                     <p>Se abren <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
                     <p>Se cierran <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
                     <p>Se pierden <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
                     <p>Se venden <strong>{{historico.total | currency}}</strong> </p>
                     <p> La mayoría de los tratos perdidos son en la etapa de 
-                      <strong>{{categorias ? categorias[historico.cual - 1].nombre : 'NA'}}</strong> </p>
+                      <strong>{{historico.cual>=1 ? categorias[historico.cual - 1].nombre : 'NA'}}</strong> </p> 
                 </div>
               </div>               
         </div>
@@ -74,7 +74,7 @@
 
 
 
-  <div class="modal fade" id="seePromedio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- <div class="modal fade" id="seePromedio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -101,4 +101,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

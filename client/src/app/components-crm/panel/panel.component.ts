@@ -36,6 +36,9 @@ export class PanelComponent implements OnInit {
   public inicios:any=[]
   public nosotros:any=[]
 
+  public imageAdv=""
+  public static x=0;
+  public static y=0;
 
   constructor( public api:DataApiService, public toast:ToastService){}
 
@@ -97,10 +100,42 @@ export class PanelComponent implements OnInit {
       this.setImg=true
     }
     if(this.upload=='carrusel'){
-      this.carrusel.fullImagen=file
-      this.toast.showInfo("Imagen seleccionada para el carrusel")
+      let x;
+      let y;
+      this.imageAdv=""
+      let im='data:image/'+file.fileExtention.substr(1)+';base64,'+file.base64File;
+      let image=new Image;
+      image.src=im;
+      image.onload=function(){
+        x=image.width;
+        y=image.height;
+        PanelComponent.x=x;
+        PanelComponent.y=y;
+        console.log("medidas en func: ",PanelComponent.x,"+",PanelComponent.y)
+      }
+
+      setTimeout(()=>{
+        this.carrusel.fullImagen=file
+        this.toast.showInfo("Imagen seleccionada para el carrusel")
+        console.log("medidas fuera de func: ",PanelComponent.x,"+",PanelComponent.y)
+        if(PanelComponent.y>=PanelComponent.x){
+          
+          this.imageAdv="Por las dimensiones de la imagen, esta podría alterarse en a vista final"
+        }
+        if((PanelComponent.y*2.5)<PanelComponent.x){
+         
+          this.imageAdv="La imagen es demasiado larga, podría a alterarse en la vista final"
+        }
+        if((PanelComponent.y*1.5)>PanelComponent.x){
+          
+          this.imageAdv="La imagen es demasiado corta, podría a alterarse en la vista final"
+        }
+      }, 1000);
+     
     }
   }
+
+
 
   createCar(){
     if(this.carrusel.fullImagen==null){

@@ -13,6 +13,7 @@ export class InformeAdminComponent implements OnInit {
 
   public informes:any=[]
   public categorias:any=[0,0,0,0,0,0,0,0]
+ 
   public report:any={abiertos:0,
     cerrados:0,
     vencidos:0,
@@ -34,6 +35,7 @@ export class InformeAdminComponent implements OnInit {
   constructor( public api:DataApiService, public auth:AuthService, public activated:ActivatedRoute) { }
 
   ngOnInit() {
+    this.categorias[-1]=0;
     this.adminId=this.activated.snapshot.paramMap.get("id");
     this.getCategorias()
     this.getInformes()
@@ -80,6 +82,7 @@ export class InformeAdminComponent implements OnInit {
       counts[num] = counts[num] ? counts[num] + 1 : 1;
     }
     this.historico.cual= (Object.values(counts).sort().length-1) - 1
+    console.log("Cual", this.historico.cual)
   }
   
   getCategorias(){

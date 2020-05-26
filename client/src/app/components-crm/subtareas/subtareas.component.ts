@@ -132,7 +132,6 @@ export class SubtareasComponent implements OnInit {
   
     if(this.subtarea.fechaFin==undefined || !this.subtarea.fechaFin){
       this.toast.showError("Debes ingresar una fecha")
-      this.cleanObject()
       return
     }
     let inicio=this.hoyGuion.split("-")

@@ -27,7 +27,7 @@ module.exports = function(Report) {
                 mes2="02"
                 break;
             }
-            case '04':{
+            case '03':{
                 bimestre="marzo/abril"
                 mes1="03"
                 mes2="04"

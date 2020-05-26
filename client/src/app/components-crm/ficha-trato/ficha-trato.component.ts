@@ -438,6 +438,10 @@ export class FichaTratoComponent implements OnInit {
 
 
   createSub(){
+    if(this.subtarea.fechaFin==undefined || !this.subtarea.fechaFin){
+      this.toast.showError("Debes ingresar una fecha")
+      return
+    }
     let inicio=this.hoyGuion.split("-")
     let i= new Date(inicio[2], inicio[1]-1, inicio[0]).toISOString();
     let mesSub=this.subtarea.fechaFin.split("-")[1]
@@ -528,6 +532,16 @@ export class FichaTratoComponent implements OnInit {
         })
       }
     }
+  }
+
+  cleanObject(){
+    this.subtarea={ fechaInicio:"",
+          fechaFin:"",
+          titulo:"",
+          descripcion:"",
+          estado:0,
+          tratoId:"",
+          categoriaId:""}
   }
 
   fechaInput(){

@@ -19,3 +19,6 @@
  p:hover{
     cursor: default;
  }
+ button:hover{
+   cursor: pointer;
+}

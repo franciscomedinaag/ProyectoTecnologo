@@ -155,9 +155,12 @@
                     id="subtitulo" placeholder="Ingresa el subtitulo">
                 </div>
                 <div class="form-group">
-                    <label for="descripcion">Imagen (para evitar deformaciones se recomienda elegir imagenes con medidas de 1080px * 480px o equivalentes 2.5 : 1): </label>
-                    <template-file-chooser [fileType] ="'carrusel'" [extensionFilter]="'text/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
-                    <p *ngIf="carrusel.fullImagen" class="text-success" style="font-weight: bold;"> ¡Imagen seleccionada! </p>
+                    <label for="descripcion">Imagen: </label>
+                    <br>
+                    <strong>(Se recomienda elegir imagenes con proporciones equivalentes a 2.5 : 1)</strong>
+                    <template-file-chooser [fileType] ="'carrusel'" [extensionFilter]="'image/*'" (onChange)="selectImageOrder($event)"></template-file-chooser> 
+                    <p *ngIf="carrusel.fullImagen" class="text-secondary" style="font-weight:lighter;"> ¡Imagen seleccionada! </p>
+                    <p class="text-success" class="text-warning" style="font-weight: bold;"> {{imageAdv}} </p>
                 </div>      
             </form>    
         </div>
