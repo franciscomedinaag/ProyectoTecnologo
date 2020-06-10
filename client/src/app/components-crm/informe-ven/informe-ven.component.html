@@ -5,7 +5,7 @@
            <h2 class="text-center" style="font-weight: bold; color:rgb(104, 100, 100);"> Informes bimestrales </h2>             
         </div>
         <div class="col-sm-3">
-          <button data-toggle="modal" data-target="#seePromedio" class="btn btn-block btn-primary text-center mr-3" >Promedio de datos</button>
+          <button data-toggle="modal" data-target="#seePromedio" class="btn btn-block btn-primary text-center mr-3" >Promedio</button>
         </div>
     </div>
     <div class="row pb-4">
@@ -62,14 +62,14 @@
 
                   <div class="col-sm-6 text-center">
                     <h5 class="text-center">Tu promedio al bimestre: </h5>
-                    <p>Abres <strong>{{historico.abiertos  | number:'1.0-1'}}</strong> tratos</p>
-                    <p>Cierras <strong>{{historico.cerrados  | number:'1.0-1'}}</strong> tratos</p>
-                    <p>Pierdes <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
+                    <p>Abres <strong>{{historico.abiertos  }}</strong> tratos</p>
+                    <p>Cierras <strong>{{historico.cerrados  }}</strong> tratos</p>
+                    <p>Pierdes <strong>{{historico.vencidos }}</strong> tratos</p>
                     <p>Vendes <strong>{{historico.total | currency}}</strong> </p>
-                    <p>Clientes Reales <strong>{{historico.clientes | number:'1.0-1'}}</strong> </p>
-                    <p>Promedio de <strong>{{historico.intentos | number:'1.0-1'}}</strong> cotizaciones por trato </p>
-                    <p><strong>{{historico.tareas1 | number:'1.0-1'}}</strong> tareas logradas (<strong>{{  (100*historico.tareas1)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
-                    <p><strong>{{historico.tareas2 | number:'1.0-1'}}</strong> tareas vencidas (<strong>{{  (100*historico.tareas2)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                    <p>Clientes Reales <strong>{{historico.clientes }}</strong> </p>
+                    <p>Promedio de <strong>{{historico.intentos }}</strong> cotizaciones por trato </p>
+                    <p><strong>{{historico.tareas1 }}</strong> tareas logradas (<strong>{{  (100*historico.tareas1)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
+                    <p><strong>{{historico.tareas2 }}</strong> tareas vencidas (<strong>{{  (100*historico.tareas2)/(historico.tareas1+historico.tareas2) | number:'1.0-0' }}% </strong> )</p>
                 </div>
               </div>               
         </div>

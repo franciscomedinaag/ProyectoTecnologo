@@ -61,7 +61,7 @@
                     <p>Se pierden <strong>{{historico.vencidos | number:'1.0-1'}}</strong> tratos</p>
                     <p>Se venden <strong>{{historico.total | currency}}</strong> </p>
                     <p> La mayoría de los tratos perdidos son en la etapa de 
-                      <strong>{{historico.cual>=1 ? categorias[historico.cual - 1].nombre : 'NA'}}</strong> </p> 
+                      <strong>{{historico.cual>0 ? categorias[historico.cual - 1].nombre : 'Llamada de contacto'}}</strong> </p> 
                 </div>
               </div>               
         </div>

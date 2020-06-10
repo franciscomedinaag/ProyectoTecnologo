@@ -11,15 +11,15 @@
     </div>
     <div class="row pb-4 pt-4">
       <div class="col text-center">
-          <h2 style="font-weight: bold;">Cotización <span *ngIf="!cotizacion.definitivo"> NO </span> definitiva</h2>
+          <h2 style="font-weight: bold;">Cotización <span *ngIf="!cotizacion.definitivo"> NO </span> definitiva de {{username}}</h2>
       </div>
   </div>
     <div class="row pb-4">
       <div class="col-sm-3 text-center">
-        <button (click)="sendNoti(1)" class="btn headButton mt-1 btn-secondary">Validar cotización</button>
+        <button *ngIf="user" (click)="sendNoti(1)" class="btn headButton mt-1 btn-secondary">Validar cotización</button>
       </div>
       <div class="col-sm-3 text-center">
-        <button (click)="sendNoti(2)" class="btn headButton mt-1 btn-secondary">Apoyo en conceptos </button>
+        <button *ngIf="user" (click)="sendNoti(2)" class="btn headButton mt-1 btn-secondary">Apoyo en conceptos </button>
       </div>
       <div class="col-sm-3 text-center">
           <button class="btn headButton mt-1 btn-primary" data-toggle="modal" data-target="#addProducto">Agregar producto</button>
@@ -38,6 +38,7 @@
                       <th scope="col">Descripción</th>
                       <th scope="col">Producto Base</th>
                       <th scope="col">Tablones</th>
+                      <th scope="col">Herrajes</th>
                       <th scope="col">Precio Unitario</th>
                       <th scope="col">Precio total</th>
                       <th scope="col">Quitar</th>
@@ -49,6 +50,7 @@
                         <td>{{p.descripcion}}</td>
                         <td>{{p.productoFijo.clave}}</td>
                         <td>{{p.cantTablones}}</td>
+                        <td> {{p.montoHerrajes | currency}}</td>
                         <td> {{p.unitario | currency}}</td>
                         <td class="text-primary"> {{p.neto | currency}}</td>
                         <td><i (click)="onDeleteCreated(p.id)" class="fa fa-trash" aria-hidden="true"></i></td>
@@ -73,7 +75,7 @@
           <br>
           % de impuestos: <strong> {{cotizacion.impuestos}} </strong>
           <br>
-          Total: <strong> {{total + cotizacion.manoObra + cotizacion.administrativos + cotizacion.utilidad + cotizacion.impuestos  | currency}} </strong>
+          Total: <strong> {{total + cotizacion.manoObra + cotizacion.administrativos + cotizacion.utilidad + ((total + cotizacion.manoObra + cotizacion.administrativos + cotizacion.utilidad)/cotizacion.impuestos)  | currency}} </strong>
           <br>
           <button class="mt-3 btn btn-success" (click)="finish()">
             Terminar
@@ -151,7 +153,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" (click)="addProduct()" class="btn btn-primary">Crear</button>
+          <button type="button" (click)="addProduct()" data-dismiss="modal" class="btn btn-primary">Crear</button>
         </div>
       </div>
     </div>
@@ -171,15 +173,15 @@
               <div class="row">
                 <div class="col-sm-6 form-group">
                   <label for="nombre">Mano de obra: </label>
-                  <input [(ngModel)]="cotizacion.manoObra" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                  <input [(ngModel)]="cotizacion.manoObra" name="desc" type="number" class="form-control" id="desc" placeholder="Ingresa la clave">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="nombre">Gastos administrativos: </label>
-                  <input [(ngModel)]="cotizacion.administrativos" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                  <input [(ngModel)]="cotizacion.administrativos" name="descr" type="number" class="form-control" id="descr" placeholder="Ingresa la clave">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="nombre">Utilidad: </label>
-                  <input [(ngModel)]="cotizacion.utilidad" name="descripcion" type="number" class="form-control" id="descripcion" placeholder="Ingresa la clave">
+                  <input [(ngModel)]="cotizacion.utilidad" name="descri" type="number" class="form-control" id="descri" placeholder="Ingresa la clave">
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="nombre">Porcentaje de impuestos: </label>
@@ -190,7 +192,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" (click)="addConcept()" class="btn btn-primary">Crear</button>
+          <button type="button" (click)="addConcept()" data-dismiss="modal" class="btn btn-primary">Crear</button>
         </div>
       </div>
     </div>

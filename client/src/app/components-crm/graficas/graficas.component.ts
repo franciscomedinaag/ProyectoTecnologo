@@ -70,9 +70,12 @@ export class GraficasComponent implements OnInit {
         break
       }
       case 3:{
-        this.chartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
-        this.barChartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'WE'}
+        this.chartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'label'}
+        //this.barChartData[0]={data:[0,0,0,0,0,0,0,0,0,0,0,0],label:'label'}
+        
         this.graficas3()
+        setTimeout(()=>{this.barChartData=this.chartData}, 3000);
+        
         break
       }
       case 4:{
@@ -194,7 +197,8 @@ export class GraficasComponent implements OnInit {
   }
 
   graficas3(){
-    this.barChartData[0].label="Monto vendido en los ultimos 12 meses"
+    //this.barChartData[0].label="Monto vendido en los ultimos 12 meses"
+    this.chartData[0].label="Monto vendido en los ultimos 12 meses"
     this.setMonths()
     this.barChartLabels=this.mesesTwelveBefore.reverse()
 
@@ -226,21 +230,21 @@ export class GraficasComponent implements OnInit {
         }
       }
       });
-      // this.barChartData=this.chartData
-      console.log("aqui?")
     })
-    console.log("this.barChartData[0].data en la funcion 3", this.barChartData[0].data)
-
+  //  console.log("this.barChartData[0].data en la funcion 3", this.barChartData[0].data)
     return
   }
 
   sold(tratoId:number, i){
-    this.api.get(`/Tratos/${tratoId}/getSold`)
-    .subscribe((vendido:any)=>{
-      this.chartData[0].data[i]+= vendido.vendido
-      this.barChartData[0].data[i]+=vendido.vendido
-      console.log("this.barChartData[0].data", this.barChartData[0].data)
-    })
+ 
+      this.api.get(`/Tratos/${tratoId}/getSold`)
+      .subscribe((vendido:any)=>{
+        this.chartData[0].data[i]+= vendido.vendido
+       // this.barChartData[0].data[i]+=vendido.vendido
+        console.log("en sold",  this.chartData[0].data)
+        
+      })
+    
   }
 
   graficas4(){

@@ -13,7 +13,7 @@
             <input class="text-center" *ngIf="!user" type="text" [(ngModel)]="usuario.username" (blur)="user=!user;assign(usuario)">
         </div>
     </div> -->
-    <div class="row pb-3">
+    <div class="row pb-3 pt-3">
         <div class="col text-center">
             <button type="button" (click)="this.getChartData(1)" class="btn ml-3 btn-primary">Cantidad tratos</button>
             <button type="button" (click)="this.getChartData(2)" class="btn ml-3 btn-secondary">Estado actual</button>

@@ -176,7 +176,7 @@ export class SubtareasComponent implements OnInit {
               manoObra:0,
               administrativos:0,
               utilidad:0,
-              impuestos:0,
+              impuestos:10,
               subtareaId:okay.id,
               definitivo:true,
               total:0
@@ -205,7 +205,7 @@ export class SubtareasComponent implements OnInit {
               manoObra:0,
               administrativos:0,
               utilidad:0,
-              impuestos:0,
+              impuestos:10,
               subtareaId:okay.id,
               definitivo:true,
               total:0

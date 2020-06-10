@@ -30,12 +30,14 @@ export class InformeVenComponent implements OnInit {
   ngOnInit() {
     this.vendedorId=this.activated.snapshot.paramMap.get("id");
     this.getInformes()
+    console.log("lleganding")
   }
   
   getInformes(){
     this.api.get(`/Informes`,true,{where:{vendedorId:this.vendedorId}})
     .subscribe((informes)=>{
       this.informes=informes
+      console.log("informes: ", this.informes)
       this.getHistorico()
     })
   }
@@ -51,5 +53,6 @@ export class InformeVenComponent implements OnInit {
       this.historico.tareas1=(this.historico.tareas1+informe.tareas1) / (this.informes.length - 1) 
       this.historico.tareas2=(this.historico.tareas2+informe.tareas2) / (this.informes.length - 1) 
     });
+    console.log("historico: ", this.historico)
   }
 }

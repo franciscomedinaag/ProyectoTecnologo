@@ -29,10 +29,12 @@ export class CotizacionComponent implements OnInit {
     cantidad:null,
     tablonId:null,
     cantTablones:null,
-    montoHerrajes:null,
+    montoHerrajes:0,
     productoFijoId:null,
     cotizacionId:null
   }
+  public username:String="username"
+  public  user=true;
 
   constructor(private activated:ActivatedRoute, private api:DataApiService, private toast:ToastService, private auth:AuthService) { }
 
@@ -42,6 +44,10 @@ export class CotizacionComponent implements OnInit {
     this.getCoti() //trae la subtarea, el trato y la cotizacione
     this.getTablones()
     this.getFijos()
+
+    if(this.auth.getCurrentUser().realm!="user"){
+      this.user=false;
+    }
   }
 
   getCoti(){
@@ -56,9 +62,14 @@ export class CotizacionComponent implements OnInit {
       this.api.get(`/Cotizaciones`,true,{where:{subtareaId:this.subtareaId}})
       .subscribe((coti)=>{
         this.cotizacion=coti[0]
+        console.log("cotizacion", this.cotizacion)
         this.api.get(`/Tratos/${this.tratoId}`)
         .subscribe((trato:Array<any>)=>{
           this.trato=trato
+          this.api.get(`/Usuarios/${this.trato.vendedorId}`,true)
+          .subscribe((vendedor:any)=>{
+            this.username=vendedor.username
+          })
         })
         this.getCreados()
       })
@@ -106,8 +117,8 @@ export class CotizacionComponent implements OnInit {
       this.producto.cantTablones=0
     }
 
-    if(!(Number(this.producto.cantidad)) || !(Number(this.producto.montoHerrajes))){
-      this.toast.showError("Monto de herrajes y cantidades deben ser numeros mayores a 0")
+    if(!(Number(this.producto.cantidad))){
+      this.toast.showError("Cantidad debe ser un numero mayor a 0")
       return
     }
     this.api.post(`/ProductosCreados`,this.producto)
@@ -119,7 +130,7 @@ export class CotizacionComponent implements OnInit {
         cantidad:null,
         tablonId:null,
         cantTablones:null,
-        montoHerrajes:null,
+        montoHerrajes:0,
         productoFijoId:null,
         cotizacionId:null
       }
@@ -194,6 +205,11 @@ export class CotizacionComponent implements OnInit {
      }
      else{
       data.title=`Apoyo para establecer los conceptos de la cotización del trato ${this.trato.nombre}`
+     }
+
+     if(!this.productosCreados.length){
+       this.toast.showError("Debes añadir algo a la cotizacion para que pueda ser revisada")
+       return
      }
 
      this.api.get(`/Usuarios`,false,{where:{realm:'admin'}})
