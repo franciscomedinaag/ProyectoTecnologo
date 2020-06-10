@@ -36,7 +36,7 @@ module.exports = function(Carrusel) {
           UploadedFiles.destroyAll({where:{URL:oldFileId}},function(err){
               if (err) return callback(err);
 
-              callback(null, res)
+              return callback(null, "res")
               
               // destroy old file
             //   var container = oldFileId.split("/")[2];

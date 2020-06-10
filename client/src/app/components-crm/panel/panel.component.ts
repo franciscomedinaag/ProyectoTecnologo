@@ -190,8 +190,8 @@ export class PanelComponent implements OnInit {
       id:fileId
     }
     if(confirm("¿Desea eliminar este item?")){
-      this.api.post('/Carrusels/deleteFile',data)
-      .subscribe((okay)=>{
+      //this.api.post('/Carrusels/deleteFile',data)
+      // .subscribe((okay)=>{
         this.api.delete(`/Carrusels/${id}`)
         .subscribe((okay)=>{
           this.inicios=[]
@@ -199,7 +199,7 @@ export class PanelComponent implements OnInit {
           this.getCar();
           this.toast.showSuccess("Eliminado con exito")
         })
-      })
+      // })
     }
   }
 
