@@ -39,12 +39,12 @@ module.exports = function(Carrusel) {
               // destroy old file
               var container = oldFileId.split("/")[2];
               var oldFileName = oldFileId.split("/")[4];
-              Carrusel.app.models.Upload.removeFile(container, oldFileName, function(err, res){
-                  if (err) return callback(err);
+            //   Carrusel.app.models.Upload.removeFile(container, oldFileName, function(err, res){
+            //       if (err) return callback(err);
       
-                  callback(null, res)
+            //       callback(null, res)
                   
-              })
+            //   })
           });
       });
   }
