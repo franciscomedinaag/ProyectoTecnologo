@@ -35,14 +35,16 @@ module.exports = function(Carrusel) {
           // destroy old File
           UploadedFiles.destroyAll({where:{URL:oldFileId}},function(err){
               if (err) return callback(err);
+
+              callback(null, res)
               
               // destroy old file
-              var container = oldFileId.split("/")[2];
-              var oldFileName = oldFileId.split("/")[4];
+            //   var container = oldFileId.split("/")[2];
+            //   var oldFileName = oldFileId.split("/")[4];
             //   Carrusel.app.models.Upload.removeFile(container, oldFileName, function(err, res){
             //       if (err) return callback(err);
       
-            //       callback(null, res)
+                 
                   
             //   })
           });
